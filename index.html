@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RIEN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D1117;
+    --bg-deep:#0A0E13;
+    --panel:#151B24;
+    --panel-2:#1B2330;
+    --panel-3:#202A38;
+    --line:#2A3544;
+    --line-soft:#202937;
+    --text:#F1F4F8;
+    --text-dim:#9AA7B8;
+    --text-faint:#677487;
+    --gold:#DDB65C;
+    --gold-bright:#F0C86A;
+    --gold-dim:#796334;
+    --gold-soft:rgba(221,182,92,.10);
+    --danger:#E47869;
+    --ok:#72C997;
+    --shadow:0 12px 30px rgba(0,0,0,.16);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(circle at 18% 0%, rgba(221,182,92,.045), transparent 28%),
+      linear-gradient(180deg,var(--bg-deep) 0%,var(--bg) 20%,var(--bg) 100%);
+    color:var(--text);
+    font-family:'IBM Plex Sans KR','Gowun Dodum','Malgun Gothic',system-ui,sans-serif;
+    font-size:15px;
+    line-height:1.7;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  button,input,select{font:inherit;}
+  ::selection{background:rgba(221,182,92,.22);color:var(--text);}
+  .app{display:flex;min-height:100vh;}
+
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    width:228px;flex:none;
+    background:rgba(15,20,27,.96);
+    border-right:1px solid var(--line-soft);
+    padding:22px 0 18px;
+    display:flex;flex-direction:column;
+    position:sticky;top:0;height:100vh;
+    box-shadow:8px 0 28px rgba(0,0,0,.10);
+  }
+  .brand{
+    position:relative;
+    font-size:20px;font-weight:600;letter-spacing:.01em;
+    padding:4px 24px 24px;color:var(--text);
+  }
+  .brand::after{
+    content:'';display:block;width:34px;height:2px;
+    background:var(--gold);margin-top:12px;border-radius:999px;
+    box-shadow:0 0 14px rgba(221,182,92,.18);
+  }
+  .brand em{display:block;font-style:normal;font-size:11.5px;color:var(--text-faint);font-weight:400;margin-top:2px;letter-spacing:.02em;}
+  .navbtn{
+    display:block;width:100%;text-align:left;
+    background:transparent;border:0;border-left:2px solid transparent;
+    color:var(--text-dim);font-family:inherit;font-size:14.5px;
+    padding:11px 24px;cursor:pointer;
+    transition:color .16s,background .16s,border-color .16s;
+  }
+  .navbtn:hover{color:var(--text);background:rgba(255,255,255,.025);}
+  .navbtn.active{
+    color:var(--gold-bright);
+    border-left-color:var(--gold);
+    background:linear-gradient(90deg,rgba(221,182,92,.11),rgba(221,182,92,.025) 76%,transparent);
+    font-weight:500;
+  }
+  .sidebar-foot{margin-top:auto;padding:18px 24px 0;font-size:11.5px;color:var(--text-faint);line-height:1.6;border-top:1px solid var(--line-soft);}
+
+  /* ---------- main ---------- */
+  .main{flex:1;min-width:0;padding:46px 34px 96px;display:flex;justify-content:center;}
+  .main-inner{width:100%;max-width:900px;}
+  .topbar{margin-bottom:30px;}
+  .topbar h1{font-size:30px;font-weight:600;margin:0;letter-spacing:-.035em;line-height:1.3;}
+  .topbar .sub{color:var(--text-dim);font-size:13.5px;margin-top:7px;}
+
+  .searchbox{
+    display:flex;align-items:center;gap:10px;
+    background:linear-gradient(180deg,var(--panel),#131922);
+    border:1px solid var(--line);border-radius:10px;
+    padding:11px 14px;margin-top:20px;max-width:500px;
+    box-shadow:0 6px 18px rgba(0,0,0,.10);
+  }
+  .searchbox:focus-within{border-color:rgba(221,182,92,.52);box-shadow:0 0 0 3px rgba(221,182,92,.06);}
+  .searchbox input{border:0;outline:0;background:transparent;width:100%;font-family:inherit;font-size:14px;color:var(--text);}
+  .searchbox input::placeholder{color:var(--text-faint);}
+  .searchbox span{color:var(--gold);font-size:12px;letter-spacing:.03em;}
+
+  section.panel{display:none;}
+  section.panel.active{display:block;animation:fadeIn .18s ease-out;}
+  @keyframes fadeIn{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+  /* ---------- subtabs ---------- */
+  .subtabs{
+    display:flex;gap:6px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:24px;flex-wrap:wrap;
+  }
+  .subtab{
+    position:relative;
+    background:none;border:0;border-bottom:2px solid transparent;
+    color:var(--text-dim);font-family:inherit;font-size:14px;
+    padding:10px 14px;cursor:pointer;margin-bottom:-1px;
+    transition:color .16s,border-color .16s,background .16s;
+    border-radius:7px 7px 0 0;
+  }
+  .subtab:hover{color:var(--text);background:rgba(255,255,255,.02);}
+  .subtab.active{color:var(--gold-bright);border-bottom-color:var(--gold);font-weight:500;background:linear-gradient(180deg,rgba(221,182,92,.08),transparent);}
+  .subpanel{display:none;}
+  .subpanel.active{display:block;}
+
+  /* ---------- content blocks ---------- */
+  .block{
+    background:linear-gradient(180deg,rgba(255,255,255,.015),transparent 24%),var(--panel);
+    border:1px solid var(--line-soft);
+    border-radius:12px;padding:22px 24px;margin-bottom:16px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+  }
+  .block h3{margin:0 0 13px;font-size:17px;font-weight:600;letter-spacing:-.018em;}
+  .block h3 + .kv{margin-top:-2px;}
+  .kv{display:flex;gap:16px;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:14px;}
+  .kv:last-child{border-bottom:0;}
+  .kv dt{flex:0 0 132px;color:var(--text-faint);}
+  .kv dd{margin:0;flex:1;color:var(--text);}
+  .note{
+    font-size:13px;color:var(--text-dim);line-height:1.65;
+    margin-top:14px;padding-top:13px;border-top:1px solid var(--line-soft);
+  }
+  .note.danger{color:var(--danger);border-top-color:rgba(228,120,105,.18);}
+  p.lead{font-size:15px;line-height:1.8;margin:0 0 15px;}
+  p.lead:last-child{margin-bottom:0;}
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  thead th{
+    text-align:left;font-weight:500;color:var(--text-dim);font-size:12.5px;
+    padding:11px 15px;background:var(--panel-3);
+    border-bottom:1px solid var(--line);position:sticky;top:0;z-index:1;
+  }
+  tbody td{padding:11px 15px;border-bottom:1px solid var(--line-soft);}
+  tbody tr:last-child td{border-bottom:0;}
+  tbody tr:hover{background:rgba(255,255,255,.022);}
+  .num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
+  .gold{color:var(--gold-bright);}
+  .tablewrap{
+    background:var(--panel);border:1px solid var(--line-soft);
+    border-radius:12px;overflow:auto;max-height:560px;margin-bottom:16px;
+    box-shadow:0 8px 24px rgba(0,0,0,.06);
+  }
+
+  /* ---------- calculator ---------- */
+  .calc{
+    background:linear-gradient(180deg,rgba(221,182,92,.045),transparent 36%),var(--panel);
+    border:1px solid var(--line-soft);
+    border-left:3px solid var(--gold-dim);
+    border-radius:2px 12px 12px 2px;padding:20px 23px;margin-bottom:16px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+  }
+  .calc h4{margin:0 0 16px;font-size:15px;font-weight:600;color:var(--gold-bright);}
+  .field{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+  .field label{font-size:13.5px;color:var(--text-dim);flex:0 0 150px;}
+  input[type=number],input[type=text],select{
+    font-family:inherit;font-size:14px;padding:9px 12px;
+    background:var(--bg-deep);border:1px solid var(--line);border-radius:7px;color:var(--text);
+    outline:0;transition:border-color .15s,box-shadow .15s;
+  }
+  input:focus,select:focus{border-color:rgba(221,182,92,.55);box-shadow:0 0 0 3px rgba(221,182,92,.06);}
+  input[type=number]{width:150px;}
+  select{min-width:260px;}
+  .btn{
+    font-family:inherit;font-size:13.5px;font-weight:500;
+    background:var(--gold);color:#14171D;border:0;border-radius:7px;
+    padding:9px 19px;cursor:pointer;transition:filter .15s,transform .15s,box-shadow .15s;
+    box-shadow:0 5px 14px rgba(221,182,92,.14);
+  }
+  .btn:hover{filter:brightness(1.06);transform:translateY(-1px);}
+  .result{
+    margin-top:16px;padding:15px 17px;background:var(--panel-2);
+    border:1px solid rgba(255,255,255,.025);border-radius:9px;
+    font-size:14px;line-height:1.8;color:var(--text-dim);
+  }
+  .result strong{color:var(--gold-bright);font-weight:600;font-variant-numeric:tabular-nums;}
+  .result .big{display:block;font-size:16px;color:var(--text);margin-bottom:3px;font-weight:500;}
+
+  /* ---------- misc ---------- */
+  .filterbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+  .chip{
+    font-size:13px;padding:7px 12px;border-radius:7px;
+    border:1px solid var(--line);background:var(--panel);
+    color:var(--text-dim);cursor:pointer;transition:.15s;
+  }
+  .chip:hover{color:var(--text);border-color:#394758;}
+  .chip.active{background:var(--gold);color:#16191F;border-color:var(--gold);font-weight:500;box-shadow:0 5px 14px rgba(221,182,92,.10);}
+  .searchline{margin-bottom:13px;}
+  .searchline input{width:100%;max-width:360px;}
+  .empty{padding:42px;text-align:center;color:var(--text-faint);font-size:14px;}
+  .muted{color:var(--text-dim);font-size:13.5px;}
+
+  details.quest{
+    background:var(--panel);border:1px solid var(--line-soft);
+    border-radius:10px;margin-bottom:9px;overflow:hidden;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+  }
+  details.quest summary{
+    cursor:pointer;padding:14px 18px;font-size:14px;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    transition:background .15s;
+  }
+  details.quest summary::-webkit-details-marker{display:none;}
+  details.quest summary:hover{background:rgba(255,255,255,.022);}
+  details.quest summary .r{color:var(--text-faint);font-size:12.5px;white-space:nowrap;}
+  details.quest[open] summary{border-bottom:1px solid var(--line-soft);color:var(--gold-bright);background:rgba(221,182,92,.035);}
+  details.quest .body{padding:17px 18px;}
+
+  .homecard{
+    position:relative;
+    background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 45%),var(--panel);
+    border:1px solid var(--line-soft);border-radius:12px;padding:20px 21px;
+    cursor:pointer;transition:transform .16s,border-color .16s,background .16s,box-shadow .16s;
+  }
+  .homecard::after{
+    content:'→';position:absolute;right:18px;top:17px;color:var(--text-faint);font-size:13px;opacity:.55;transition:transform .16s,color .16s,opacity .16s;
+  }
+  .homecard:hover{border-color:rgba(221,182,92,.42);background:linear-gradient(180deg,rgba(221,182,92,.055),transparent 62%),var(--panel);box-shadow:var(--shadow);transform:translateY(-2px);}
+  .homecard:hover::after{transform:translateX(3px);color:var(--gold);opacity:1;}
+  .homecard b{display:block;font-size:15.5px;font-weight:600;margin-bottom:6px;padding-right:26px;}
+  .homecard span{font-size:13px;color:var(--text-dim);line-height:1.65;display:block;padding-right:18px;}
+  .homegrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+  .tipbox{
+    background:
+      linear-gradient(110deg,rgba(221,182,92,.085),rgba(221,182,92,.02) 48%,transparent),
+      var(--panel);
+    border:1px solid rgba(221,182,92,.16);border-left:3px solid var(--gold);
+    border-radius:3px 12px 12px 3px;padding:19px 22px;margin-bottom:23px;
+    box-shadow:0 8px 22px rgba(0,0,0,.07);
+  }
+  .tipbox .k{font-size:11.5px;color:var(--gold-bright);margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase;}
+  .tipbox .v{font-size:15px;line-height:1.7;}
+
+  ol.steps{list-style:none;counter-reset:step;margin:0;padding:0;}
+  ol.steps li{
+    counter-increment:step;display:flex;align-items:center;gap:13px;
+    padding:12px 0;border-bottom:1px solid var(--line-soft);font-size:14px;
+  }
+  ol.steps li:last-child{border-bottom:0;}
+  ol.steps li::before{
+    content:counter(step);flex:none;width:26px;height:26px;border-radius:50%;
+    border:1px solid var(--gold-dim);color:var(--gold-bright);
+    font-size:12px;display:flex;align-items:center;justify-content:center;
+    background:rgba(221,182,92,.035);
+  }
+  ol.steps .s-name{flex:1;}
+  ol.steps .s-pt{color:var(--gold-bright);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500;}
+
+  .stage{
+    background:var(--panel);border:1px solid var(--line-soft);
+    border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 8px 22px rgba(0,0,0,.06);
+  }
+  .stage-head{
+    display:flex;align-items:center;gap:13px;
+    padding:15px 21px;border-bottom:1px solid var(--line-soft);
+    background:linear-gradient(180deg,var(--panel-2),rgba(27,35,48,.72));
+  }
+  .stage-num{
+    flex:none;width:29px;height:29px;border-radius:50%;
+    background:var(--gold);color:#16191F;font-size:13px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 4px rgba(221,182,92,.05);
+  }
+  .stage-head b{font-size:16px;font-weight:600;}
+  .stage-head .lv{margin-left:auto;font-size:12px;color:var(--text-faint);white-space:nowrap;}
+  .stage-body{padding:17px 21px;}
+  .stage-body h5{margin:0 0 9px;font-size:12.5px;font-weight:500;color:var(--text-faint);}
+  .stage-body h5 + ul{margin-top:0;}
+  .qlist{list-style:none;margin:0 0 18px;padding:0;}
+  .qlist li{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:14px;}
+  .qlist li:last-child{border-bottom:0;}
+  .qlist .qn{flex:0 0 130px;}
+  .qlist .qm{flex:1;color:var(--text-dim);font-size:13px;}
+  .qlist .qr{color:var(--gold-bright);font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .todo{list-style:none;margin:0;padding:0;}
+  .todo li{padding:9px 0 9px 19px;position:relative;font-size:14px;line-height:1.65;border-bottom:1px solid var(--line-soft);}
+  .todo li:last-child{border-bottom:0;}
+  .todo li::before{content:'';position:absolute;left:2px;top:17px;width:5px;height:5px;border-radius:50%;background:var(--gold-dim);}
+  .todo li.warn{color:var(--danger);}
+  .todo li.warn::before{background:var(--danger);}
+
+  ul.plain{list-style:none;margin:0;padding:0;}
+  ul.plain li{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-soft);font-size:14px;}
+  ul.plain li:last-child{border-bottom:0;}
+  ul.plain .s-name{flex:1;}
+  ul.plain .s-pt{color:var(--gold-bright);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500;}
+
+  .groupbox{margin-bottom:23px;}
+  .group-title{
+    font-size:11.5px;color:var(--gold-bright);margin-bottom:11px;
+    display:flex;align-items:center;gap:10px;letter-spacing:.07em;font-weight:500;
+  }
+  .group-title::after{content:'';flex:1;height:1px;background:var(--line-soft);}
+  .groupbox .homecard{border-color:rgba(221,182,92,.19);background:linear-gradient(180deg,rgba(221,182,92,.045),transparent),var(--panel);}
+
+  .tier{display:inline-flex;flex-direction:column;gap:1px;align-items:flex-end;line-height:1.35;}
+  .tier .pct{color:var(--gold);font-variant-numeric:tabular-nums;}
+  .tier .rng{font-size:12.5px;color:var(--text-faint);font-variant-numeric:tabular-nums;}
+  .tier.zero .pct{color:var(--text-dim);}
+  .itemhead{
+    display:flex;align-items:baseline;gap:12px;
+    margin:22px 0 12px;font-size:15px;color:var(--text-dim);
+  }
+  .itemhead::after{content:'';flex:1;height:1px;background:var(--line-soft);}
+
+  #searchResults{margin-bottom:20px;}
+  .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
+  .hit:last-child{border-bottom:0;}
+  .hit:hover{background:rgba(255,255,255,.025);}
+  .hit .where{color:var(--text-faint);font-size:12px;flex:0 0 78px;}
+
+  @media (max-width:860px){
+    .app{flex-direction:column;}
+    .sidebar{width:100%;height:auto;position:sticky;top:0;z-index:20;flex-direction:row;overflow-x:auto;padding:8px 0;background:rgba(12,16,22,.96);backdrop-filter:blur(10px);box-shadow:0 8px 20px rgba(0,0,0,.14);}
+    .brand{display:none;}
+    .sidebar-foot{display:none;}
+    .navbtn{width:auto;white-space:nowrap;border-left:0;border-bottom:2px solid transparent;padding:9px 15px;}
+    .navbtn.active{border-left:0;border-bottom-color:var(--gold);background:transparent;}
+    .main{padding:26px 16px 60px;}
+    .main-inner{max-width:none;}
+    .topbar h1{font-size:25px;}
+    .homegrid{grid-template-columns:1fr;}
+    .field label{flex:1 1 100%;}
+  }
+
+
+
+  /* =========================================================
+     RIEN GAME UI THEME — visual layer only
+     ========================================================= */
+  body::before{
+    content:'';
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.010) 1px,transparent 1px),
+      radial-gradient(circle at 50% 12%,rgba(221,182,92,.055),transparent 34%);
+    background-size:32px 32px,32px 32px,100% 100%;
+    mask-image:linear-gradient(to bottom,black,transparent 78%);
+  }
+  .app{position:relative;z-index:1;}
+
+  /* Game HUD-style sidebar */
+  .sidebar{
+    width:238px;
+    background:
+      linear-gradient(180deg,rgba(16,22,30,.985),rgba(10,15,21,.985));
+    border-right:1px solid rgba(221,182,92,.14);
+    box-shadow:14px 0 40px rgba(0,0,0,.22), inset -1px 0 rgba(255,255,255,.018);
+  }
+  .brand{
+    padding:7px 24px 22px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .brand::before{
+    content:'SERVER GUIDE';
+    display:block;
+    color:var(--text-faint);
+    font-size:9px;
+    letter-spacing:.16em;
+    margin-bottom:5px;
+    font-weight:500;
+  }
+  .brand::after{
+    width:46px;height:2px;
+    margin-top:13px;
+    box-shadow:0 0 16px rgba(221,182,92,.25);
+  }
+  .brand em{letter-spacing:.04em;text-transform:none;}
+  .navbtn{
+    position:relative;
+    margin:2px 9px;
+    width:calc(100% - 18px);
+    border:1px solid transparent;
+    border-left:2px solid transparent;
+    border-radius:5px;
+    padding:10px 15px 10px 17px;
+    font-size:14px;
+    letter-spacing:-.01em;
+  }
+  .navbtn::after{
+    content:'›';
+    position:absolute;right:14px;top:50%;
+    transform:translateY(-50%) translateX(-3px);
+    color:var(--text-faint);
+    opacity:0;
+    transition:.16s;
+  }
+  .navbtn:hover::after,.navbtn.active::after{opacity:1;transform:translateY(-50%) translateX(0);}
+  .navbtn:hover{
+    background:linear-gradient(90deg,rgba(255,255,255,.025),transparent);
+    border-color:rgba(255,255,255,.03);
+  }
+  .navbtn.active{
+    background:
+      linear-gradient(90deg,rgba(221,182,92,.12),rgba(221,182,92,.045) 72%,transparent),
+      linear-gradient(180deg,rgba(255,255,255,.02),transparent);
+    border-color:rgba(221,182,92,.14);
+    border-left-color:var(--gold);
+    box-shadow:inset 0 0 18px rgba(221,182,92,.025),0 5px 16px rgba(0,0,0,.08);
+  }
+
+  /* Main page becomes a restrained game panel */
+  .main{padding-top:42px;}
+  .main-inner{max-width:940px;}
+  .topbar{
+    position:relative;
+    padding:0 0 22px;
+    border-bottom:1px solid var(--line-soft);
+    margin-bottom:22px;
+  }
+  .topbar::before{
+    content:'';
+    position:absolute;left:0;top:-12px;
+    width:7px;height:7px;
+    border-left:1px solid var(--gold);
+    border-top:1px solid var(--gold);
+    opacity:.8;
+  }
+  .topbar::after{
+    content:'';
+    position:absolute;right:0;bottom:-1px;
+    width:88px;height:1px;background:var(--gold);
+    box-shadow:0 0 12px rgba(221,182,92,.16);
+  }
+  .topbar h1{
+    text-shadow:0 1px 18px rgba(0,0,0,.35);
+  }
+  .topbar h1::after{
+    content:' / RIEN DATABASE';
+    color:var(--text-faint);
+    font-size:10px;
+    font-weight:500;
+    letter-spacing:.13em;
+    vertical-align:middle;
+    margin-left:10px;
+  }
+  .topbar .sub{letter-spacing:-.01em;}
+
+  .searchbox{
+    position:relative;
+    max-width:560px;
+    border-radius:6px;
+    border-color:#314052;
+    background:linear-gradient(180deg,#121923,#0F151D);
+    box-shadow:inset 0 1px rgba(255,255,255,.02),0 10px 24px rgba(0,0,0,.12);
+  }
+  .searchbox::after{
+    content:'ENTER';
+    margin-left:10px;
+    color:#4d5968;
+    font-size:9px;
+    letter-spacing:.1em;
+    padding:3px 6px;
+    border:1px solid #303b4a;
+    border-radius:3px;
+  }
+
+  /* Tabs read more like in-game category switches */
+  .subtabs{
+    gap:4px;
+    border-bottom:1px solid #2a3544;
+    position:relative;
+  }
+  .subtab{
+    border:1px solid transparent;
+    border-bottom:2px solid transparent;
+    border-radius:5px 5px 0 0;
+    padding:9px 13px 10px;
+    color:#8794a7;
+  }
+  .subtab.active{
+    color:var(--gold-bright);
+    background:linear-gradient(180deg,rgba(221,182,92,.10),rgba(221,182,92,.025));
+    border-color:rgba(221,182,92,.12);
+    border-bottom-color:var(--gold);
+    box-shadow:inset 0 1px rgba(255,255,255,.025);
+  }
+
+  /* Panel frames: small corners create a game-window impression without becoming noisy */
+  .block,.tablewrap,.calc,.stage,details.quest{
+    position:relative;
+  }
+  .block::before,.tablewrap::before,.calc::before,.stage::before,details.quest::before{
+    content:'';
+    position:absolute;left:-1px;top:-1px;
+    width:10px;height:10px;pointer-events:none;
+    border-left:1px solid rgba(221,182,92,.30);
+    border-top:1px solid rgba(221,182,92,.30);
+    border-radius:5px 0 0 0;
+    opacity:.75;
+  }
+  .block::after,.tablewrap::after,.calc::after,.stage::after,details.quest::after{
+    content:'';
+    position:absolute;right:-1px;bottom:-1px;
+    width:10px;height:10px;pointer-events:none;
+    border-right:1px solid rgba(221,182,92,.18);
+    border-bottom:1px solid rgba(221,182,92,.18);
+    border-radius:0 0 5px 0;
+  }
+  .block:hover,.homecard:hover,.stage:hover{
+    border-color:rgba(221,182,92,.24);
+  }
+  .block h3{display:flex;align-items:center;gap:9px;}
+  .block h3::before{
+    content:'';
+    width:3px;height:15px;flex:none;
+    border-radius:1px;
+    background:linear-gradient(var(--gold),var(--gold-dim));
+    box-shadow:0 0 8px rgba(221,182,92,.10);
+  }
+
+  /* Game-like data emphasis */
+  .gold{font-weight:600;text-shadow:0 0 12px rgba(221,182,92,.08);}
+  .num{letter-spacing:.01em;}
+  thead th{
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    font-size:11px;
+    background:linear-gradient(180deg,#202a38,#1b2430);
+  }
+  tbody tr:hover td:first-child{color:var(--text);}
+
+  /* Buttons feel like game controls */
+  .btn{
+    position:relative;
+    border:1px solid rgba(255,255,255,.16);
+    border-bottom-color:rgba(84,65,24,.7);
+    border-radius:5px;
+    text-shadow:0 1px rgba(255,255,255,.16);
+    box-shadow:0 5px 15px rgba(221,182,92,.10),inset 0 1px rgba(255,255,255,.18);
+  }
+  .btn:active{transform:translateY(1px);box-shadow:0 2px 7px rgba(221,182,92,.08);}
+  .chip{
+    border-radius:5px;
+    background:linear-gradient(180deg,#19212c,#151c25);
+  }
+  .chip.active{
+    background:linear-gradient(180deg,#efc96e,#d8ac49);
+    box-shadow:0 0 0 1px rgba(221,182,92,.10),0 6px 15px rgba(221,182,92,.10);
+  }
+
+  /* Home = game launcher/dashboard */
+  .group-title{
+    letter-spacing:.11em;
+    position:relative;
+  }
+  .group-title::before{
+    content:'◆';
+    font-size:6px;
+    color:var(--gold);
+    margin-right:-3px;
+    text-shadow:0 0 8px rgba(221,182,92,.2);
+  }
+  .homegrid{gap:12px;}
+  .homecard{
+    min-height:94px;
+    padding:18px 21px 17px;
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.025),transparent 45%),
+      linear-gradient(180deg,#171f29,#141a22);
+    box-shadow:inset 0 1px rgba(255,255,255,.025),0 10px 24px rgba(0,0,0,.08);
+    overflow:hidden;
+  }
+  .homecard::before{
+    content:'';
+    position:absolute;right:0;bottom:0;
+    width:46px;height:46px;
+    border-right:1px solid rgba(221,182,92,.18);
+    border-bottom:1px solid rgba(221,182,92,.18);
+    clip-path:polygon(100% 0,100% 100%,0 100%);
+    pointer-events:none;
+  }
+  .homecard::after{font-size:12px;}
+  .homecard b{font-size:16px;letter-spacing:-.02em;}
+  .homecard span{font-size:12.5px;color:#8895a7;}
+  .groupbox .homecard{
+    background:
+      linear-gradient(135deg,rgba(221,182,92,.08),transparent 50%),
+      linear-gradient(180deg,#1a2029,#151b23);
+    border-color:rgba(221,182,92,.25);
+  }
+  .groupbox .homecard b::before{
+    content:'◆';
+    color:var(--gold);
+    font-size:7px;
+    margin-right:8px;
+    vertical-align:2px;
+  }
+  .tipbox{
+    position:relative;
+    overflow:hidden;
+    border-top-color:rgba(221,182,92,.24);
+    border-bottom-color:rgba(221,182,92,.08);
+  }
+  .tipbox::before{
+    content:'SYSTEM TIP';
+    position:absolute;right:14px;top:10px;
+    font-size:8px;color:rgba(221,182,92,.28);letter-spacing:.14em;
+  }
+  .tipbox .v{max-width:88%;}
+
+  /* Route / stage blocks feel closer to quest windows */
+  .stage-head{
+    background:linear-gradient(180deg,#202a38,#1b2430);
+    box-shadow:inset 0 1px rgba(255,255,255,.025);
+  }
+  .stage-num{
+    border-radius:4px;
+    box-shadow:0 0 0 2px rgba(221,182,92,.08),0 4px 10px rgba(0,0,0,.16);
+  }
+
+  /* inputs */
+  input[type=number],input[type=text],select{
+    border-radius:5px;
+    box-shadow:inset 0 1px 4px rgba(0,0,0,.18);
+  }
+
+  /* mobile keeps the game-bar feel */
+  @media (max-width:860px){
+    .sidebar{border-bottom:1px solid rgba(221,182,92,.12);}
+    .navbtn{margin:0 2px;border-radius:4px;}
+    .navbtn.active{background:linear-gradient(180deg,rgba(221,182,92,.10),transparent);}
+    .topbar h1::after{display:none;}
+    .main{padding-top:28px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand" id="brandBox">RIEN<em>서버 종합 가이드</em></div>
+    <button class="navbtn active" data-tab="home">홈</button>
+    <button class="navbtn" data-tab="enhance">강화</button>
+    <button class="navbtn" data-tab="soul">영혼석</button>
+    <button class="navbtn" data-tab="hidden">히든 스킬</button>
+    <button class="navbtn" data-tab="alchemy">연금술</button>
+    <button class="navbtn" data-tab="items">아이템 정보</button>
+    <button class="navbtn" data-tab="quest">퀘스트</button>
+    <button class="navbtn" data-tab="shop">홍포 상점</button>
+    <button class="navbtn" data-tab="tips">공략 팁</button>
+  </aside>
+
+  <main class="main">
+    <div class="main-inner">
+    <div class="topbar">
+      <h1 id="sectTitle">홈</h1>
+      <div class="sub" id="sectSub">불러오는 중…</div>
+      <div class="searchbox">
+        <span>검색</span>
+        <input id="globalSearch" placeholder="아이템, 퀘스트, 스킬 이름">
+      </div>
+    </div>
+    <div id="searchResults"></div>
+    <div id="loadError"></div>
+
+    <!-- ========== HOME ========== -->
+    <section class="panel active" id="home">
+      <div class="groupbox">
+        <div class="group-title" id="homeGroupTitle">초반 팁</div>
+        <div class="homegrid" id="homeGroupCards"></div>
+      </div>
+
+      <div class="tipbox">
+        <div class="k">오늘의 팁</div>
+        <div class="v" id="tipText"></div>
+      </div>
+      <div class="homegrid" id="homeCards"></div>
+    </section>
+
+    <!-- ========== 강화 ========== -->
+    <section class="panel" id="enhance">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="enh-basic">장비 강화</button>
+        <button class="subtab" data-sub="enh-dmg">추가 데미지</button>
+        <button class="subtab" data-sub="enh-amp">증폭</button>
+        <button class="subtab" data-sub="enh-ability">어빌리티</button>
+      </div>
+
+      <div class="subpanel active" id="enh-basic">
+        <div id="enhBasicList"></div>
+      </div>
+
+      <div class="subpanel" id="enh-dmg">
+        <div id="enhDmgInfo"></div>
+        <div class="calc">
+          <h4>필요 재료 계산</h4>
+          <div class="field">
+            <label>시도 횟수</label>
+            <input type="number" id="dmgTries" min="0" value="10">
+            <button class="btn" onclick="calcDmg()">계산</button>
+          </div>
+          <div class="result" id="dmgResult">시도 횟수를 입력하세요.</div>
+          <div class="note" id="dmgCalcNote"></div>
+        </div>
+      </div>
+
+      <div class="subpanel" id="enh-amp">
+        <div id="enhAmpInfo"></div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>결과</th><th class="num">확률</th><th>수치 변동</th></tr></thead>
+            <tbody id="ampTableBody"></tbody>
+          </table>
+        </div>
+        <div class="calc">
+          <h4>필요 재료 계산</h4>
+          <div class="field">
+            <label>시도 횟수</label>
+            <input type="number" id="ampTries" min="0" value="5">
+            <button class="btn" onclick="calcAmp()">계산</button>
+          </div>
+          <div class="result" id="ampResult">시도 횟수를 입력하세요.</div>
+        </div>
+      </div>
+
+      <div class="subpanel" id="enh-ability">
+        <div id="enhAbilityInfo"></div>
+      </div>
+    </section>
+
+    <!-- ========== 영혼석 ========== -->
+    <section class="panel" id="soul">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="soul-info">제작 정보</button>
+        <button class="subtab" data-sub="soul-calc">재료 계산</button>
+      </div>
+      <div class="subpanel active" id="soul-info">
+        <div id="soulInfo"></div>
+      </div>
+      <div class="subpanel" id="soul-calc">
+        <div class="calc">
+          <h4>목표 개수로 계산</h4>
+          <div class="field">
+            <label>만들 영혼석 개수</label>
+            <input type="number" id="soulTarget" min="0" value="1">
+            <button class="btn" onclick="calcSoulByTarget()">계산</button>
+          </div>
+          <div class="result" id="soulTargetResult">개수를 입력하세요.</div>
+        </div>
+        <div class="calc">
+          <h4>보유 재료로 계산</h4>
+          <div class="field"><label>영혼의 파편</label><input type="number" id="haveFrag" min="0" value="0"></div>
+          <div class="field"><label>영혼석 정화수</label><input type="number" id="havePurify" min="0" value="0"></div>
+          <div class="field">
+            <label>메소</label>
+            <input type="number" id="haveMeso" min="0" value="0">
+            <button class="btn" onclick="calcSoulByHave()">계산</button>
+          </div>
+          <div class="result" id="soulHaveResult">보유량을 입력하세요.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 히든스킬 ========== -->
+    <section class="panel" id="hidden">
+      <div class="filterbar" id="hiddenFilter"></div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>스킬</th><th>분류</th><th class="num">필요 메소</th><th>비고</th></tr></thead>
+          <tbody id="hiddenBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== 연금술 ========== -->
+    <section class="panel" id="alchemy">
+      <div class="subtabs" id="alchemySubtabs"></div>
+      <div class="searchline"><input type="text" id="alchemySearch" placeholder="아이템 이름으로 검색"></div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr id="alchemyHead"></tr></thead>
+          <tbody id="alchemyBody"></tbody>
+        </table>
+      </div>
+      <div class="block">
+        <p class="lead muted" id="alchemyNote"></p>
+      </div>
+    </section>
+
+    <!-- ========== 아이템 정보 ========== -->
+    <section class="panel" id="items">
+      <div class="subtabs" id="itemSubtabs"></div>
+      <div id="itemDetail"></div>
+    </section>
+
+    <!-- ========== 퀘스트 ========== -->
+    <section class="panel" id="quest">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="q-daily">일일퀘스트</button>
+        <button class="subtab" data-sub="q-boss">필드보스</button>
+        <button class="subtab" data-sub="q-title">타이틀 퀘스트</button>
+      </div>
+
+      <div class="subpanel active" id="q-daily">
+        <div class="tablewrap" style="max-height:none;">
+          <table>
+            <thead><tr><th>등급</th><th class="num">경험치</th><th class="num">드랍</th><th class="num">메소</th><th class="num">추가뎀</th><th class="num">일반뎀</th><th class="num">보스뎀</th></tr></thead>
+            <tbody id="dailyGradeBody"></tbody>
+          </table>
+        </div>
+        <div id="weekdayBlock"></div>
+      </div>
+
+      <div class="subpanel" id="q-boss">
+        <div class="calc">
+          <h4>파밍 계산</h4>
+          <div class="field"><label>보스</label><select id="bossSelect"></select></div>
+          <div class="field">
+            <label id="bossTimesLabel">진행 횟수</label>
+            <input type="number" id="bossTimes" min="1" value="10">
+            <button class="btn" onclick="calcBoss()">계산</button>
+          </div>
+          <div class="result" id="bossResult">보스와 횟수를 고르세요.</div>
+          <div class="note" id="bossNote"></div>
+        </div>
+        <div class="searchline"><input type="text" id="bossSearch" placeholder="보스 이름으로 검색"></div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>전리품</th><th class="num">개수</th><th class="num">경험치</th><th class="num">메소</th></tr></thead>
+            <tbody id="bossBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="subpanel" id="q-title">
+        <div id="titleQuestList"></div>
+        <div class="searchline" style="margin-top:24px;"><input type="text" id="questSearch" placeholder="퀘스트 이름으로 검색"></div>
+        <div id="questList"></div>
+      </div>
+    </section>
+
+    <!-- ========== 홍포 상점 ========== -->
+    <section class="panel" id="shop">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="shop-order">초반 구매 순서</button>
+        <button class="subtab" data-sub="shop-all">전체 목록</button>
+        <button class="subtab" data-sub="shop-calc">포인트 계산</button>
+      </div>
+
+      <div class="subpanel active" id="shop-order">
+        <div id="shopOrder"></div>
+      </div>
+
+      <div class="subpanel" id="shop-all">
+        <div class="tablewrap" style="max-height:none;">
+          <table>
+            <thead><tr><th>아이템</th><th class="num">포인트</th><th>선행 조건</th></tr></thead>
+            <tbody id="shopBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="subpanel" id="shop-calc">
+        <div class="calc">
+          <h4>단계 구매 시 총 포인트</h4>
+          <div class="field">
+            <label>목표 아이템</label>
+            <select id="shopSelect"></select>
+            <button class="btn" onclick="calcShop()">계산</button>
+          </div>
+          <div class="result" id="shopResult">목표 아이템을 고르세요.</div>
+          <div class="note" id="shopCalcNote"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 팁 ========== -->
+    <section class="panel" id="tips">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="tip-route">추천 초반루트</button>
+        <button class="subtab" data-sub="tip-basic">기본 팁</button>
+      </div>
+
+      <div class="subpanel active" id="tip-route">
+        <div class="block">
+          <p class="lead muted" id="routeLead"></p>
+        </div>
+        <div id="routeList"></div>
+      </div>
+
+      <div class="subpanel" id="tip-basic">
+        <div id="basicTipList"></div>
+      </div>
+    </section>
+    </div>
+  </main>
+</div>
+
+<script>
+/* =========================================================
+   데이터는 data.json 에 있습니다. 이 파일은 손대지 않아도
+   data.json 만 수정하면 내용이 바뀝니다.
+   ========================================================= */
+
+let D = null;
+
+const fmt = n => Number(n).toLocaleString('ko-KR');
+const esc = s => String(s == null ? '' : s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* 공통 블록 생성 */
+function block(o){
+  const rows = (o.rows||[]).map(r=>`<dl class="kv"><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></dl>`).join('');
+  const lead = o.lead ? `<p class="lead">${esc(o.lead)}</p>` : '';
+  const note = o.note ? `<div class="note">${esc(o.note)}</div>` : '';
+  const danger = o.danger ? `<div class="note danger">${esc(o.danger)}</div>` : '';
+  const sub = o.subtitle ? ` <span class="muted" style="font-size:14px;font-weight:400;">${esc(o.subtitle)}</span>` : '';
+  const title = o.title ? `<h3>${esc(o.title)}${sub}</h3>` : '';
+  return `<div class="block">${title}${lead}${rows}${o.extra||''}${note}${danger}</div>`;
+}
+
+/* ===== 탭 전환 ===== */
+function switchTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  const s = D && D.sections && D.sections[id];
+  if(s){
+    document.getElementById('sectTitle').textContent = s.title;
+    document.getElementById('sectSub').textContent = s.sub;
+  }
+  document.getElementById('searchResults').innerHTML='';
+  document.getElementById('globalSearch').value='';
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+document.querySelectorAll('.subtab[data-sub]').forEach(t=>t.onclick=()=>{
+  const parent=t.closest('.panel');
+  parent.querySelectorAll('.subtab').forEach(x=>x.classList.toggle('active',x===t));
+  parent.querySelectorAll('.subpanel').forEach(p=>p.classList.toggle('active',p.id===t.dataset.sub));
+});
+
+/* ===== 홈 ===== */
+function renderHome(){
+  document.getElementById('brandBox').innerHTML =
+    `${esc(D.site.brand)}<em>${esc(D.site.tagline)}</em>`;
+  document.title = D.site.brand;
+  document.getElementById('homeGroupTitle').textContent = D.home.groupTitle;
+  const card = c => `<div class="homecard" data-goto="${esc(c.goto)}"><b>${esc(c.title)}</b><span>${esc(c.desc)}</span></div>`;
+  document.getElementById('homeGroupCards').innerHTML = D.home.groupCards.map(card).join('');
+  document.getElementById('homeCards').innerHTML = D.home.cards.map(card).join('');
+  document.querySelectorAll('.homecard').forEach(c=>c.onclick=()=>switchTab(c.dataset.goto));
+
+  const KEY='rien_tip_index', T=D.dailyTips||[];
+  if(T.length){
+    const last=parseInt(localStorage.getItem(KEY),10);
+    const i = Number.isInteger(last)&&T.length>1 ? (last+1)%T.length : Math.floor(Math.random()*T.length);
+    try{ localStorage.setItem(KEY,String(i)); }catch(e){}
+    document.getElementById('tipText').textContent=T[i];
+  }
+}
+
+/* ===== 강화 ===== */
+function renderEnhance(){
+  const E=D.enhance;
+  document.getElementById('enhBasicList').innerHTML = E.basic.map(block).join('');
+  document.getElementById('enhDmgInfo').innerHTML = block(E.dmg);
+  document.getElementById('dmgCalcNote').textContent = E.dmg.calcNote||'';
+  document.getElementById('enhAmpInfo').innerHTML = block(E.amp);
+  document.getElementById('ampTableBody').innerHTML = (E.amp.table||[]).map(r=>
+    `<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('');
+  document.getElementById('enhAbilityInfo').innerHTML = block(E.ability);
+}
+function calcDmg(){
+  const E=D.enhance.dmg;
+  const n=Math.max(0,parseInt(document.getElementById('dmgTries').value)||0);
+  document.getElementById('dmgResult').innerHTML=
+   `<span class="big">${fmt(n)}회 시도 시</span>추종석 <strong>${fmt(n*E.costStone)}</strong>개 · 메소 <strong>${fmt(n*E.costMeso)}</strong>`;
+}
+function calcAmp(){
+  const E=D.enhance.amp;
+  const n=Math.max(0,parseInt(document.getElementById('ampTries').value)||0);
+  document.getElementById('ampResult').innerHTML=
+   `<span class="big">${fmt(n)}회 시도 시</span>추종석 <strong>${fmt(n*E.costStone)}</strong>개 · 메소 <strong>${fmt(n*E.costMeso)}</strong>`;
+}
+
+/* ===== 영혼석 ===== */
+function renderSoul(){
+  const S=D.soul;
+  document.getElementById('soulInfo').innerHTML = block({
+    title:S.title,
+    rows:[['영혼의 파편', S.fragPerUnit+'개'],
+          ['영혼석 정화수', S.purifyPerUnit+'개'],
+          ['메소', fmt(S.mesoPerUnit)]],
+    note:S.note
+  });
+}
+function calcSoulByTarget(){
+  const S=D.soul;
+  const n=Math.max(0,parseInt(document.getElementById('soulTarget').value)||0);
+  document.getElementById('soulTargetResult').innerHTML=
+   `<span class="big">영혼석 ${fmt(n)}개 제작</span>영혼의 파편 <strong>${fmt(n*S.fragPerUnit)}</strong>개 · 정화수 <strong>${fmt(n*S.purifyPerUnit)}</strong>개 · 메소 <strong>${fmt(n*S.mesoPerUnit)}</strong>`;
+}
+function calcSoulByHave(){
+  const S=D.soul;
+  const f=Math.max(0,parseInt(document.getElementById('haveFrag').value)||0);
+  const p=Math.max(0,parseInt(document.getElementById('havePurify').value)||0);
+  const m=Math.max(0,parseInt(document.getElementById('haveMeso').value)||0);
+  const byF=Math.floor(f/S.fragPerUnit), byP=Math.floor(p/S.purifyPerUnit), byM=Math.floor(m/S.mesoPerUnit);
+  const can=Math.min(byF,byP,byM);
+  const neck = can===byF ? '영혼의 파편' : (can===byP ? '영혼석 정화수' : '메소');
+  document.getElementById('soulHaveResult').innerHTML=
+   `<span class="big">제작 가능 ${fmt(can)}개</span>가장 부족한 재료: ${neck}`;
+}
+
+/* ===== 히든스킬 ===== */
+let hCat='전체';
+function renderHidden(){
+  const L=D.hiddenSkills;
+  const cats=['전체',...new Set(L.map(s=>s.category))];
+  document.getElementById('hiddenFilter').innerHTML=cats.map(c=>
+    `<div class="chip ${c===hCat?'active':''}" data-c="${esc(c)}">${esc(c)}</div>`).join('');
+  document.querySelectorAll('#hiddenFilter .chip').forEach(ch=>ch.onclick=()=>{hCat=ch.dataset.c;renderHidden();});
+  const rows=L.filter(s=>hCat==='전체'||s.category===hCat);
+  document.getElementById('hiddenBody').innerHTML=rows.map(s=>
+    `<tr><td>${esc(s.name)}</td><td class="muted">${esc(s.category)}</td><td class="num gold">${fmt(s.meso)}</td><td class="muted">${esc(s.desc)||'—'}</td></tr>`).join('')
+    ||'<tr><td colspan="4" class="empty">해당 분류가 없습니다.</td></tr>';
+}
+
+/* ===== 연금술 ===== */
+let aCat='전체';
+function renderAlchemy(){
+  const A=D.alchemy;
+  const cats=['전체',...new Set(A.items.map(a=>a[0]))];
+  document.getElementById('alchemySubtabs').innerHTML=cats.map(c=>
+    `<button class="subtab ${c===aCat?'active':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
+  document.querySelectorAll('#alchemySubtabs .subtab').forEach(b=>b.onclick=()=>{aCat=b.dataset.c;renderAlchemy();});
+  const upgrade=(A.upgradeCategories||[]).includes(aCat);
+  document.getElementById('alchemyHead').innerHTML= upgrade
+    ? '<th>아이템</th><th class="num">성공 경험치</th><th>하위 재료</th>'
+    : '<th>분류</th><th>아이템</th><th class="num">성공 경험치</th>';
+  const kw=document.getElementById('alchemySearch').value.trim();
+  const rows=A.items.filter(a=>(aCat==='전체'||a[0]===aCat)&&a[1].includes(kw));
+  document.getElementById('alchemyBody').innerHTML=rows.map(a=> upgrade
+    ? `<tr><td>${esc(a[1])}</td><td class="num gold">${fmt(a[2])}</td><td class="muted">${esc(a[3])||'—'}</td></tr>`
+    : `<tr><td class="muted">${esc(a[0])}</td><td>${esc(a[1])}</td><td class="num gold">${fmt(a[2])}</td></tr>`
+  ).join('')||`<tr><td colspan="3" class="empty">검색 결과가 없습니다.</td></tr>`;
+  document.getElementById('alchemyNote').textContent=A.note||'';
+}
+
+/* ===== 아이템 정보 ===== */
+let itemIdx=0;
+function renderItems(){
+  const I=D.items;
+  if(!I||!I.list||!I.list.length){
+    document.getElementById('itemSubtabs').innerHTML='';
+    document.getElementById('itemDetail').innerHTML='<div class="empty">등록된 아이템이 없습니다.</div>';
+    return;
+  }
+  if(itemIdx>=I.list.length) itemIdx=0;
+  document.getElementById('itemSubtabs').innerHTML=I.list.map((it,i)=>
+    `<button class="subtab ${i===itemIdx?'active':''}" data-i="${i}">${esc(it.name)}</button>`).join('');
+  document.querySelectorAll('#itemSubtabs .subtab').forEach(b=>b.onclick=()=>{
+    itemIdx=parseInt(b.dataset.i); renderItems(); });
+
+  const it=I.list[itemIdx];
+  const head=(I.tierHeaders||['스탯','변화 없음','1단계','2단계','3단계']);
+  const table=(it.stats&&it.stats.length)?
+   `<div class="tablewrap" style="max-height:none;">
+      <table>
+        <thead><tr><th>${esc(head[0])}</th>${head.slice(1).map(x=>`<th class="num">${esc(x)}</th>`).join('')}</tr></thead>
+        <tbody>${it.stats.map(s=>
+          `<tr><td>${esc(s.name)}</td>${s.tiers.map((t,i)=>
+            `<td class="num"><span class="tier${i===0?' zero':''}"><span class="pct">${esc(t[1])}</span><span class="rng">${esc(t[0])}</span></span></td>`
+          ).join('')}</tr>`).join('')}</tbody>
+      </table>
+    </div>`:'';
+  document.getElementById('itemDetail').innerHTML=
+    block({title:it.name, rows:it.rows, lead:it.desc}) +
+    (it.statTitle?`<div class="itemhead">${esc(it.statTitle)}</div>`:'') +
+    table +
+    (it.note?block({note:it.note}):'');
+}
+
+/* ===== 퀘스트 ===== */
+function renderDaily(){
+  const Q=D.quest;
+  document.getElementById('dailyGradeBody').innerHTML=Q.dailyGrades.map(g=>
+   `<tr><td class="gold">${esc(g[0])}</td>${g.slice(1).map(v=>`<td class="num">${esc(v)}</td>`).join('')}</tr>`).join('');
+  document.getElementById('weekdayBlock').innerHTML=block(Q.weekday);
+}
+function renderBoss(){
+  const Q=D.quest;
+  const kw=document.getElementById('bossSearch').value.trim();
+  const rows=Q.bosses.filter(b=>b[0].includes(kw));
+  document.getElementById('bossBody').innerHTML=rows.map(b=>
+    `<tr><td>${esc(b[0])}</td><td class="num">${fmt(b[1])}</td><td class="num gold">${fmt(b[2])}</td><td class="num">${fmt(b[3])}</td></tr>`).join('')
+    ||'<tr><td colspan="4" class="empty">검색 결과가 없습니다.</td></tr>';
+}
+function calcBoss(){
+  const Q=D.quest;
+  const b=Q.bosses[parseInt(document.getElementById('bossSelect').value)];
+  const max=Q.bossMaxRuns||10;
+  let t=Math.max(1,parseInt(document.getElementById('bossTimes').value)||1);
+  if(t>max){t=max;document.getElementById('bossTimes').value=max;}
+  document.getElementById('bossResult').innerHTML=
+   `<span class="big">${esc(b[0])} ${t}회</span>필요 재료 <strong>${fmt(b[1]*t)}</strong>개 · 경험치 <strong>${fmt(b[2]*t)}</strong> · 메소 <strong>${fmt(b[3]*t)}</strong>`;
+}
+function renderQuests(){
+  const kw=document.getElementById('questSearch').value.trim();
+  const rows=D.quest.quests.filter(q=>q.name.includes(kw));
+  document.getElementById('questList').innerHTML=rows.map(q=>{
+    const r='경험치 '+fmt(q.reward)+'+';
+    return `<details class="quest"><summary><span>${esc(q.name)}</span><span class="r">${r}</span></summary>
+      <div class="body">
+        <dl class="kv"><dt>필요 재료</dt><dd>${esc(q.mat)}</dd></dl>
+        <dl class="kv"><dt>효과</dt><dd>${esc(q.effect)}</dd></dl>
+        <dl class="kv"><dt>클리어 보상</dt><dd>${r}</dd></dl>
+      </div></details>`;
+  }).join('')||'<div class="empty">검색 결과가 없습니다.</div>';
+}
+function renderQuestPanel(){
+  const Q=D.quest;
+  document.getElementById('titleQuestList').innerHTML=Q.specialTitles.map(block).join('');
+  document.getElementById('bossSelect').innerHTML=Q.bosses.map((b,i)=>`<option value="${i}">${esc(b[0])}</option>`).join('');
+  const max=Q.bossMaxRuns||10;
+  document.getElementById('bossTimes').max=max;
+  document.getElementById('bossTimesLabel').textContent=`진행 횟수 (최대 ${max})`;
+  document.getElementById('bossNote').textContent=Q.bossNote||'';
+  renderDaily(); renderBoss(); renderQuests();
+}
+
+/* ===== 홍포 상점 ===== */
+function shopFind(name){ return D.shop.items.find(s=>s.name===name); }
+function renderShop(){
+  const S=D.shop;
+  document.getElementById('shopOrder').innerHTML=S.order.map(g=>{
+    const li=g.items.map(n=>{
+      const it=shopFind(n);
+      return `<li><span class="s-name">${esc(n)}</span><span class="s-pt">${it?fmt(it.point)+'점':'—'}</span></li>`;
+    }).join('');
+    const list = g.numbered ? `<ol class="steps">${li}</ol>` : `<ul class="plain">${li}</ul>`;
+    return block({title:g.title, subtitle:g.subtitle, extra:list, note:g.note});
+  }).join('');
+
+  document.getElementById('shopBody').innerHTML=S.items.map(s=>
+   `<tr><td>${esc(s.name)}</td><td class="num gold">${fmt(s.point)}</td><td class="muted">${esc(s.pre)||'—'}</td></tr>`).join('');
+  document.getElementById('shopSelect').innerHTML=S.items.map((s,i)=>`<option value="${i}">${esc(s.name)}</option>`).join('');
+  document.getElementById('shopCalcNote').textContent=S.calcNote||'';
+}
+function shopChain(name, seen){
+  seen = seen || [];
+  if(seen.includes(name)) return [];
+  const item=shopFind(name);
+  if(!item) return [];
+  return item.pre ? [...shopChain(item.pre, seen.concat(name)), item] : [item];
+}
+function calcShop(){
+  const target=D.shop.items[parseInt(document.getElementById('shopSelect').value)];
+  const chain=shopChain(target.name);
+  const total=chain.reduce((a,b)=>a+b.point,0);
+  const detail=chain.map(c=>`${c.name} ${fmt(c.point)}`).join(' + ');
+  document.getElementById('shopResult').innerHTML=
+   `<span class="big">${esc(target.name)}까지 총 <strong>${fmt(total)}</strong>점</span>${chain.length>1?esc(detail):'선행 아이템 없음'}`;
+}
+
+/* ===== 추천 초반루트 ===== */
+function renderRoute(){
+  const R=D.route, stages=R.stages||[];
+  document.getElementById('routeLead').textContent=R.lead||'';
+  const sorted=[...D.quest.quests].sort((a,b)=>a.reward-b.reward);
+  const per=Math.ceil(sorted.length/stages.length);
+  document.getElementById('routeList').innerHTML=stages.map((st,i)=>{
+    const chunk=sorted.slice(i*per,(i+1)*per);
+    const first=chunk[0], last=chunk[chunk.length-1];
+    const range=first?`${fmt(first.reward)}+ ~ ${fmt(last.reward)}+`:'';
+    return `<div class="stage">
+      <div class="stage-head">
+        <span class="stage-num">${i+1}</span>
+        <b>${esc(st.title)}</b>
+        <span class="lv">${range}</span>
+      </div>
+      <div class="stage-body">
+        <h5>이 단계에 진행할 퀘스트</h5>
+        <ul class="qlist">${chunk.map(q=>
+          `<li><span class="qn">${esc(q.name)}</span><span class="qm">${esc(q.mat)}</span><span class="qr">${esc(q.effect)}</span></li>`).join('')}</ul>
+        <h5>이 시점에 같이 할 것</h5>
+        <ul class="todo">${(st.todo||[]).map(t=>`<li class="${esc(t[0])}">${esc(t[1])}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+  }).join('');
+}
+function renderBasicTips(){
+  document.getElementById('basicTipList').innerHTML=(D.basicTips||[]).map(block).join('');
+}
+
+/* ===== 전역 검색 ===== */
+let INDEX=[];
+function buildIndex(){
+  INDEX=[];
+  D.hiddenSkills.forEach(s=>INDEX.push([s.name,'hidden','히든스킬']));
+  D.alchemy.items.forEach(a=>INDEX.push([a[1],'alchemy','연금술']));
+  D.quest.bosses.forEach(b=>INDEX.push([b[0],'quest','필드보스']));
+  D.quest.quests.forEach(q=>INDEX.push([q.name,'quest','퀘스트']));
+  D.shop.items.forEach(s=>INDEX.push([s.name,'shop','홍포 상점']));
+  (D.items&&D.items.list||[]).forEach(i=>INDEX.push([i.name,'items','아이템']));
+  (D.extraSearchEntries||[]).forEach(e=>INDEX.push(e));
+}
+document.getElementById('globalSearch').oninput=e=>{
+  const kw=e.target.value.trim();
+  const box=document.getElementById('searchResults');
+  if(!kw||!D){box.innerHTML='';return;}
+  const hits=INDEX.filter(i=>i[0].includes(kw)).slice(0,8);
+  box.innerHTML=hits.length
+   ? `<div class="tablewrap" style="max-height:340px;">${hits.map(h=>
+      `<div class="hit" data-t="${esc(h[1])}"><span class="where">${esc(h[2])}</span><span>${esc(h[0])}</span></div>`).join('')}</div>`
+   : '<div class="tablewrap"><div class="empty">검색 결과가 없습니다.</div></div>';
+  box.querySelectorAll('.hit').forEach(h=>h.onclick=()=>switchTab(h.dataset.t));
+};
+
+/* ===== 부팅 ===== */
+function bindInputs(){
+  document.getElementById('alchemySearch').oninput=renderAlchemy;
+  document.getElementById('bossSearch').oninput=renderBoss;
+  document.getElementById('questSearch').oninput=renderQuests;
+}
+async function boot(){
+  try{
+    const res=await fetch('data.json?v='+Date.now(),{cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    D=await res.json();
+  }catch(err){
+    document.getElementById('sectSub').textContent='';
+    document.getElementById('loadError').innerHTML=
+      '<div class="block"><h3>데이터를 불러오지 못했습니다</h3>'+
+      '<p class="lead">data.json 파일이 index.html 과 같은 폴더에 있는지 확인해 주세요.</p>'+
+      '<div class="note">파일을 더블클릭해서 여는 경우 브라우저 보안 정책 때문에 차단됩니다. 웹 주소로 접속하거나 로컬 서버로 실행해 주세요.</div></div>';
+    return;
+  }
+  renderHome();
+  renderEnhance();
+  renderSoul();
+  renderHidden();
+  renderAlchemy();
+  renderItems();
+  renderQuestPanel();
+  renderShop();
+  renderRoute();
+  renderBasicTips();
+  buildIndex();
+  bindInputs();
+  switchTab('home');
+}
+boot();
+</script>
+</body>
+</html>
