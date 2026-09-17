@@ -440,20 +440,32 @@
     .hero h2{font-size:22px;}
   }
 
+  .rm-layout{display:flex;gap:22px;align-items:flex-start;}
+  .rm-main{flex:1;min-width:0;}
+  .rm-side{flex:none;width:172px;}
+  .rm-side .rmline{position:sticky;top:22px;}
+
   .rmline{
-    list-style:none;margin:0 0 30px;padding:0;display:flex;gap:8px;flex-wrap:wrap;
+    list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;
   }
   .rmline li{
-    flex:1 1 160px;background:var(--panel);border:1px solid var(--line-soft);
-    border-top:3px solid var(--line);border-radius:0 0 9px 9px;padding:14px 16px;cursor:pointer;
+    background:var(--panel);border:1px solid var(--line-soft);
+    border-left:3px solid var(--line);border-radius:0 8px 8px 0;padding:10px 12px;cursor:pointer;
   }
   .rmline li:hover{border-color:var(--gold-dim);}
-  .rmline li.on{border-top-color:var(--gold);background:linear-gradient(180deg,rgba(227,180,76,.09),transparent),var(--panel);}
+  .rmline li.on{border-left-color:var(--gold);background:linear-gradient(90deg,rgba(227,180,76,.09),transparent),var(--panel);}
   .rmline li.end{cursor:default;opacity:.55;}
-  .rmline .sn{display:block;font-size:11px;letter-spacing:.1em;color:var(--text-faint);}
-  .rmline .lv{display:block;font-size:12.5px;color:var(--gold);margin:5px 0 3px;font-variant-numeric:tabular-nums;}
+  .rmline .sn{display:block;font-size:10.5px;letter-spacing:.1em;color:var(--text-faint);}
+  .rmline .lv{display:block;font-size:11.5px;color:var(--gold);margin:4px 0 2px;font-variant-numeric:tabular-nums;}
   .rmline li.end .lv{color:var(--text-dim);}
-  .rmline .st{font-size:14.5px;}
+  .rmline .st{font-size:13.5px;line-height:1.4;}
+  @media (max-width:960px){
+    .rm-layout{flex-direction:column;}
+    .rm-side{width:100%;order:-1;}
+    .rm-side .rmline{position:static;flex-direction:row;flex-wrap:wrap;margin-bottom:8px;}
+    .rm-side .rmline li{flex:1 1 140px;border-left:none;border-top:3px solid var(--line);border-radius:0 0 8px 8px;}
+    .rm-side .rmline li.on{border-top-color:var(--gold);border-left-color:transparent;}
+  }
 
   .rmcard{
     background:var(--panel);border:1px solid var(--line-soft);
@@ -499,7 +511,6 @@
   }
   .rmnext{font-size:13.5px;color:var(--gold);white-space:nowrap;}
   @media (max-width:700px){
-    .rmline li{flex:1 1 100%;}
     .rmcard{padding:20px 18px;}
   }
 
@@ -1258,9 +1269,15 @@
     <section class="panel" id="roadmap">
       <div id="rmHero"></div>
       <div id="rmLevel"></div>
-      <div id="rmTimeline"></div>
-      <div id="rmPhases"></div>
-      <div id="rmAfter"></div>
+      <div class="rm-layout">
+        <div class="rm-main">
+          <div id="rmPhases"></div>
+          <div id="rmAfter"></div>
+        </div>
+        <aside class="rm-side">
+          <div id="rmTimeline"></div>
+        </aside>
+      </div>
     </section>
 
     <!-- ========== 팁 ========== -->
