@@ -254,18 +254,18 @@
   .tipbox .v{font-size:15px;line-height:1.7;}
 
   ol.steps{list-style:none;counter-reset:step;margin:0;padding:0;}
-  ol.steps li{
-    counter-increment:step;display:flex;align-items:center;gap:13px;
+  ol.steps > li{
+    counter-increment:step;display:flex;align-items:flex-start;gap:13px;
     padding:12px 0;border-bottom:1px solid var(--line-soft);font-size:14px;
   }
-  ol.steps li:last-child{border-bottom:0;}
-  ol.steps li::before{
+  ol.steps > li:last-child{border-bottom:0;}
+  ol.steps > li::before{
     content:counter(step);flex:none;width:26px;height:26px;border-radius:50%;
     border:1px solid var(--gold-dim);color:var(--gold-bright);
     font-size:12px;display:flex;align-items:center;justify-content:center;
     background:rgba(221,182,92,.035);
   }
-  ol.steps .s-name{flex:1;}
+  ol.steps .s-body{flex:1;min-width:0;}
   ol.steps .s-pt{color:var(--gold-bright);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500;}
 
   .stage{
@@ -302,9 +302,9 @@
   .todo li.warn::before{background:var(--danger);}
 
   ul.plain{list-style:none;margin:0;padding:0;}
-  ul.plain li{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-soft);font-size:14px;}
-  ul.plain li:last-child{border-bottom:0;}
-  ul.plain .s-name{flex:1;}
+  ul.plain > li{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-soft);font-size:14px;}
+  ul.plain > li:last-child{border-bottom:0;}
+  ul.plain .s-body{flex:1;min-width:0;}
   ul.plain .s-pt{color:var(--gold-bright);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500;}
 
   .groupbox{margin-bottom:23px;}
@@ -442,8 +442,7 @@
 
   .rm-layout{display:flex;gap:22px;align-items:flex-start;}
   .rm-main{flex:1;min-width:0;}
-  .rm-side{flex:none;width:172px;}
-  .rm-side .rmline{position:sticky;top:22px;}
+  .rm-side{flex:none;width:172px;position:sticky;top:22px;}
 
   .rmline{
     list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;
@@ -461,8 +460,8 @@
   .rmline .st{font-size:13.5px;line-height:1.4;}
   @media (max-width:960px){
     .rm-layout{flex-direction:column;}
-    .rm-side{width:100%;order:-1;}
-    .rm-side .rmline{position:static;flex-direction:row;flex-wrap:wrap;margin-bottom:8px;}
+    .rm-side{width:100%;order:-1;position:static;}
+    .rm-side .rmline{flex-direction:row;flex-wrap:wrap;margin-bottom:8px;}
     .rm-side .rmline li{flex:1 1 140px;border-left:none;border-top:3px solid var(--line);border-radius:0 0 8px 8px;}
     .rm-side .rmline li.on{border-top-color:var(--gold);border-left-color:transparent;}
   }
@@ -552,6 +551,23 @@
   .changes li.gold{color:var(--gold);font-weight:500;}
   li.clickrow{cursor:pointer;}
   li.clickrow:hover .more{opacity:1;}
+
+  .s-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  li.clickrow{cursor:pointer;}
+  li.clickrow:hover .more{opacity:1;}
+  .s-effect{
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .22s ease, opacity .18s ease, margin .22s ease;
+    margin-top:0;
+  }
+  li.clickrow.open .s-effect{max-height:600px;opacity:1;margin-top:10px;}
+  li.clickrow.open .more{background:var(--gold);color:#16191F;border-color:var(--gold);}
+  tr.clickrow{cursor:pointer;}
+  tr.clickrow:hover .more{opacity:1;}
+  tr.clickrow.open .more{background:var(--gold);color:#16191F;border-color:var(--gold);}
+  tr.effect-row td{background:var(--panel-2);padding:14px 20px;}
+  tr.effect-row .itemhead{font-size:13px;}
+  tr.effect-row .changes li{font-size:14px;}
 
   #searchResults{margin-bottom:20px;}
   .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
@@ -1238,7 +1254,6 @@
 
       <div class="subpanel active" id="shop-order">
         <div id="shopOrder"></div>
-        <div id="shopEffectBoxOrder"></div>
       </div>
 
       <div class="subpanel" id="shop-all">
@@ -1248,7 +1263,6 @@
             <tbody id="shopBody"></tbody>
           </table>
         </div>
-        <div id="shopEffectBoxAll"></div>
       </div>
 
       <div class="subpanel" id="shop-calc">
@@ -2241,42 +2255,50 @@ function renderAttend(){
 
 /* ===== 홍포 상점 ===== */
 function shopFind(name){ return D.shop.items.find(s=>s.name===name); }
+function shopEffectHtml(it){
+  return `<div class="itemhead" style="margin-top:0;">보유 효과</div>
+    <ul class="changes">${it.effects.map(e=>`<li class="gold">${esc(e)}</li>`).join('')}</ul>
+    ${D.shop.effectNote?`<div class="note" style="border-top:none;padding-top:0;margin-top:10px;">${esc(D.shop.effectNote)}</div>`:''}`;
+}
 function renderShop(){
   const S=D.shop;
   document.getElementById('shopOrder').innerHTML=S.order.map(g=>{
     const li=g.items.map(n=>{
       const it=shopFind(n);
       const ico=it&&it.icon?`<img class="ico" src="${esc(it.icon)}" alt="">`:'';
-      const tag=it&&it.effects&&it.effects.length?'<span class="more">효과</span>':'';
-      const cls=it&&it.effects&&it.effects.length?' class="clickrow"':'';
-      return `<li${cls} data-n="${esc(n)}"><span class="s-name">${ico}${esc(n)}${tag}</span><span class="s-pt">${it?fmt(it.point)+'점':'—'}</span></li>`;
+      const has=it&&it.effects&&it.effects.length;
+      const tag=has?'<span class="more">효과</span>':'';
+      const cls=has?' clickrow':'';
+      const body=`<div class="s-row">
+          <span class="s-name">${ico}${esc(n)}${tag}</span>
+          <span class="s-pt">${it?fmt(it.point)+'점':'—'}</span>
+        </div>${has?`<div class="s-effect">${shopEffectHtml(it)}</div>`:''}`;
+      return `<li class="${cls}" data-n="${esc(n)}"><div class="s-body">${body}</div></li>`;
     }).join('');
     const list = g.numbered ? `<ol class="steps">${li}</ol>` : `<ul class="plain">${li}</ul>`;
     return block({title:g.title, subtitle:g.subtitle, extra:list, note:g.note});
   }).join('');
-  document.querySelectorAll('#shopOrder li.clickrow').forEach(li=>li.onclick=()=>showShopEffect(li.dataset.n,'shopEffectBoxOrder'));
+  document.querySelectorAll('#shopOrder li.clickrow').forEach(li=>li.onclick=()=>li.classList.toggle('open'));
 
   document.getElementById('shopBody').innerHTML=S.items.map(s=>{
-    const tag=s.effects&&s.effects.length?'<span class="more">효과</span>':'';
-    const cls=s.effects&&s.effects.length?' class="clickrow"':'';
-    return `<tr${cls} data-n="${esc(s.name)}"><td><span class="namecell">${s.icon?`<img class="ico" src="${esc(s.icon)}" alt="">`:''}${esc(s.name)}${tag}</span></td><td class="num gold">${fmt(s.point)}</td><td class="muted">${esc(s.pre)||'—'}</td></tr>`;
+    const has=s.effects&&s.effects.length;
+    const tag=has?'<span class="more">효과</span>':'';
+    const cls=has?' clickrow':'';
+    const row=`<tr class="${cls}" data-n="${esc(s.name)}"><td><span class="namecell">${s.icon?`<img class="ico" src="${esc(s.icon)}" alt="">`:''}${esc(s.name)}${tag}</span></td><td class="num gold">${fmt(s.point)}</td><td class="muted">${esc(s.pre)||'—'}</td></tr>`;
+    const effRow=has?`<tr class="effect-row" style="display:none;"><td colspan="3">${shopEffectHtml(s)}</td></tr>`:'';
+    return row+effRow;
   }).join('');
-  document.querySelectorAll('#shopBody tr.clickrow').forEach(tr=>tr.onclick=()=>showShopEffect(tr.dataset.n,'shopEffectBoxAll'));
+  document.querySelectorAll('#shopBody tr.clickrow').forEach(tr=>tr.onclick=()=>{
+    const next=tr.nextElementSibling;
+    if(next&&next.classList.contains('effect-row')){
+      const show=next.style.display==='none';
+      next.style.display=show?'table-row':'none';
+      tr.classList.toggle('open',show);
+    }
+  });
 
   document.getElementById('shopSelect').innerHTML=S.items.map((s,i)=>`<option value="${i}">${esc(s.name)}</option>`).join('');
   document.getElementById('shopCalcNote').textContent=S.calcNote||'';
-}
-function showShopEffect(name, boxId){
-  const it=shopFind(name);
-  const box=document.getElementById(boxId);
-  if(!it||!box) return;
-  if(!it.effects||!it.effects.length){ box.innerHTML=''; return; }
-  box.innerHTML=block({
-    title:it.name, icon:it.icon,
-    extra:`<div class="itemhead">보유 효과</div><ul class="changes">${it.effects.map(e=>`<li class="gold">${esc(e)}</li>`).join('')}</ul>`,
-    note:D.shop.effectNote
-  });
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function shopChain(name, seen){
   seen = seen || [];
