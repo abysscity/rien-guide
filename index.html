@@ -375,6 +375,166 @@
     border:1px dashed var(--line);
   }
 
+  .hero{
+    border:1px solid var(--line-soft);border-left:3px solid var(--gold);
+    border-radius:0 12px 12px 0;padding:30px 32px;margin-bottom:26px;
+    background:linear-gradient(180deg,rgba(227,180,76,.06),transparent),var(--panel);
+  }
+  .hero-kicker{font-size:12px;letter-spacing:.14em;color:var(--gold);margin-bottom:12px;}
+  .hero h2{font-size:26px;font-weight:600;margin:0 0 12px;letter-spacing:-0.02em;line-height:1.35;}
+  .hero p{margin:0;font-size:15.5px;line-height:1.75;color:var(--text-dim);max-width:560px;}
+  .hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+  .btn-ghost{
+    font-family:inherit;font-size:15px;background:none;color:var(--text-dim);
+    border:1px solid var(--line);border-radius:7px;padding:10px 20px;cursor:pointer;
+  }
+  .btn-ghost:hover{color:var(--text);border-color:var(--gold-dim);}
+  .linkbtn{
+    font-family:inherit;font-size:13.5px;background:none;border:none;
+    color:var(--gold);cursor:pointer;padding:0;margin-top:14px;text-align:left;
+  }
+  .linkbtn:hover{filter:brightness(1.2);}
+
+  .nowgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:34px;}
+  .nowcard{
+    background:var(--panel);border:1px solid var(--line-soft);border-radius:10px;
+    padding:20px 22px;display:flex;flex-direction:column;
+  }
+  .nowcard .nowno{
+    font-size:12px;color:var(--gold);letter-spacing:.1em;margin-bottom:8px;
+    font-variant-numeric:tabular-nums;
+  }
+  .nowcard b{font-size:17px;font-weight:600;margin-bottom:12px;}
+  .dots{list-style:none;margin:0;padding:0;flex:1;}
+  .dots li{position:relative;padding:5px 0 5px 16px;font-size:14px;line-height:1.6;color:var(--text-dim);}
+  .dots li::before{
+    content:'';position:absolute;left:0;top:13px;width:5px;height:5px;
+    border-radius:50%;background:var(--gold-dim);
+  }
+  .dots li.warn{color:var(--danger);}
+  .dots li.warn::before{background:var(--danger);}
+
+  ol.stepflow{list-style:none;margin:0 0 34px;padding:0;display:flex;gap:10px;flex-wrap:wrap;}
+  ol.stepflow li{
+    flex:1 1 150px;background:var(--panel);border:1px solid var(--line-soft);
+    border-top:3px solid var(--gold-dim);border-radius:0 0 9px 9px;padding:14px 16px;
+  }
+  ol.stepflow .sn{display:block;font-size:11px;letter-spacing:.1em;color:var(--text-faint);margin-bottom:6px;}
+  ol.stepflow .st{font-size:15px;color:var(--text);}
+
+  .sysgroup{margin-bottom:22px;}
+  .sysname{font-size:13.5px;color:var(--gold);margin-bottom:10px;}
+  #homeGroups{margin-bottom:14px;}
+
+  .warncard{
+    background:var(--panel);border:1px solid var(--line-soft);
+    border-left:3px solid var(--danger);border-radius:0 10px 10px 0;padding:18px 20px;
+  }
+  .warncard b{display:block;font-size:16px;font-weight:600;margin-bottom:8px;}
+  .warncard p{margin:0;font-size:14.5px;line-height:1.7;color:var(--text-dim);}
+  #homeWarnings{margin-bottom:34px;}
+  #homeChips{margin-bottom:10px;}
+  @media (max-width:700px){
+    .nowgrid{grid-template-columns:1fr;}
+    .hero{padding:24px 22px;}
+    .hero h2{font-size:22px;}
+  }
+
+  .rmline{
+    list-style:none;margin:0 0 30px;padding:0;display:flex;gap:8px;flex-wrap:wrap;
+  }
+  .rmline li{
+    flex:1 1 160px;background:var(--panel);border:1px solid var(--line-soft);
+    border-top:3px solid var(--line);border-radius:0 0 9px 9px;padding:14px 16px;cursor:pointer;
+  }
+  .rmline li:hover{border-color:var(--gold-dim);}
+  .rmline li.on{border-top-color:var(--gold);background:linear-gradient(180deg,rgba(227,180,76,.09),transparent),var(--panel);}
+  .rmline li.end{cursor:default;opacity:.55;}
+  .rmline .sn{display:block;font-size:11px;letter-spacing:.1em;color:var(--text-faint);}
+  .rmline .lv{display:block;font-size:12.5px;color:var(--gold);margin:5px 0 3px;font-variant-numeric:tabular-nums;}
+  .rmline li.end .lv{color:var(--text-dim);}
+  .rmline .st{font-size:14.5px;}
+
+  .rmcard{
+    background:var(--panel);border:1px solid var(--line-soft);
+    border-left:3px solid var(--line);border-radius:0 12px 12px 0;
+    padding:24px 26px;margin-bottom:18px;
+  }
+  .rmcard.on{border-left-color:var(--gold);}
+  .rmhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+  .rmno{font-size:11.5px;letter-spacing:.12em;color:var(--text-faint);}
+  .rmlv{font-size:13px;color:var(--gold);font-variant-numeric:tabular-nums;}
+  .rmcur{
+    font-size:11.5px;color:#16191F;background:var(--gold);
+    border-radius:4px;padding:2px 8px;
+  }
+  .rmtitle{margin:0 0 10px;font-size:20px;font-weight:600;letter-spacing:-0.01em;}
+  .rmnote{
+    margin-top:12px;padding:12px 14px;background:var(--panel-2);border-radius:8px;
+    font-size:14px;line-height:1.7;color:var(--text-dim);
+  }
+  ul.checklist{list-style:none;margin:0;padding:0;}
+  ul.checklist li{
+    position:relative;padding:11px 0 11px 32px;font-size:15px;
+    border-bottom:1px solid var(--line-soft);cursor:pointer;color:var(--text);
+  }
+  ul.checklist li:last-child{border-bottom:none;}
+  ul.checklist li::before{
+    content:'';position:absolute;left:0;top:13px;width:16px;height:16px;
+    border:1px solid var(--line);border-radius:4px;
+  }
+  ul.checklist li:hover::before{border-color:var(--gold-dim);}
+  ul.checklist li.done{color:var(--text-faint);text-decoration:line-through;}
+  ul.checklist li.done::before{
+    background:var(--gold);border-color:var(--gold);
+  }
+  ul.checklist li.done::after{
+    content:'';position:absolute;left:5px;top:18px;width:6px;height:3px;
+    border-left:2px solid #16191F;border-bottom:2px solid #16191F;
+    transform:rotate(-45deg);
+  }
+  .rmfoot{
+    margin-top:20px;padding-top:16px;border-top:1px solid var(--line-soft);
+    display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .rmnext{font-size:13.5px;color:var(--gold);white-space:nowrap;}
+  @media (max-width:700px){
+    .rmline li{flex:1 1 100%;}
+    .rmcard{padding:20px 18px;}
+  }
+
+  .jgcard.on{border-left-color:var(--gold);}
+  .jghead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;}
+  .jghead b{font-size:17px;font-weight:600;}
+  .jgskill{color:var(--gold);font-size:14px;margin-bottom:2px;}
+  .jgpickbtn{
+    font-family:inherit;font-size:12.5px;background:none;color:var(--text-dim);
+    border:1px solid var(--line);border-radius:6px;padding:5px 12px;cursor:pointer;white-space:nowrap;
+  }
+  .jgpickbtn:hover{border-color:var(--gold-dim);color:var(--text);}
+  .jgpickbtn.on{background:var(--gold);color:#16191F;border-color:var(--gold);}
+  .jgpickbtn:disabled{opacity:.4;cursor:not-allowed;}
+  .jgsplit{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .jgsplit-title{font-size:12.5px;color:var(--text-faint);margin-top:10px;}
+  @media (max-width:700px){ .jgsplit{grid-template-columns:1fr;} }
+
+  .enhtree{
+    background:var(--panel);border:1px solid var(--line-soft);border-radius:10px;
+    padding:20px 22px;margin-bottom:8px;
+  }
+  .et-root{font-size:15px;color:var(--gold);margin-bottom:12px;}
+  .et-lines{display:flex;flex-direction:column;gap:9px;padding-left:16px;border-left:2px solid var(--line);}
+  .et-branch{font-size:14.5px;color:var(--text-dim);}
+  .et-arrow{color:var(--gold);margin:0 6px;}
+
+  .probgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0 22px;}
+  .probcard{background:var(--panel);border:1px solid var(--line-soft);border-radius:10px;padding:16px;text-align:center;}
+  .probhead{font-size:13px;color:var(--text-dim);margin-bottom:8px;}
+  .probpct{font-size:20px;font-weight:600;color:var(--gold);margin-bottom:6px;}
+  .probval{font-size:14px;color:var(--text);}
+  .homecard.warn-mini{border-left:3px solid var(--danger);}
+  @media (max-width:700px){ .probgrid{grid-template-columns:1fr 1fr;} }
+
   #searchResults{margin-bottom:20px;}
   .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
   .hit:last-child{border-bottom:0;}
@@ -704,6 +864,7 @@
   <aside class="sidebar">
     <div class="brand" id="brandBox">RIEN<em>서버 종합 가이드</em></div>
     <button class="navbtn active" data-tab="home">홈</button>
+    <button class="navbtn" data-tab="roadmap">성장 로드맵</button>
     <button class="navbtn" data-tab="tips">공략 팁</button>
     <button class="navbtn" data-tab="quest">퀘스트</button>
     <button class="navbtn" data-tab="attend">출석체크</button>
@@ -714,6 +875,7 @@
     <button class="navbtn" data-tab="alchemy">연금술</button>
     <button class="navbtn" data-tab="items">아이템 정보</button>
     <button class="navbtn" data-tab="skills">스킬</button>
+    <button class="navbtn" data-tab="jobguide">직업 가이드</button>
     <button class="navbtn" data-tab="hidden">히든 스킬</button>
     <button class="navbtn" data-tab="soul">영혼석</button>
   </aside>
@@ -733,16 +895,28 @@
 
     <!-- ========== HOME ========== -->
     <section class="panel active" id="home">
-      <div class="groupbox">
-        <div class="group-title" id="homeGroupTitle">초반 팁</div>
-        <div class="homegrid" id="homeGroupCards"></div>
-      </div>
+      <div id="homeHero"></div>
 
       <div class="tipbox">
         <div class="k">오늘의 팁</div>
         <div class="v" id="tipText"></div>
       </div>
-      <div class="homegrid" id="homeCards"></div>
+
+      <div class="group-title" id="homeNowTitle"></div>
+      <p class="lead muted" id="homeNowDesc" style="margin:-6px 0 16px;"></p>
+      <div id="homeNow"></div>
+
+      <div class="group-title" id="homeStepTitle"></div>
+      <div id="homeSteps"></div>
+
+      <div class="group-title" id="homeGroupTitle"></div>
+      <div id="homeGroups"></div>
+
+      <div class="group-title" id="homeWarnTitle"></div>
+      <div id="homeWarnings"></div>
+
+      <div class="group-title" id="homeFind"></div>
+      <div class="filterbar" id="homeChips"></div>
     </section>
 
     <!-- ========== 보스 ========== -->
@@ -762,14 +936,39 @@
     <!-- ========== 강화 ========== -->
     <section class="panel" id="enhance">
       <div class="subtabs">
-        <button class="subtab active" data-sub="enh-basic">장비 강화</button>
+        <button class="subtab active" data-sub="enh-overview">개요</button>
+        <button class="subtab" data-sub="enh-normal">일반 장비 강화</button>
+        <button class="subtab" data-sub="enh-max">최대 장비 강화</button>
         <button class="subtab" data-sub="enh-dmg">추가 데미지</button>
         <button class="subtab" data-sub="enh-amp">증폭</button>
         <button class="subtab" data-sub="enh-ability">어빌리티</button>
       </div>
 
-      <div class="subpanel active" id="enh-basic">
-        <div id="enhBasicList"></div>
+      <div class="subpanel active" id="enh-overview">
+        <div id="enhStartCta"></div>
+        <div class="itemhead">강화 시스템 구조</div>
+        <div id="enhTree"></div>
+        <div class="itemhead">지금 어떤 강화를 해야 하나요?</div>
+        <div class="homegrid" id="enhOverviewCards"></div>
+        <div class="itemhead">강화 전 체크</div>
+        <ul class="checklist" id="enhChecklist"></ul>
+        <div class="itemhead">강화 안정제</div>
+        <div id="enhStabilizer"></div>
+        <div class="itemhead">강화 시스템 비교</div>
+        <div class="tablewrap" style="max-height:none;">
+          <table>
+            <thead><tr><th>시스템</th><th>비용</th><th>성공 · 결과</th><th>주요 위험</th></tr></thead>
+            <tbody id="enhCompareBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="subpanel" id="enh-normal">
+        <div id="enhNormalInfo"></div>
+      </div>
+
+      <div class="subpanel" id="enh-max">
+        <div id="enhMaxInfo"></div>
       </div>
 
       <div class="subpanel" id="enh-dmg">
@@ -788,12 +987,7 @@
 
       <div class="subpanel" id="enh-amp">
         <div id="enhAmpInfo"></div>
-        <div class="tablewrap">
-          <table>
-            <thead><tr><th>결과</th><th class="num">확률</th><th>수치 변동</th></tr></thead>
-            <tbody id="ampTableBody"></tbody>
-          </table>
-        </div>
+        <div class="probgrid" id="ampProbGrid"></div>
         <div class="calc">
           <h4>필요 재료 계산</h4>
           <div class="field">
@@ -841,6 +1035,26 @@
           <div class="result" id="soulHaveResult">보유량을 입력하세요.</div>
         </div>
       </div>
+    </section>
+
+    <!-- ========== 직업 가이드 ========== -->
+    <section class="panel" id="jobguide">
+      <div class="block">
+        <p class="lead muted">이 페이지의 직업 정보는 일반 메이플스토리의 직업 평가가 아니라, RIEN 서버의 현재 스킬 데이터와 패치 내용을 기준으로 합니다. 순위나 등급을 매기지 않으며, 데이터를 비교할 수 있도록 정리만 합니다.</p>
+      </div>
+
+      <div class="itemhead">어떤 목적으로 캐릭터를 육성하시나요?</div>
+      <div class="filterbar" id="jgPurpose"></div>
+      <p class="note" id="jgPurposeNote" style="margin:0 0 18px;"></p>
+
+      <div id="jgCards"></div>
+
+      <div class="itemhead">비공격 궁극기</div>
+      <p class="note" style="margin-top:0;">공격 스킬이 아니라서 비교 대상에는 포함하지 않습니다.</p>
+      <div id="jgNonAttack"></div>
+
+      <div class="itemhead">직업 비교 <span class="muted" style="font-size:13px;font-weight:400;">최대 3개까지 선택</span></div>
+      <div id="jgCompare"></div>
     </section>
 
     <!-- ========== 히든스킬 ========== -->
@@ -1024,6 +1238,15 @@
       </div>
     </section>
 
+    <!-- ========== 성장 로드맵 ========== -->
+    <section class="panel" id="roadmap">
+      <div id="rmHero"></div>
+      <div id="rmLevel"></div>
+      <div id="rmTimeline"></div>
+      <div id="rmPhases"></div>
+      <div id="rmAfter"></div>
+    </section>
+
     <!-- ========== 팁 ========== -->
     <section class="panel" id="tips">
       <div class="subtabs">
@@ -1091,23 +1314,250 @@ document.querySelectorAll('.subtab[data-sub]').forEach(t=>t.onclick=()=>{
 });
 
 /* ===== 홈 ===== */
+function linkBtn(goto,label){
+  return `<button class="linkbtn" data-goto="${esc(goto)}">${esc(label)}</button>`;
+}
 function renderHome(){
-  document.getElementById('brandBox').innerHTML =
+  const H=D.home||{}, S=D.sections||{};
+  document.getElementById('brandBox').innerHTML=
     `${esc(D.site.brand)}<em>${esc(D.site.tagline)}</em>`;
-  document.title = D.site.brand;
-  document.getElementById('homeGroupTitle').textContent = D.home.groupTitle;
-  const card = c => `<div class="homecard" data-goto="${esc(c.goto)}"><b>${esc(c.title)}</b><span>${esc(c.desc)}</span></div>`;
-  document.getElementById('homeGroupCards').innerHTML = D.home.groupCards.map(card).join('');
-  document.getElementById('homeCards').innerHTML = D.home.cards.map(card).join('');
-  document.querySelectorAll('.homecard').forEach(c=>c.onclick=()=>switchTab(c.dataset.goto));
+  document.title=D.site.brand;
+
+  const hero=H.hero||{};
+  document.getElementById('homeHero').innerHTML=`
+    <div class="hero">
+      <div class="hero-kicker">${esc(hero.kicker||'')}</div>
+      <h2>${esc(hero.title||'')}</h2>
+      <p>${esc(hero.desc||'')}</p>
+      <div class="hero-cta">
+        ${hero.cta?`<button class="btn" data-goto="${esc(hero.cta.goto)}">${esc(hero.cta.label)}</button>`:''}
+        ${hero.cta2?`<button class="btn-ghost" data-anchor="${esc(hero.cta2.anchor)}">${esc(hero.cta2.label)}</button>`:''}
+      </div>
+    </div>`;
+
+  const stages=(D.route&&D.route.stages)||[];
+  document.getElementById('homeNowTitle').textContent=H.nowTitle||'';
+  document.getElementById('homeNowDesc').textContent=H.nowDesc||'';
+  document.getElementById('homeNow').innerHTML=`<div class="nowgrid">${stages.map((st,i)=>`
+    <div class="nowcard">
+      <div class="nowno">${String(i+1).padStart(2,'0')}</div>
+      <b>${esc(st.title)}</b>
+      <ul class="dots">${(st.todo||[]).map(t=>`<li class="${esc(t[0])}">${esc(t[1])}</li>`).join('')}</ul>
+      ${st.goto?linkBtn(st.goto,(st.cta||'자세히 보기')+' →'):''}
+    </div>`).join('')}</div>`;
+
+  document.getElementById('homeStepTitle').textContent=H.stepTitle||'';
+  document.getElementById('homeSteps').innerHTML=`<ol class="stepflow">${stages.map((st,i)=>`
+    <li><span class="sn">STEP ${String(i+1).padStart(2,'0')}</span><span class="st">${esc(st.title)}</span></li>`).join('')}</ol>`;
+
+  document.getElementById('homeGroupTitle').textContent=H.groupTitle||'';
+  document.getElementById('homeGroups').innerHTML=(H.groups||[]).map(g=>`
+    <div class="sysgroup">
+      <div class="sysname">${esc(g.title)}</div>
+      <div class="homegrid">${(g.items||[]).map(it=>`
+        <div class="homecard" data-goto="${esc(it.goto)}">
+          <b>${esc(it.label)}</b><span>${esc(it.desc||'')}</span>
+        </div>`).join('')}</div>
+    </div>`).join('');
+
+  document.getElementById('homeWarnTitle').textContent=H.warnTitle||'';
+  document.getElementById('homeWarnings').innerHTML=`<div class="homegrid">${(H.warnings||[]).map(w=>`
+    <div class="warncard">
+      <b>${esc(w.title)}</b>
+      <p>${esc(w.desc)}</p>
+      ${w.goto?linkBtn(w.goto,(w.cta||'자세히 보기')+' →'):''}
+    </div>`).join('')}</div>`;
+
+  document.getElementById('homeFind').textContent=H.findTitle||'';
+  document.getElementById('homeChips').innerHTML=(H.findChips||[])
+    .filter(k=>S[k]).map(k=>`<div class="chip" data-goto="${esc(k)}">${esc(S[k].title)}</div>`).join('');
+
+  document.querySelectorAll('#home [data-goto]').forEach(el=>el.onclick=()=>switchTab(el.dataset.goto));
+  document.querySelectorAll('#home [data-anchor]').forEach(el=>el.onclick=()=>{
+    const t=document.getElementById(el.dataset.anchor);
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
 
   const KEY='rien_tip_index', T=D.dailyTips||[];
   if(T.length){
     const last=parseInt(localStorage.getItem(KEY),10);
-    const i = Number.isInteger(last)&&T.length>1 ? (last+1)%T.length : Math.floor(Math.random()*T.length);
+    const i=Number.isInteger(last)&&T.length>1 ? (last+1)%T.length : Math.floor(Math.random()*T.length);
     try{ localStorage.setItem(KEY,String(i)); }catch(e){}
     document.getElementById('tipText').textContent=T[i];
   }
+}
+
+/* ===== 성장 로드맵 ===== */
+let rmLevel=null;
+function rmPhaseOf(lv){
+  const P=(D.roadmap&&D.roadmap.phases)||[];
+  if(!P.length) return -1;
+  for(let i=0;i<P.length;i++){
+    const p=P[i];
+    if(lv>=p.from && (lv<p.to || (i===P.length-1 && lv<=p.to))) return i;
+  }
+  return lv<P[0].from ? 0 : P.length-1;
+}
+function rmKey(pi,ti){ return 'rien_rm_'+pi+'_'+ti; }
+
+function renderRoadmap(){
+  const R=D.roadmap;
+  if(!R){ document.getElementById('rmPhases').innerHTML='<div class="empty">데이터가 없습니다.</div>'; return; }
+  const hero=R.hero||{};
+  document.getElementById('rmHero').innerHTML=`
+    <div class="hero">
+      <div class="hero-kicker">${esc(hero.kicker||'')}</div>
+      <h2>${esc(hero.title||'')}</h2>
+      <p>${esc(hero.desc||'')}</p>
+    </div>`;
+
+  const P=R.phases||[];
+  const cur=rmLevel!==null?rmPhaseOf(rmLevel):-1;
+  const outMsg = cur>=0
+    ? `<span class="gold">현재 위치 · Lv.${P[cur].from} ~ ${P[cur].to} · ${esc(P[cur].name)}</span>`
+    : esc(R.levelHint||'');
+
+  document.getElementById('rmLevel').innerHTML=`
+    <div class="calc" style="margin-bottom:26px;">
+      <h4>${esc(R.levelLabel||'내 레벨')}</h4>
+      <div class="field">
+        <label>레벨</label>
+        <input type="number" id="rmLevelInput" min="1" max="300" placeholder="예: 57" value="${rmLevel!==null?rmLevel:''}">
+        <button class="btn" id="rmLevelBtn">확인</button>
+      </div>
+      <div class="note" id="rmLevelOut">${outMsg}</div>
+    </div>`;
+
+  document.getElementById('rmTimeline').innerHTML=`<ol class="rmline">${P.map((p,i)=>`
+    <li class="${i===cur?'on':''}" data-i="${i}">
+      <span class="sn">PHASE ${esc(p.no)}</span>
+      <span class="lv">Lv.${p.from} ~ ${p.to}</span>
+      <span class="st">${esc(p.name)}</span>
+    </li>`).join('')}
+    <li class="end"><span class="sn">NEXT</span><span class="lv">Lv.120+</span><span class="st">중반 성장</span></li>
+  </ol>`;
+
+  document.getElementById('rmPhases').innerHTML=P.map((p,i)=>rmPhase(p,i,i===cur)).join('');
+
+  const A=R.after||{};
+  document.getElementById('rmAfter').innerHTML=block({title:A.title, lead:A.desc, note:A.note});
+
+  const inp=document.getElementById('rmLevelInput');
+  const run=()=>{
+    const v=parseInt(inp.value);
+    rmLevel=Number.isFinite(v)&&v>0?v:null;
+    renderRoadmap();
+    if(rmLevel!==null){
+      const t=document.querySelector('#rmPhases .rmcard.on');
+      if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  };
+  document.getElementById('rmLevelBtn').onclick=run;
+  inp.onkeydown=e=>{ if(e.key==='Enter') run(); };
+
+  document.querySelectorAll('#roadmap [data-goto]').forEach(el=>el.onclick=()=>switchTab(el.dataset.goto));
+  document.querySelectorAll('#roadmap .chk').forEach(el=>el.onclick=()=>{
+    const on=el.classList.toggle('done');
+    try{ localStorage.setItem(el.dataset.k, on?'1':''); }catch(e){}
+  });
+  document.querySelectorAll('#rmTimeline li[data-i]').forEach(el=>el.onclick=()=>{
+    const t=document.querySelectorAll('#rmPhases .rmcard')[parseInt(el.dataset.i)];
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+}
+
+function rmPhase(p,i,on){
+  const E=D.enhance||{}, S=D.shop||{}, Q=D.quest||{}, R=D.roadmap||{};
+  let extra='';
+
+  if(p.showDmgCost&&E.dmg){
+    extra+=`<div class="itemhead">추가 데미지 강화</div>
+      <div class="tablewrap" style="max-height:none;"><table><tbody>${
+        (E.dmg.rows||[]).map(x=>`<tr><td class="muted" style="width:150px;">${esc(x[0])}</td><td>${esc(x[1])}</td></tr>`).join('')
+      }</tbody></table></div>`;
+  }
+  if(p.showBossLimit&&Q.bossNote){
+    extra+=`<div class="rmnote">${esc(Q.bossNote)}</div>`;
+  }
+  if(p.showRainbowOrder&&S.order){
+    const g=(S.order||[]).find(o=>o.numbered&&(o.items||[]).length>1);
+    if(g){
+      const price=n=>{const it=(S.items||[]).find(s=>s.name===n);return it?fmt(it.point)+'점':'';};
+      extra+=`<div class="itemhead">${esc(g.title)}</div>
+        <ol class="steps">${g.items.map(n=>
+          `<li><span class="s-name">${esc(n)}</span><span class="s-pt">${price(n)}</span></li>`).join('')}</ol>
+        ${g.note?`<div class="rmnote">${esc(g.note)}</div>`:''}`;
+    }
+  }
+  if(p.showHiddenMove){
+    const mv=(D.hiddenSkills||[]).filter(s=>s.category==='이동기');
+    if(mv.length){
+      extra+=`<div class="itemhead">히든 이동 스킬</div>
+        <ul class="matlist">${mv.map(s=>
+          `<li class="mat">${s.icon?`<img class="ico" src="${esc(s.icon)}" alt="">`:'<span class="noico"></span>'}${esc(s.name)} · ${fmt(s.meso)} 메소</li>`).join('')}</ul>`;
+    }
+  }
+  if(p.showAmpTable&&E.amp){
+    extra+=`<div class="itemhead">추가 데미지 증폭 <span class="muted" style="font-size:13px;font-weight:400;">일반 강화와 다른 시스템입니다</span></div>
+      <div class="tablewrap" style="max-height:none;"><table><tbody>${
+        (E.amp.rows||[]).map(x=>`<tr><td class="muted" style="width:150px;">${esc(x[0])}</td><td>${esc(x[1])}</td></tr>`).join('')
+      }</tbody></table></div>
+      <div class="tablewrap" style="max-height:none;"><table>
+        <thead><tr><th>결과</th><th class="num">확률</th><th>수치 변동</th></tr></thead>
+        <tbody>${(E.amp.table||[]).map(t=>
+          `<tr><td>${esc(t[0])}</td><td class="num">${esc(t[1])}</td><td>${esc(t[2])}</td></tr>`).join('')}</tbody>
+      </table></div>`;
+  }
+  if(p.showUnion&&R.unionBox){
+    const u=R.unionBox;
+    extra+=`<div class="itemhead">${esc(u.title)}</div>
+      <p class="lead" style="margin:0 0 10px;">${esc(u.desc)}</p>
+      <div class="rmnote">${esc(u.point)}</div>
+      ${u.goto?linkBtn(u.goto,(u.cta||'자세히')+' →'):''}`;
+  }
+  (p.rewardLevels||[]).forEach(lv=>{
+    const row=((D.levelRewards&&D.levelRewards.list)||[]).find(r=>r.level===lv);
+    if(!row) return;
+    extra+=`<div class="itemhead">Lv.${lv} 레벨 보상</div>
+      <ul class="changes">${row.items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      ${linkBtn('levels','전체 레벨 보상 보기 →')}`;
+  });
+
+  const warn=p.warning?`
+    <div class="warncard" style="margin-top:18px;">
+      <b>${esc(p.warning.title)}</b>
+      <p>${esc(p.warning.desc)}</p>
+      ${p.warning.goto?linkBtn(p.warning.goto,(p.warning.cta||'자세히')+' →'):''}
+    </div>`:'';
+
+  const chk=(p.todo||[]).map((t,ti)=>{
+    let done='';
+    try{ done=localStorage.getItem(rmKey(i,ti))?' done':''; }catch(e){}
+    return `<li class="chk${done}" data-k="${rmKey(i,ti)}">${esc(t)}</li>`;
+  }).join('');
+
+  const links=(p.links||[]).map(l=>
+    `<button class="chip" data-goto="${esc(l[0])}">${esc(l[1])}</button>`).join('');
+
+  return `
+  <div class="rmcard${on?' on':''}">
+    <div class="rmhead">
+      <span class="rmno">PHASE ${esc(p.no)}</span>
+      <span class="rmlv">Lv.${p.from} ~ ${p.to}</span>
+      ${on?'<span class="rmcur">현재 위치</span>':''}
+    </div>
+    <h3 class="rmtitle">${esc(p.name)}</h3>
+    <p class="lead muted" style="margin:0;">${esc(p.goal||'')}</p>
+    ${p.why?`<div class="rmnote">${esc(p.why)}</div>`:''}
+    <div class="itemhead">${esc(R.todoTitle||'지금 해야 할 것')}</div>
+    <ul class="checklist">${chk}</ul>
+    ${extra}
+    ${warn}
+    <div class="rmfoot">
+      <div class="filterbar" style="margin:0;">${links}</div>
+      ${p.next?`<div class="rmnext">다음 단계 · ${esc(p.next)}</div>`:''}
+    </div>
+  </div>`;
 }
 
 /* ===== 보스 ===== */
@@ -1148,15 +1598,106 @@ function renderBossDrops(){
 }
 
 /* ===== 강화 ===== */
+function jumpSub(panelId, sub){
+  const btn=document.querySelector(`#${panelId} .subtab[data-sub="${sub}"]`);
+  if(btn) btn.click();
+}
+function extractRow(rows,label){
+  const r=(rows||[]).find(x=>x[0]===label);
+  return r?r[1]:'—';
+}
 function renderEnhance(){
   const E=D.enhance;
-  document.getElementById('enhBasicList').innerHTML = E.basic.map(block).join('');
+  document.getElementById('enhNormalInfo').innerHTML = block(E.basic[0]);
+  document.getElementById('enhMaxInfo').innerHTML = block(E.basic[1]);
   document.getElementById('enhDmgInfo').innerHTML = block(E.dmg);
   document.getElementById('dmgCalcNote').textContent = E.dmg.calcNote||'';
   document.getElementById('enhAmpInfo').innerHTML = block(E.amp);
-  document.getElementById('ampTableBody').innerHTML = (E.amp.table||[]).map(r=>
-    `<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('');
+  document.getElementById('ampProbGrid').innerHTML = (E.amp.table||[]).map(r=>
+    `<div class="probcard"><div class="probhead">${esc(r[0])}</div><div class="probpct">${esc(r[1])}</div><div class="probval">${esc(r[2])}</div></div>`).join('');
   document.getElementById('enhAbilityInfo').innerHTML = block(E.ability);
+  renderEnhanceOverview();
+}
+function renderEnhanceOverview(){
+  const E=D.enhance;
+
+  document.getElementById('enhStartCta').innerHTML = `
+    <div class="block">
+      <h3>처음 시작하셨나요?</h3>
+      <p class="lead" style="margin-bottom:12px;">강화부터 시작하기보다 전체 성장 순서를 먼저 확인하세요.</p>
+      <button class="linkbtn" id="enhToRoadmap" style="margin-top:0;">1 → 120 성장 로드맵 보기 →</button>
+    </div>`;
+  const rmBtn=document.getElementById('enhToRoadmap');
+  if(rmBtn) rmBtn.onclick=()=>switchTab('roadmap');
+
+  document.getElementById('enhTree').innerHTML = `
+    <div class="enhtree">
+      <div class="et-root">기본 장비</div>
+      <div class="et-lines">
+        <div class="et-branch">일반 장비 강화</div>
+        <div class="et-branch">추가 데미지 강화</div>
+        <div class="et-branch">추가 데미지 증폭 <span class="et-arrow">→</span> 최대 장비 강화</div>
+      </div>
+    </div>
+    <div class="note">실제 게임의 선행 조건이 아니라, 강화 시스템을 구분해서 보여주기 위한 정보 구조입니다.</div>`;
+
+  const cards=[
+    {title:'일반 장비 강화', desc:'장비 등급을 높이는 기본 강화입니다.', sub:'enh-normal'},
+    {title:'추가 데미지 강화', desc:`추증석 ${E.dmg.costStone}개 + 메소 ${fmt(E.dmg.costMeso)}. 성공 확률 ${extractRow(E.dmg.rows,'성공 확률')}.`, sub:'enh-dmg'},
+    {title:'추가 데미지 증폭', desc:`추증석 ${E.amp.costStone}개 + 메소 ${fmt(E.amp.costMeso)}. 결과가 여러 갈래로 나뉩니다.`, sub:'enh-amp'},
+    {title:'최대 장비 강화', desc:'실패 시 장비가 파괴될 수 있는 강화입니다.', sub:'enh-max', warn:true},
+  ];
+  document.getElementById('enhOverviewCards').innerHTML=cards.map(c=>
+    `<div class="homecard${c.warn?' warn-mini':''}" data-jump="${c.sub}"><b>${esc(c.title)}</b><span>${esc(c.desc)}</span></div>`
+  ).join('');
+  document.querySelectorAll('#enhOverviewCards [data-jump]').forEach(el=>el.onclick=()=>jumpSub('enhance', el.dataset.jump));
+
+  const checks=[
+    '일반 강화인가? → 강화 안정제 여부를 먼저 확인하세요.',
+    `추가 데미지 강화인가? → 추증석 ${E.dmg.costStone}개와 메소 ${fmt(E.dmg.costMeso)}가 필요합니다.`,
+    `추가 데미지 증폭인가? → 추증석 ${E.amp.costStone}개와 메소 ${fmt(E.amp.costMeso)}가 필요합니다.`,
+    '최대 강화인가? → 실패 시 장비가 파괴될 수 있다는 점을 확인하세요.',
+  ];
+  document.getElementById('enhChecklist').innerHTML=checks.map((t,i)=>{
+    let done=''; try{ done=localStorage.getItem('rien_enh_chk_'+i)?' done':''; }catch(e){}
+    return `<li class="chk${done}" data-k="rien_enh_chk_${i}">${esc(t)}</li>`;
+  }).join('');
+  document.querySelectorAll('#enhChecklist .chk').forEach(el=>el.onclick=()=>{
+    const on=el.classList.toggle('done');
+    try{ localStorage.setItem(el.dataset.k, on?'1':''); }catch(e){}
+  });
+
+  const rec=(D.alchemy&&D.alchemy.recipes)||{};
+  const st=rec['강화 안정제'];
+  const stabBox=document.getElementById('enhStabilizer');
+  if(st){
+    stabBox.innerHTML=`
+      <div class="warncard">
+        <b>강화하기 전에 강화 안정제를 확인하세요</b>
+        <p>강화 안정제가 없으면 일반 강화 실패 시 장비 등급이 하락할 수 있습니다. 연금술로 제작할 수 있습니다.</p>
+        <div class="filterbar" style="margin-top:10px;">
+          <div class="chip" style="cursor:default;">성공 확률 ${esc(st.rate)}</div>
+          <div class="chip" style="cursor:default;">메소 ${esc(st.meso)}</div>
+        </div>
+        <button class="linkbtn" id="enhStabCta">연금술에서 확인 →</button>
+      </div>`;
+    const stBtn=document.getElementById('enhStabCta');
+    if(stBtn) stBtn.onclick=()=>{
+      switchTab('alchemy');
+      if(typeof showRecipe==='function') showRecipe('강화 안정제');
+    };
+  } else {
+    stabBox.innerHTML='<div class="empty">현재 데이터에서 확인할 수 없습니다.</div>';
+  }
+
+  const rows=[
+    ['일반 장비 강화','강화석 + 메소','강화 등급 상승','실패 시 등급 하락 가능 (안정제 미보유 시)'],
+    ['추가 데미지 강화',`추증석 ${E.dmg.costStone}개 + 메소 ${fmt(E.dmg.costMeso)}`,`성공 ${extractRow(E.dmg.rows,'성공 확률')}`,'실패 결과는 상세 정보 참고'],
+    ['추가 데미지 증폭',`추증석 ${E.amp.costStone}개 + 메소 ${fmt(E.amp.costMeso)}`,'여러 결과 존재 (성공·실패·대성공·대실패)','실패 · 대실패 시 수치 감소'],
+    ['최대 장비 강화','강화 재료 + 메소','강화 등급 상승','실패 시 장비 파괴 가능'],
+  ];
+  document.getElementById('enhCompareBody').innerHTML=rows.map(r=>
+    `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="muted">${esc(r[3])}</td></tr>`).join('');
 }
 function calcDmg(){
   const E=D.enhance.dmg;
@@ -1333,6 +1874,165 @@ function renderMobDrops(){
     `<tr><td>${esc(r[0])}</td><td class="muted">${esc(r[1])}</td><td class="num gold">${esc(r[2])}</td></tr>`).join('')
     ||'<tr><td colspan="3" class="empty">검색 결과가 없습니다.</td></tr>';
 }
+
+/* ===== 직업 가이드 ===== */
+let jgPurpose='hunt';
+let jgSelected=[];
+
+function jgParse(u){
+  const map={};
+  (u.rows||[]).forEach(r=>{ map[r[0]]=r[1]; });
+  const dmgRaw=map['데미지'];
+  const dmg = dmgRaw!=null ? parseFloat(dmgRaw) : null;
+  const th = map['마릿수 / 타격수']||map['마릿수 / 발사수']||'';
+  let targets=null, hits=null;
+  const mt=th.match(/마릿수\s*(\d+)명/); if(mt) targets=parseInt(mt[1]);
+  const mh=th.match(/(?:타격수|발사수)\s*(\d+)(?:번|발)/); if(mh) hits=parseInt(mh[1]);
+  return {
+    dmg, targets, hits,
+    speed:map['공격속도']||'', range:map['공격범위']||'', distance:map['공격거리']||'',
+    isAttack: dmg!=null
+  };
+}
+
+function jgRows(pairs, labelWidth){
+  const w = labelWidth || 170;
+  return `<div class="tablewrap" style="max-height:none;margin-top:10px;"><table><tbody>${
+    pairs.map(p=>`<tr><td class="muted" style="width:${w}px;white-space:nowrap;">${esc(p[0])}</td><td class="gold" style="white-space:nowrap;">${esc(String(p[1]))}</td></tr>`).join('')
+  }</tbody></table></div>`;
+}
+
+const JG_PURPOSES=[
+ ['hunt','사냥 / 파밍 중심','오랜 시간 사냥하면서 안정적으로 캐릭터를 육성하고 싶은 경우 — 스킬 데이터 기준으로 대상 수, 타격 횟수, 공격 속도, 범위를 함께 봅니다.'],
+ ['huntboss','사냥 + 보스','사냥과 보스를 둘 다 활용할 캐릭터를 만들고 싶은 경우 — 사냥용 수치와 보스용 수치(단일 대상 기준)를 나눠서 보여줍니다.'],
+ ['boss','보스 중심','필드 사냥보다 단일 대상 공격 성능을 중요하게 보는 경우 — RIEN의 보스는 항상 단일 대상이라 대상 수는 표시하지 않습니다.'],
+];
+
+function renderJobGuide(){
+  const U=(D.skills&&D.skills.ultimates)||[];
+  const parsed=U.map(u=>Object.assign({u}, jgParse(u)));
+  const attack=parsed.filter(x=>x.isAttack);
+  const nonAttack=parsed.filter(x=>!x.isAttack);
+
+  document.getElementById('jgPurpose').innerHTML=JG_PURPOSES.map(p=>
+    `<div class="chip ${p[0]===jgPurpose?'active':''}" data-p="${p[0]}">${esc(p[1])}</div>`).join('');
+  document.querySelectorAll('#jgPurpose .chip').forEach(c=>c.onclick=()=>{ jgPurpose=c.dataset.p; renderJobGuide(); });
+  const cur=JG_PURPOSES.find(p=>p[0]===jgPurpose);
+  document.getElementById('jgPurposeNote').textContent=cur?cur[2]:'';
+
+  document.getElementById('jgCards').innerHTML=`<div class="homegrid">${attack.map(jgCard).join('')}</div>`;
+  document.getElementById('jgNonAttack').innerHTML=nonAttack.map(jgNonAttackCard).join('')||'<div class="empty">해당하는 스킬이 없습니다.</div>';
+
+  document.querySelectorAll('#jgCards .jgpickbtn').forEach(el=>el.onclick=()=>{
+    const name=el.dataset.job;
+    const i=jgSelected.indexOf(name);
+    if(i>=0) jgSelected.splice(i,1);
+    else { if(jgSelected.length>=3) return; jgSelected.push(name); }
+    renderJobGuide();
+  });
+  document.querySelectorAll('[data-goskill]').forEach(el=>el.onclick=()=>{
+    switchTab('skills'); ultCat=el.dataset.goskill; renderUlt();
+  });
+  document.querySelectorAll('[data-gopatch]').forEach(el=>el.onclick=()=>{
+    switchTab('skills');
+    const btn=document.querySelector('.subtab[data-sub="sk-patch"]');
+    if(btn) btn.click();
+    patchCat=el.dataset.group;
+    const inp=document.getElementById('patchSearch');
+    if(inp) inp.value=el.dataset.job;
+    renderPatch();
+  });
+
+  renderJgCompare(attack);
+}
+
+function jgCard(x){
+  const u=x.u;
+  const picked=jgSelected.includes(u.job);
+  const full=jgSelected.length>=3 && !picked;
+  let body='';
+  if(jgPurpose==='hunt'){
+    body=jgRows([
+      ['기본 데미지', x.dmg+'%'],
+      ['타격 횟수', x.hits!=null?x.hits:'—'],
+      ['대상 수', x.targets!=null?x.targets:'—'],
+      ['공격 속도', x.speed],
+      ['범위', x.range],
+      ['거리', x.distance],
+    ]);
+  } else if(jgPurpose==='huntboss'){
+    body=`<div class="jgsplit">
+      <div><div class="jgsplit-title">사냥</div>${jgRows([
+        ['대상 수', x.targets!=null?x.targets:'—'],
+        ['타격 횟수', x.hits!=null?x.hits:'—'],
+        ['공격 속도', x.speed],
+        ['범위', x.range],
+        ['거리', x.distance],
+      ], 96)}</div>
+      <div><div class="jgsplit-title">보스 (단일 대상 기준)</div>${jgRows([
+        ['기본 데미지', x.dmg+'%'],
+        ['타격 횟수', x.hits!=null?x.hits:'—'],
+        ['공격 속도', x.speed],
+      ], 112)}</div>
+    </div>`;
+  } else {
+    const coef=(x.dmg!=null&&x.hits!=null) ? (x.dmg*x.hits) : null;
+    body=jgRows([
+      ['기본 데미지', x.dmg+'%'],
+      ['타격 횟수', x.hits!=null?x.hits:'—'],
+      ['공격 속도', x.speed],
+      ['궁극기 1회 사용 기준 기본 계수 합계', coef!=null?(fmt(coef)+'%'):'—'],
+    ]) + '<div class="note" style="margin-top:8px;padding-top:0;border-top:none;">실제 전투 화력(DPS)이 아니라, 궁극기 한 번 사용했을 때의 계수를 단순 합산한 참고값입니다.</div>';
+  }
+  return `<div class="block jgcard${picked?' on':''}">
+    <div class="jghead">
+      <b>${esc(u.job)}</b>
+      <button class="jgpickbtn${picked?' on':''}" data-job="${esc(u.job)}" ${full?'disabled':''}>${picked?'비교에서 제외':'비교에 담기'}</button>
+    </div>
+    <div class="jgskill">${esc(u.name)}</div>
+    ${body}
+    <div class="filterbar" style="margin-top:14px;">
+      <button class="chip" data-goskill="${esc(u.group)}">스킬 상세 보기</button>
+      <button class="chip" data-gopatch="1" data-job="${esc(u.job)}" data-group="${esc(u.group)}">패치 내역 보기</button>
+    </div>
+  </div>`;
+}
+
+function jgNonAttackCard(x){
+  const u=x.u;
+  return `<div class="block">
+    <h3><span>${esc(u.job)} <span class="muted" style="font-size:14px;font-weight:400;">${esc(u.name)}</span></span></h3>
+    ${(u.rows||[]).map(r=>`<dl class="kv"><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></dl>`).join('')}
+    <div class="filterbar" style="margin-top:14px;">
+      <button class="chip" data-goskill="${esc(u.group)}">스킬 상세 보기</button>
+    </div>
+  </div>`;
+}
+
+function renderJgCompare(attackList){
+  const box=document.getElementById('jgCompare');
+  if(!jgSelected.length){
+    box.innerHTML='<div class="empty">위 카드에서 "비교에 담기"를 눌러 최대 3개까지 골라보세요.</div>';
+    return;
+  }
+  const items=jgSelected.map(name=>attackList.find(x=>x.u.job===name)).filter(Boolean);
+  const rowsDef=[
+    ['기본 데미지', x=>x.dmg+'%'],
+    ['타격 횟수', x=>x.hits!=null?x.hits:'—'],
+    ['대상 수', x=>x.targets!=null?x.targets:'—'],
+    ['공격 속도', x=>x.speed],
+    ['범위', x=>x.range],
+    ['거리', x=>x.distance],
+  ];
+  box.innerHTML=`<div class="tablewrap" style="max-height:none;"><table>
+      <thead><tr><th>항목</th>${items.map(x=>`<th>${esc(x.u.job)}</th>`).join('')}</tr></thead>
+      <tbody>${rowsDef.map(rd=>`<tr><td class="muted">${esc(rd[0])}</td>${
+        items.map(x=>`<td class="gold">${esc(String(rd[1](x)))}</td>`).join('')
+      }</tr>`).join('')}</tbody>
+    </table></div>
+    <div class="note">이 표는 데이터를 나란히 보여줄 뿐, 어느 쪽이 더 낫다고 판단하지 않습니다.</div>`;
+}
+
 
 /* ===== 스킬 ===== */
 let ultCat='전체', patchCat='전체';
@@ -1576,12 +2276,14 @@ async function boot(){
     return;
   }
   renderHome();
+  renderRoadmap();
   renderEnhance();
   renderSoul();
   renderHidden();
   renderAlchemy();
   renderItems();
   renderMobDrops();
+  renderJobGuide();
   renderSkills();
   renderBosses();
   renderLevels();
