@@ -349,6 +349,16 @@
   .block h3 .ico{margin-right:10px;}
   .block h3{display:flex;align-items:center;}
 
+  .namecell{display:flex;align-items:center;gap:10px;}
+  .namecell .ico{width:26px;height:26px;}
+
+  tr.clickrow{cursor:pointer;}
+  tr.clickrow:hover .more{opacity:1;}
+  .more{
+    font-size:11px;color:var(--gold);border:1px solid var(--gold-dim);
+    border-radius:4px;padding:1px 6px;margin-left:8px;opacity:.45;
+  }
+
   #searchResults{margin-bottom:20px;}
   .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
   .hit:last-child{border-bottom:0;}
@@ -821,8 +831,10 @@
           <tbody id="alchemyBody"></tbody>
         </table>
       </div>
+      <div id="recipeBox"></div>
       <div class="block">
         <p class="lead muted" id="alchemyNote"></p>
+        <p class="lead muted" id="alchemyRecipeNote" style="margin-top:8px;"></p>
       </div>
     </section>
 
@@ -1098,29 +1110,68 @@ function renderHidden(){
   document.querySelectorAll('#hiddenFilter .chip').forEach(ch=>ch.onclick=()=>{hCat=ch.dataset.c;renderHidden();});
   const rows=L.filter(s=>hCat==='전체'||s.category===hCat);
   document.getElementById('hiddenBody').innerHTML=rows.map(s=>
-    `<tr><td>${esc(s.name)}</td><td class="muted">${esc(s.category)}</td><td class="num gold">${fmt(s.meso)}</td><td class="muted">${esc(s.desc)||'—'}</td></tr>`).join('')
+    `<tr><td><span class="namecell">${s.icon?`<img class="ico" src="${esc(s.icon)}" alt="">`:''}${esc(s.name)}</span></td><td class="muted">${esc(s.category)}</td><td class="num gold">${fmt(s.meso)}</td><td class="muted">${esc(s.desc)||'—'}</td></tr>`).join('')
     ||'<tr><td colspan="4" class="empty">해당 분류가 없습니다.</td></tr>';
 }
 
 /* ===== 연금술 ===== */
 let aCat='전체';
 function renderAlchemy(){
-  const A=D.alchemy;
+  const A=D.alchemy, R=A.recipes||{};
   const cats=['전체',...new Set(A.items.map(a=>a[0]))];
   document.getElementById('alchemySubtabs').innerHTML=cats.map(c=>
     `<button class="subtab ${c===aCat?'active':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
   document.querySelectorAll('#alchemySubtabs .subtab').forEach(b=>b.onclick=()=>{aCat=b.dataset.c;renderAlchemy();});
-  const upgrade=(A.upgradeCategories||[]).includes(aCat);
-  document.getElementById('alchemyHead').innerHTML= upgrade
-    ? '<th>아이템</th><th class="num">성공 경험치</th><th>하위 재료</th>'
-    : '<th>분류</th><th>아이템</th><th class="num">성공 경험치</th>';
   const kw=document.getElementById('alchemySearch').value.trim();
   const rows=A.items.filter(a=>(aCat==='전체'||a[0]===aCat)&&a[1].includes(kw));
-  document.getElementById('alchemyBody').innerHTML=rows.map(a=> upgrade
-    ? `<tr><td>${esc(a[1])}</td><td class="num gold">${fmt(a[2])}</td><td class="muted">${esc(a[3])||'—'}</td></tr>`
-    : `<tr><td class="muted">${esc(a[0])}</td><td>${esc(a[1])}</td><td class="num gold">${fmt(a[2])}</td></tr>`
-  ).join('')||`<tr><td colspan="3" class="empty">검색 결과가 없습니다.</td></tr>`;
+  const hasRecipe=rows.some(a=>R[a[1]]);
+  const upgrade=!hasRecipe&&(A.upgradeCategories||[]).includes(aCat);
+
+  document.getElementById('alchemyHead').innerHTML= upgrade
+    ? '<th>아이템</th><th class="num">성공 경험치</th><th>하위 재료</th>'
+    : (hasRecipe
+       ? '<th>아이템</th><th>분류</th><th class="num">성공 확률</th><th class="num">성공 경험치</th>'
+       : '<th>분류</th><th>아이템</th><th class="num">성공 경험치</th>');
+
+  document.getElementById('alchemyBody').innerHTML=rows.map(a=>{
+    const r=R[a[1]];
+    if(upgrade)
+      return `<tr><td>${esc(a[1])}</td><td class="num gold">${fmt(a[2])}</td><td class="muted">${esc(a[3])||'—'}</td></tr>`;
+    if(!hasRecipe)
+      return `<tr><td class="muted">${esc(a[0])}</td><td>${esc(a[1])}</td><td class="num gold">${fmt(a[2])}</td></tr>`;
+    const ico=r&&r.icon?`<img class="ico" src="${esc(r.icon)}" alt="">`:'';
+    return `<tr class="${r?'clickrow':''}" data-n="${esc(a[1])}">
+      <td><span class="namecell">${ico}${esc(a[1])}${r?'<span class="more">레시피</span>':''}</span></td>
+      <td class="muted">${esc(a[0])}</td>
+      <td class="num">${r?esc(r.rate):'—'}</td>
+      <td class="num gold">${fmt(a[2])}</td></tr>`;
+  }).join('')||`<tr><td colspan="4" class="empty">검색 결과가 없습니다.</td></tr>`;
+
+  document.querySelectorAll('#alchemyBody .clickrow').forEach(tr=>tr.onclick=()=>showRecipe(tr.dataset.n));
   document.getElementById('alchemyNote').textContent=A.note||'';
+  const rn=document.getElementById('alchemyRecipeNote');
+  if(rn) rn.textContent=(hasRecipe&&!upgrade)?(A.recipeNote||''):'';
+  const box=document.getElementById('recipeBox');
+  if(box) box.innerHTML='';
+}
+function showRecipe(name){
+  const A=D.alchemy, r=(A.recipes||{})[name];
+  const box=document.getElementById('recipeBox');
+  if(!r||!box) return;
+  const item=(A.items||[]).find(a=>a[1]===name);
+  const rows=[['성공 확률',r.rate]];
+  if(r.limit) rows.push(['제작 제한',r.limit]);
+  rows.push(['필요 메소',r.meso+' 메소']);
+  rows.push(['제작 결과', name+' '+(r.qty||1)+'개'+(item?` · 연금술 경험치 +${fmt(item[2])}`:'')]);
+  let mat=`<div class="itemhead" style="margin-top:18px;">필요 재료</div>
+      <ul class="changes">${r.mats.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`;
+  if(r.alt){
+    mat+=`<div class="itemhead" style="margin-top:18px;">또는 이 재료로도 제작</div>
+      <ul class="changes">${r.alt.mats.map(m=>`<li>${esc(m)}</li>`).join('')}
+        <li>메소 ${esc(r.alt.meso)}</li></ul>`;
+  }
+  box.innerHTML=block({title:name, icon:r.icon, rows:rows, extra:mat});
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 /* ===== 아이템 정보 ===== */
