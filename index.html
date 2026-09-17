@@ -538,6 +538,10 @@
   .s-name{display:flex;align-items:center;gap:8px;}
   .s-name .ico{width:24px;height:24px;flex:none;}
 
+  .changes li.gold{color:var(--gold);font-weight:500;}
+  li.clickrow{cursor:pointer;}
+  li.clickrow:hover .more{opacity:1;}
+
   #searchResults{margin-bottom:20px;}
   .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
   .hit:last-child{border-bottom:0;}
@@ -1223,6 +1227,7 @@
 
       <div class="subpanel active" id="shop-order">
         <div id="shopOrder"></div>
+        <div id="shopEffectBoxOrder"></div>
       </div>
 
       <div class="subpanel" id="shop-all">
@@ -1232,6 +1237,7 @@
             <tbody id="shopBody"></tbody>
           </table>
         </div>
+        <div id="shopEffectBoxAll"></div>
       </div>
 
       <div class="subpanel" id="shop-calc">
@@ -2224,16 +2230,36 @@ function renderShop(){
     const li=g.items.map(n=>{
       const it=shopFind(n);
       const ico=it&&it.icon?`<img class="ico" src="${esc(it.icon)}" alt="">`:'';
-      return `<li><span class="s-name">${ico}${esc(n)}</span><span class="s-pt">${it?fmt(it.point)+'점':'—'}</span></li>`;
+      const tag=it&&it.effects&&it.effects.length?'<span class="more">효과</span>':'';
+      const cls=it&&it.effects&&it.effects.length?' class="clickrow"':'';
+      return `<li${cls} data-n="${esc(n)}"><span class="s-name">${ico}${esc(n)}${tag}</span><span class="s-pt">${it?fmt(it.point)+'점':'—'}</span></li>`;
     }).join('');
     const list = g.numbered ? `<ol class="steps">${li}</ol>` : `<ul class="plain">${li}</ul>`;
     return block({title:g.title, subtitle:g.subtitle, extra:list, note:g.note});
   }).join('');
+  document.querySelectorAll('#shopOrder li.clickrow').forEach(li=>li.onclick=()=>showShopEffect(li.dataset.n,'shopEffectBoxOrder'));
 
-  document.getElementById('shopBody').innerHTML=S.items.map(s=>
-   `<tr><td><span class="namecell">${s.icon?`<img class="ico" src="${esc(s.icon)}" alt="">`:''}${esc(s.name)}</span></td><td class="num gold">${fmt(s.point)}</td><td class="muted">${esc(s.pre)||'—'}</td></tr>`).join('');
+  document.getElementById('shopBody').innerHTML=S.items.map(s=>{
+    const tag=s.effects&&s.effects.length?'<span class="more">효과</span>':'';
+    const cls=s.effects&&s.effects.length?' class="clickrow"':'';
+    return `<tr${cls} data-n="${esc(s.name)}"><td><span class="namecell">${s.icon?`<img class="ico" src="${esc(s.icon)}" alt="">`:''}${esc(s.name)}${tag}</span></td><td class="num gold">${fmt(s.point)}</td><td class="muted">${esc(s.pre)||'—'}</td></tr>`;
+  }).join('');
+  document.querySelectorAll('#shopBody tr.clickrow').forEach(tr=>tr.onclick=()=>showShopEffect(tr.dataset.n,'shopEffectBoxAll'));
+
   document.getElementById('shopSelect').innerHTML=S.items.map((s,i)=>`<option value="${i}">${esc(s.name)}</option>`).join('');
   document.getElementById('shopCalcNote').textContent=S.calcNote||'';
+}
+function showShopEffect(name, boxId){
+  const it=shopFind(name);
+  const box=document.getElementById(boxId);
+  if(!it||!box) return;
+  if(!it.effects||!it.effects.length){ box.innerHTML=''; return; }
+  box.innerHTML=block({
+    title:it.name, icon:it.icon,
+    extra:`<div class="itemhead">보유 효과</div><ul class="changes">${it.effects.map(e=>`<li class="gold">${esc(e)}</li>`).join('')}</ul>`,
+    note:D.shop.effectNote
+  });
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function shopChain(name, seen){
   seen = seen || [];
