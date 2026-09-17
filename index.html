@@ -340,6 +340,15 @@
     margin-left:8px;letter-spacing:.02em;
   }
 
+  .ico{
+    width:30px;height:30px;flex:none;image-rendering:pixelated;
+    border-radius:5px;vertical-align:middle;
+  }
+  .chip .ico{width:22px;height:22px;margin:-2px 6px -2px -2px;}
+  .chip{display:inline-flex;align-items:center;}
+  .block h3 .ico{margin-right:10px;}
+  .block h3{display:flex;align-items:center;}
+
   #searchResults{margin-bottom:20px;}
   .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
   .hit:last-child{border-bottom:0;}
@@ -981,7 +990,8 @@ function block(o){
   const note = o.note ? `<div class="note">${esc(o.note)}</div>` : '';
   const danger = o.danger ? `<div class="note danger">${esc(o.danger)}</div>` : '';
   const sub = o.subtitle ? ` <span class="muted" style="font-size:14px;font-weight:400;">${esc(o.subtitle)}</span>` : '';
-  const title = o.title ? `<h3>${esc(o.title)}${sub}</h3>` : '';
+  const ico = o.icon ? `<img class="ico" src="${esc(o.icon)}" alt="">` : '';
+  const title = o.title ? `<h3>${ico}<span>${esc(o.title)}${sub}</span></h3>` : '';
   return `<div class="block">${title}${lead}${rows}${o.extra||''}${note}${danger}</div>`;
 }
 
@@ -1124,7 +1134,7 @@ function renderItems(){
   }
   if(itemIdx>=I.list.length) itemIdx=0;
   document.getElementById('itemSubtabs').innerHTML=I.list.map((it,i)=>
-    `<div class="chip ${i===itemIdx?'active':''}" data-i="${i}">${esc(it.name)}</div>`).join('');
+    `<div class="chip ${i===itemIdx?'active':''}" data-i="${i}">${it.icon?`<img class="ico" src="${esc(it.icon)}" alt="">`:''}${esc(it.name)}</div>`).join('');
   document.querySelectorAll('#itemSubtabs .chip').forEach(b=>b.onclick=()=>{
     itemIdx=parseInt(b.dataset.i); renderItems(); });
 
@@ -1151,7 +1161,7 @@ function renderItems(){
       </table>
     </div>${I.dropNote?`<div class="block"><div class="note" style="border-top:none;padding-top:0;">${esc(I.dropNote)}</div></div>`:''}`:'';
   document.getElementById('itemDetail').innerHTML=
-    block({title:it.name, rows:it.rows, lead:it.desc, note:it.note}) + statTable + dropTable;
+    block({title:it.name, icon:it.icon, rows:it.rows, lead:it.desc, note:it.note}) + statTable + dropTable;
 }
 function renderMobDrops(){
   const I=D.items||{};

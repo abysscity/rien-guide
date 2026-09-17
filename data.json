@@ -1848,11 +1848,6 @@
             "획득",
             "몬스터 드랍"
           ]
-          [
-            "아이템 옵션",
-            "장착시 공격력 10, 마력 10 상승"
-            "장착시 공격 속도 1% 상승"
-          ]
         ],
         "dropTitle": "드랍 몬스터",
         "drops": [
@@ -1925,11 +1920,6 @@
             "획득",
             "몬스터 드랍"
           ]
-          [
-            "아이템 옵션",
-            "장착시 공격력 20, 마력 20 상승"
-            "장착시 공격 속도 2% 상승"
-          ]
         ],
         "dropTitle": "드랍 몬스터",
         "drops": [
@@ -1982,11 +1972,6 @@
             "획득",
             "몬스터 드랍"
           ]
-          [
-            "아이템 옵션",
-            "장착시 공격력 30, 마력 30 상승"
-            "장착시 공격 속도 3% 상승"
-          ]
         ],
         "dropTitle": "드랍 몬스터",
         "drops": [
@@ -2009,22 +1994,45 @@
         ]
       },
       {
-        "name": "경험치 상승량",
+        "name": "경험치 상승량 (대)",
+        "icon": "data:image/png;base64,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",
         "rows": [
           [
             "분류",
             "소비 아이템"
           ],
           [
-            "대",
+            "획득 경험치",
             "20,000 경험치"
+          ]
+        ],
+        "note": "사용 시 해당 경험치를 바로 획득합니다."
+      },
+      {
+        "name": "경험치 상승량 (중)",
+        "icon": "data:image/png;base64,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",
+        "rows": [
+          [
+            "분류",
+            "소비 아이템"
           ],
           [
-            "중",
+            "획득 경험치",
             "10,000 경험치"
+          ]
+        ],
+        "note": "사용 시 해당 경험치를 바로 획득합니다."
+      },
+      {
+        "name": "경험치 상승량 (소)",
+        "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAJfUlEQVR42n2Xa2xcxRXHfzP3sXvX+7i2sbETAgHctHFApKp5NEk/8IFWakMloAQFgVAKFSgqQogCLdjxK1A+lKqVILQqJKhCMiE8IkVRALVqQEU8CoEiIhLHISQQ2zHE8e56X/fememH3b04ATrS1WjmzuM8/uc/54hXXnnZtLa28tln02zcuJlKpYIQFsYYAIwxCCE4s33b/Lc1IQTGaJLJJFu2/JYlS7oJghBbRac4cqTC6OgTbNnSTzqdIoqixuECKSVaa8AsPO6MeXFGzxlrBUppbNuiUJhnYOBx7r33ZhYt6sCenCrw6KNPsWnT7ezZs4vx8YPx4VJadHd3MTU1jdaqoYX52jywQCCBEPWxUgopLRYvXsTk5BRBEJDNZnjwwdsYGfkLgw/cgujsvNQ8/viDbNv2VyzLZnp6mq6uLo4fP04UKVzXIQwjpBTkcjny+TzGGBzHIQxDjDG4rktXVzfT0/VLLMuiu7ubqakpAM4991yOHTsGQHf3IoxRbNhwO3f++iFkuVwhk/Eolyvkcj6JRIL29nYcx6GlJcWKFStIpTxc12Xp0qU4joPruixfvhzXdXFdl97eXhYvXkRvby+JRAIhBDMzMwghcBwH3/exbRvHcWhvb6NcLpPJeBRLFaRlSaJIxyZsgk9KSU9PDy0tLfT09CClREoZe9Z1XaSURFHEoUOHKJfLHDp0iCiKFoDuq7MWAldKiyjS2JZEGkMDJBEHDnyMUopcLodSiomJCSzLYmJiAqUUqVQqFiCZTKK1RghBrVZjfHycWq0GgOM4XH755di2jTGGTCYTC5XNZhGijhNjQC7EaxiGscRSSqrVKm+99Ra1Wg2lFO+88w5KKZRSvP3229i2FeOhr68Px3EaQKwL0WwLLde0UPxv4cB13TOkrIdbM96b4RlFEdlslk2bRmht9VFK0dnZGa8TQpDJZOIzstkslmURBAH79u0jDIN4rQTQWpNIJLjmmmvwPI9cLhej+9prryWRSDTCsu7z1tZWhoaGuOrHqxgaHKW1rRXLspBSxn5eqEQulwMgnU5z5ZVXkk5naMDj6xYACIIgnkskErFWURTh+z4jow+zatVyCuJGLluzlE39I+zdu5dSqYRlWQBx39zrOA5r167lwgt7WLv2Z7G75Jl0WavVeOmll6jValiWRTabXaB5/fI1qy9By7/xCbv4h+zjklVLGOwfxm/1Yzc1AdnEVhAE7Nmzh1qtyp49ewjDACktZJ0+65f7vo8QgkqlEm8OgoAwDPH9VoZHHmbN6l6U+DP7GSVEM2+meabUx4rV5/HQyCO0tbVRKpXYuXMnYRgShiHPP/88YRhSLBYZGxsjn883MGBOt0CtVkNrjed58Xjbtm2kUik2b36IH63+DnPiOj5gkEOUOQZIIUm2TDFYvpTlPzyXzSOb8X2/8ah9pVzz3PXr1+N5XkzbEkwcck8//TSe57Fhwwba2tqIojoFDw+PsmbNSo6LX/Ay/+RfhBwGDgPvozkoBIE3yT2FlXx/1cVsHnmIVEuKMAzxPI/bbrst5o2F2IhB2JTQGMO6devo6upi3bp1uK6LASSCGoonmOAFMowjOQIcAQ4beH9OsP94lvemJBFNp3Ja7DeV3Lp1K9VqtcENDRfUX7g60J577jkmJyfZvn07URRRq9UYGOznnX9/wP3qI57gAF+aFDMG8khqBmqFFDsWf8zrPQf44I0P6B/sp1qpYts25XKZsbGx2CULI+xrYSiEYG5ujmeffZa5uTmEEFjSYnZ2lqHBQQ7vO0bW+OiCZG4WTp2C/EkweUlW+Hz64VGGhgaZnZ2NOcH3fdavX4/v+/Hb8K0CKKXwPI8bbrhhAVDqVFqpVKhFFSJCdAj5Y3DqCOSPgj4FyoRUowqVSiV+2FzXPc2liUQC27b/PxU347bJaM3PsiykkKAF858LzKxAnKr383MCYwRSSCzLitcHQcD27dsZHx9nbGwMgOuuuy5m1m+kYtd1UUrFFomiMP4MGowhPBkQfmEIv1QEM4bgSADaYIwmikLC5npjyOfz7N69m3w+j5QyVrLZ7G+j4mbcJtwWlFIkvSS25SFwyZQ6KZwoYoTAigyZWgZpXBzbI5dpx7WrWLZFtVYC4KqrrmL37t2n5RtnCCDQ2lAsFqlWq+zYsQPf9xkeGuUHl10Aor4p4SYRhLzw8zdQDabVgLQhaYVc1LeEHbu3YgyYSLJ/32EGBvvZtWsXURSRSCSYnZ1FaxMH62kW0FqjtCKTTjM0PMqlq5fyaeUKVDiPQZAvK2RGYUoOiawmQjCJoVqUWKmQsCKZ1DaRMGQzKW5c9RYjw6P0DzxIoVAgDENeffVV0ukWpFwgQJ0xDXNzeZLJJEMDo6xafREvllZwx3dDlJVACLBympXbp/nvzZ1c/NRJ0t+DwgH48NZOVv79JP/5aTdRILHTmpU7P+N1+njqigOMDm/m/t/d1+ACeZob7IWFxuzsSYwxpFIpjDAcDOYohjkueWYWt11hIoPpEix78hTv3XoOy//0BR/f1cHFT59Aexa1UoIr9h5HSHjzJ4voe6yA6DWkvFScxvX09HDixHQshN0sbpRSHDx4kKSXxGhNCLxbdtGBYP8tHSANlqfpe3KKzFkhvb+Z4aNbO7hoeIZMIqRyVCKlRkw1KqbAIAsu6DoVW5bF0qVL8TyPZcuWxW+CrVT9gdDa0NnZSalcTyoEgmoQYCyP8++fwfI1KEOpaph91+HI7zs4754v2b+5gwv6Z7DSCjVv8fYN52CnNcv++DmFk0l0KHES9eRjYuIQZ5/dRbFY4Oqrr0Frjd3S4lEslmhp8ZicnCKRTFCcLxJFEZkvfCDi4FB7HQMpxYX3T3P4D21ccNckbodh8a8m+fiBTi64ewayVc6/bwrHB60hXa4nKIVCniiKqFQqHP30KF3dnRTn50l5ScSOHS+awcEneOCBW3nmmW0Ui0Xa2tsYHR5lyfKzWb/rMgrleeyiwAiDldLoikC2aAr5ejRF8xIrYdAnBbZniIwh42TYufFdJj85wcBAP3NzeYyBdDrFTTf9kkdGn+Sujdcj3nzzDTM5+SUDA48xMrKRTKaFIIxIeSlcx6Wk5jDNgtOA0QIhDUaJOLEUVn0shMHo+ryUgkwyRxAGDfSDbdsUiyU2bdrC3XdcT3tHDvHaa3tNMpnk889PNMrzKkLUC0ttNDZOk6u+oeYmFuyb/kcqbNQYVqMQUSSTHiMP38lZHT5UA/4HcQjKSg545GQAAAAASUVORK5CYII=",
+        "rows": [
+          [
+            "분류",
+            "소비 아이템"
           ],
           [
-            "소",
+            "획득 경험치",
             "2,000 경험치"
           ]
         ],
