@@ -706,6 +706,7 @@
     <button class="navbtn active" data-tab="home">홈</button>
     <button class="navbtn" data-tab="tips">공략 팁</button>
     <button class="navbtn" data-tab="quest">퀘스트</button>
+    <button class="navbtn" data-tab="attend">출석체크</button>
     <button class="navbtn" data-tab="shop">홍포 상점</button>
     <button class="navbtn" data-tab="levels">레벨 보상</button>
     <button class="navbtn" data-tab="enhance">강화</button>
@@ -961,6 +962,18 @@
       </div>
     </section>
 
+    <!-- ========== 출석체크 ========== -->
+    <section class="panel" id="attend">
+      <div class="searchline"><input type="text" id="attendSearch" placeholder="일차나 아이템 이름으로 검색"></div>
+      <div class="tablewrap" style="max-height:none;">
+        <table>
+          <thead><tr><th class="num" style="width:74px;">일차</th><th>보상</th></tr></thead>
+          <tbody id="attendBody"></tbody>
+        </table>
+      </div>
+      <div id="attendRules"></div>
+    </section>
+
     <!-- ========== 홍포 상점 ========== -->
     <section class="panel" id="shop">
       <div class="subtabs">
@@ -1097,13 +1110,13 @@ function calcDmg(){
   const E=D.enhance.dmg;
   const n=Math.max(0,parseInt(document.getElementById('dmgTries').value)||0);
   document.getElementById('dmgResult').innerHTML=
-   `<span class="big">${fmt(n)}회 시도 시</span>추종석 <strong>${fmt(n*E.costStone)}</strong>개 · 메소 <strong>${fmt(n*E.costMeso)}</strong>`;
+   `<span class="big">${fmt(n)}회 시도 시</span>추증석 <strong>${fmt(n*E.costStone)}</strong>개 · 메소 <strong>${fmt(n*E.costMeso)}</strong>`;
 }
 function calcAmp(){
   const E=D.enhance.amp;
   const n=Math.max(0,parseInt(document.getElementById('ampTries').value)||0);
   document.getElementById('ampResult').innerHTML=
-   `<span class="big">${fmt(n)}회 시도 시</span>추종석 <strong>${fmt(n*E.costStone)}</strong>개 · 메소 <strong>${fmt(n*E.costMeso)}</strong>`;
+   `<span class="big">${fmt(n)}회 시도 시</span>추증석 <strong>${fmt(n*E.costStone)}</strong>개 · 메소 <strong>${fmt(n*E.costMeso)}</strong>`;
 }
 
 /* ===== 영혼석 ===== */
@@ -1196,6 +1209,7 @@ function showRecipe(name){
   const item=(A.items||[]).find(a=>a[1]===name);
   const rows=[['성공 확률',r.rate]];
   if(r.atk) rows.push(['공격력',r.atk]);
+  if(r.effect) rows.push(['효과',r.effect]);
   if(r.limit) rows.push(['제작 제한',r.limit]);
   rows.push(['필요 메소',r.meso+' 메소']);
   rows.push(['제작 결과', name+' '+(r.qty||1)+'개'+(item?` · 연금술 경험치 +${fmt(item[2])}`:'')]);
@@ -1372,6 +1386,24 @@ function renderQuestPanel(){
   renderDaily(); renderBoss(); renderQuests();
 }
 
+/* ===== 출석체크 ===== */
+function renderAttend(){
+  const A=D.attendance;
+  if(!A){document.getElementById('attendBody').innerHTML='<tr><td colspan="2" class="empty">데이터가 없습니다.</td></tr>';return;}
+  const kw=document.getElementById('attendSearch').value.trim();
+  const rows=(A.list||[]).filter(r=>!kw||String(r.day).includes(kw)||r.item.includes(kw));
+  document.getElementById('attendBody').innerHTML=rows.map(r=>
+   `<tr><td class="num gold">${r.day}일차</td>
+      <td><span class="namecell">${r.icon?`<img class="ico" src="${esc(r.icon)}" alt="">`:''}${esc(r.item)}</span></td></tr>`
+  ).join('')||'<tr><td colspan="2" class="empty">검색 결과가 없습니다.</td></tr>';
+  const rules=(A.rules||[]).map(r=>`<li>${esc(r)}</li>`).join('');
+  document.getElementById('attendRules').innerHTML=block({
+    title:'출석체크 규칙',
+    extra:rules?`<ul class="changes">${rules}</ul>`:'',
+    note:A.note
+  });
+}
+
 /* ===== 홍포 상점 ===== */
 function shopFind(name){ return D.shop.items.find(s=>s.name===name); }
 function renderShop(){
@@ -1474,6 +1506,7 @@ function bindInputs(){
   document.getElementById('patchSearch').oninput=renderPatch;
   document.getElementById('mobSearch').oninput=renderMobDrops;
   document.getElementById('levelSearch').oninput=renderLevels;
+  document.getElementById('attendSearch').oninput=renderAttend;
 }
 async function boot(){
   try{
@@ -1498,6 +1531,7 @@ async function boot(){
   renderSkills();
   renderLevels();
   renderQuestPanel();
+  renderAttend();
   renderShop();
   renderRoute();
   renderBasicTips();
