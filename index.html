@@ -535,6 +535,9 @@
   .homecard.warn-mini{border-left:3px solid var(--danger);}
   @media (max-width:700px){ .probgrid{grid-template-columns:1fr 1fr;} }
 
+  .s-name{display:flex;align-items:center;gap:8px;}
+  .s-name .ico{width:24px;height:24px;flex:none;}
+
   #searchResults{margin-bottom:20px;}
   .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
   .hit:last-child{border-bottom:0;}
@@ -872,6 +875,7 @@
     <button class="navbtn" data-tab="levels">레벨 보상</button>
     <button class="navbtn" data-tab="bosses">보스</button>
     <button class="navbtn" data-tab="enhance">강화</button>
+    <button class="navbtn" data-tab="sets">세트 효과</button>
     <button class="navbtn" data-tab="alchemy">연금술</button>
     <button class="navbtn" data-tab="items">아이템 정보</button>
     <button class="navbtn" data-tab="skills">스킬</button>
@@ -1066,6 +1070,12 @@
           <tbody id="hiddenBody"></tbody>
         </table>
       </div>
+    </section>
+
+    <!-- ========== 세트 효과 ========== -->
+    <section class="panel" id="sets">
+      <div class="filterbar" id="setChips"></div>
+      <div id="setDetail"></div>
     </section>
 
     <!-- ========== 연금술 ========== -->
@@ -1595,6 +1605,56 @@ function renderBossDrops(){
   ).join('')||'<tr><td colspan="3" class="empty">검색 결과가 없습니다.</td></tr>';
   const note=[b.dropNote,(D.bosses.note||'')].filter(Boolean).join(' ');
   document.getElementById('bossDropNote').innerHTML=note?block({note:note}):'';
+}
+
+/* ===== 세트 효과 ===== */
+let setIdx=0;
+function renderSets(){
+  const S=D.sets;
+  if(!S||!S.list||!S.list.length){
+    document.getElementById('setChips').innerHTML='';
+    document.getElementById('setDetail').innerHTML='<div class="empty">데이터가 없습니다.</div>';
+    return;
+  }
+  if(setIdx>=S.list.length) setIdx=0;
+  document.getElementById('setChips').innerHTML=S.list.map((s,i)=>
+    `<div class="chip ${i===setIdx?'active':''}" data-i="${i}">${esc(s.name)}</div>`).join('');
+  document.querySelectorAll('#setChips .chip').forEach(c=>c.onclick=()=>{ setIdx=parseInt(c.dataset.i); renderSets(); });
+
+  const st=S.list[setIdx];
+  let html=`<div class="block"><h3>${esc(st.name)}</h3>`;
+  if(st.note) html+=`<p class="lead muted" style="margin-top:6px;">${esc(st.note)}</p>`;
+  html+=`</div>`;
+
+  (st.groups||[]).forEach(g=>{
+    html+=`<div class="itemhead">${esc(g.label)}</div>
+      <div class="tablewrap" style="max-height:none;">
+        <table>
+          <thead><tr><th style="width:90px;">세트</th><th>효과</th></tr></thead>
+          <tbody>${(g.tiers||[]).map(t=>
+            `<tr><td class="gold">${esc(t[0])}세트</td><td>${esc(t[1])}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>`;
+  });
+
+  if(st.items&&st.items.length){
+    html+=`<div class="itemhead">포함 장비 <span class="muted" style="font-size:13px;font-weight:400;">${st.items.length}종</span></div>
+      <div class="homegrid">`;
+    st.items.forEach(it=>{
+      const rows=(it.rows||[]).slice();
+      if(it.source){
+        const s=it.source;
+        rows.push(['획득처',`${s.monster} (Lv.${s.level})`]);
+        rows.push(['몬스터 체력',s.hp]);
+        rows.push(['몬스터 경험치',s.exp]);
+        rows.push(['드랍률',s.rate]);
+      }
+      html+=block({title:it.name, icon:it.icon, rows:rows});
+    });
+    html+=`</div>`;
+  }
+
+  document.getElementById('setDetail').innerHTML=html;
 }
 
 /* ===== 강화 ===== */
@@ -2163,14 +2223,15 @@ function renderShop(){
   document.getElementById('shopOrder').innerHTML=S.order.map(g=>{
     const li=g.items.map(n=>{
       const it=shopFind(n);
-      return `<li><span class="s-name">${esc(n)}</span><span class="s-pt">${it?fmt(it.point)+'점':'—'}</span></li>`;
+      const ico=it&&it.icon?`<img class="ico" src="${esc(it.icon)}" alt="">`:'';
+      return `<li><span class="s-name">${ico}${esc(n)}</span><span class="s-pt">${it?fmt(it.point)+'점':'—'}</span></li>`;
     }).join('');
     const list = g.numbered ? `<ol class="steps">${li}</ol>` : `<ul class="plain">${li}</ul>`;
     return block({title:g.title, subtitle:g.subtitle, extra:list, note:g.note});
   }).join('');
 
   document.getElementById('shopBody').innerHTML=S.items.map(s=>
-   `<tr><td>${esc(s.name)}</td><td class="num gold">${fmt(s.point)}</td><td class="muted">${esc(s.pre)||'—'}</td></tr>`).join('');
+   `<tr><td><span class="namecell">${s.icon?`<img class="ico" src="${esc(s.icon)}" alt="">`:''}${esc(s.name)}</span></td><td class="num gold">${fmt(s.point)}</td><td class="muted">${esc(s.pre)||'—'}</td></tr>`).join('');
   document.getElementById('shopSelect').innerHTML=S.items.map((s,i)=>`<option value="${i}">${esc(s.name)}</option>`).join('');
   document.getElementById('shopCalcNote').textContent=S.calcNote||'';
 }
@@ -2277,6 +2338,7 @@ async function boot(){
   }
   renderHome();
   renderRoadmap();
+  renderSets();
   renderEnhance();
   renderSoul();
   renderHidden();
