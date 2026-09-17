@@ -325,6 +325,21 @@
   }
   .itemhead::after{content:'';flex:1;height:1px;background:var(--line-soft);}
 
+  .changes{list-style:none;margin:0;padding:0;}
+  .changes li{
+    padding:10px 0 10px 18px;position:relative;font-size:14.5px;line-height:1.6;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .changes li:last-child{border-bottom:none;}
+  .changes li::before{
+    content:'';position:absolute;left:0;top:17px;
+    width:5px;height:5px;border-radius:50%;background:var(--gold-dim);
+  }
+  .jobtag{
+    font-size:12px;color:var(--text-faint);font-weight:400;
+    margin-left:8px;letter-spacing:.02em;
+  }
+
   #searchResults{margin-bottom:20px;}
   .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
   .hit:last-child{border-bottom:0;}
@@ -659,6 +674,7 @@
     <button class="navbtn" data-tab="hidden">히든 스킬</button>
     <button class="navbtn" data-tab="alchemy">연금술</button>
     <button class="navbtn" data-tab="items">아이템 정보</button>
+    <button class="navbtn" data-tab="skills">스킬</button>
     <button class="navbtn" data-tab="quest">퀘스트</button>
     <button class="navbtn" data-tab="shop">홍포 상점</button>
     <button class="navbtn" data-tab="tips">공략 팁</button>
@@ -805,6 +821,25 @@
     <section class="panel" id="items">
       <div class="subtabs" id="itemSubtabs"></div>
       <div id="itemDetail"></div>
+    </section>
+
+    <!-- ========== 스킬 ========== -->
+    <section class="panel" id="skills">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="sk-ult">궁극기</button>
+        <button class="subtab" data-sub="sk-patch">패치 내역</button>
+      </div>
+
+      <div class="subpanel active" id="sk-ult">
+        <div class="filterbar" id="ultFilter"></div>
+        <div id="ultList"></div>
+      </div>
+
+      <div class="subpanel" id="sk-patch">
+        <div class="filterbar" id="patchFilter"></div>
+        <div class="searchline"><input type="text" id="patchSearch" placeholder="직업이나 스킬 이름으로 검색"></div>
+        <div id="patchList"></div>
+      </div>
     </section>
 
     <!-- ========== 퀘스트 ========== -->
@@ -1095,6 +1130,42 @@ function renderItems(){
     (it.note?block({note:it.note}):'');
 }
 
+/* ===== 스킬 ===== */
+let ultCat='전체', patchCat='전체';
+function renderUlt(){
+  const L=(D.skills&&D.skills.ultimates)||[];
+  const cats=['전체',...new Set(L.map(s=>s.group))];
+  document.getElementById('ultFilter').innerHTML=cats.map(c=>
+    `<div class="chip ${c===ultCat?'active':''}" data-c="${esc(c)}">${esc(c)}</div>`).join('');
+  document.querySelectorAll('#ultFilter .chip').forEach(ch=>ch.onclick=()=>{ultCat=ch.dataset.c;renderUlt();});
+  const rows=L.filter(s=>ultCat==='전체'||s.group===ultCat);
+  document.getElementById('ultList').innerHTML=rows.map(s=>block({
+    title:s.name, subtitle:`${s.job} · ${s.type}`, rows:s.rows, note:s.note
+  })).join('')||'<div class="empty">해당 분류가 없습니다.</div>';
+}
+function renderPatch(){
+  const L=(D.skills&&D.skills.patches)||[];
+  const cats=['전체',...new Set(L.map(s=>s.group))];
+  document.getElementById('patchFilter').innerHTML=cats.map(c=>
+    `<div class="chip ${c===patchCat?'active':''}" data-c="${esc(c)}">${esc(c)}</div>`).join('');
+  document.querySelectorAll('#patchFilter .chip').forEach(ch=>ch.onclick=()=>{patchCat=ch.dataset.c;renderPatch();});
+  const kw=document.getElementById('patchSearch').value.trim();
+  const rows=L.map(g=>{
+    if(patchCat!=='전체'&&g.group!==patchCat) return null;
+    if(!kw) return g;
+    if(g.job.includes(kw)) return g;
+    const hit=g.changes.filter(c=>c.includes(kw));
+    return hit.length?{group:g.group,job:g.job,changes:hit}:null;
+  }).filter(Boolean);
+  document.getElementById('patchList').innerHTML=rows.map(g=>
+    `<div class="block"><h3>${esc(g.job)}<span class="jobtag">${esc(g.group)}</span></h3>
+      <ul class="changes">${g.changes.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>`
+  ).join('')||'<div class="empty">검색 결과가 없습니다.</div>';
+}
+function renderSkills(){
+  renderUlt(); renderPatch();
+}
+
 /* ===== 퀘스트 ===== */
 function renderDaily(){
   const Q=D.quest;
@@ -1217,6 +1288,8 @@ function buildIndex(){
   D.quest.quests.forEach(q=>INDEX.push([q.name,'quest','퀘스트']));
   D.shop.items.forEach(s=>INDEX.push([s.name,'shop','홍포 상점']));
   (D.items&&D.items.list||[]).forEach(i=>INDEX.push([i.name,'items','아이템']));
+  ((D.skills&&D.skills.ultimates)||[]).forEach(s=>INDEX.push([s.name,'skills','궁극기']));
+  ((D.skills&&D.skills.patches)||[]).forEach(s=>INDEX.push([s.job,'skills','스킬 패치']));
   (D.extraSearchEntries||[]).forEach(e=>INDEX.push(e));
 }
 document.getElementById('globalSearch').oninput=e=>{
@@ -1236,6 +1309,7 @@ function bindInputs(){
   document.getElementById('alchemySearch').oninput=renderAlchemy;
   document.getElementById('bossSearch').oninput=renderBoss;
   document.getElementById('questSearch').oninput=renderQuests;
+  document.getElementById('patchSearch').oninput=renderPatch;
 }
 async function boot(){
   try{
@@ -1256,6 +1330,7 @@ async function boot(){
   renderHidden();
   renderAlchemy();
   renderItems();
+  renderSkills();
   renderQuestPanel();
   renderShop();
   renderRoute();
