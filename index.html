@@ -359,6 +359,22 @@
     border-radius:4px;padding:1px 6px;margin-left:8px;opacity:.45;
   }
 
+  .lvtag{
+    color:var(--gold);font-variant-numeric:tabular-nums;letter-spacing:.02em;
+  }
+
+  .matlist{list-style:none;margin:0;padding:0;}
+  .matlist li.mat{
+    display:flex;align-items:center;gap:12px;
+    padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:15px;
+  }
+  .matlist li.mat:last-child{border-bottom:none;}
+  .matlist .ico{width:28px;height:28px;}
+  .matlist .noico{
+    width:28px;height:28px;flex:none;border-radius:5px;
+    border:1px dashed var(--line);
+  }
+
   #searchResults{margin-bottom:20px;}
   .hit{display:flex;gap:13px;align-items:center;padding:12px 17px;border-bottom:1px solid var(--line-soft);cursor:pointer;font-size:14px;}
   .hit:last-child{border-bottom:0;}
@@ -688,15 +704,16 @@
   <aside class="sidebar">
     <div class="brand" id="brandBox">RIEN<em>서버 종합 가이드</em></div>
     <button class="navbtn active" data-tab="home">홈</button>
+    <button class="navbtn" data-tab="tips">공략 팁</button>
+    <button class="navbtn" data-tab="quest">퀘스트</button>
+    <button class="navbtn" data-tab="shop">홍포 상점</button>
+    <button class="navbtn" data-tab="levels">레벨 보상</button>
     <button class="navbtn" data-tab="enhance">강화</button>
-    <button class="navbtn" data-tab="soul">영혼석</button>
-    <button class="navbtn" data-tab="hidden">히든 스킬</button>
     <button class="navbtn" data-tab="alchemy">연금술</button>
     <button class="navbtn" data-tab="items">아이템 정보</button>
     <button class="navbtn" data-tab="skills">스킬</button>
-    <button class="navbtn" data-tab="quest">퀘스트</button>
-    <button class="navbtn" data-tab="shop">홍포 상점</button>
-    <button class="navbtn" data-tab="tips">공략 팁</button>
+    <button class="navbtn" data-tab="hidden">히든 스킬</button>
+    <button class="navbtn" data-tab="soul">영혼석</button>
   </aside>
 
   <main class="main">
@@ -877,6 +894,24 @@
         <div class="filterbar" id="patchFilter"></div>
         <div class="searchline"><input type="text" id="patchSearch" placeholder="직업이나 스킬 이름으로 검색"></div>
         <div id="patchList"></div>
+      </div>
+    </section>
+
+    <!-- ========== 레벨 보상 ========== -->
+    <section class="panel" id="levels">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="lv-list">달성 보상</button>
+        <button class="subtab" data-sub="lv-item">보상 아이템 설명</button>
+      </div>
+
+      <div class="subpanel active" id="lv-list">
+        <div class="searchline"><input type="text" id="levelSearch" placeholder="레벨이나 아이템 이름으로 검색"></div>
+        <div id="levelList"></div>
+        <div class="block"><p class="lead muted" id="levelNote"></p></div>
+      </div>
+
+      <div class="subpanel" id="lv-item">
+        <div id="levelItemList"></div>
       </div>
     </section>
 
@@ -1160,15 +1195,22 @@ function showRecipe(name){
   if(!r||!box) return;
   const item=(A.items||[]).find(a=>a[1]===name);
   const rows=[['성공 확률',r.rate]];
+  if(r.atk) rows.push(['공격력',r.atk]);
   if(r.limit) rows.push(['제작 제한',r.limit]);
   rows.push(['필요 메소',r.meso+' 메소']);
   rows.push(['제작 결과', name+' '+(r.qty||1)+'개'+(item?` · 연금술 경험치 +${fmt(item[2])}`:'')]);
+  const MI=A.matIcons||{};
+  const matLine=m=>{
+    const key=String(m).replace(/\s*\d[\d,]*개$/,'').trim();
+    const src=MI[key];
+    return `<li class="mat">${src?`<img class="ico" src="${esc(src)}" alt="">`:'<span class="noico"></span>'}${esc(m)}</li>`;
+  };
   let mat=`<div class="itemhead" style="margin-top:18px;">필요 재료</div>
-      <ul class="changes">${r.mats.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`;
+      <ul class="matlist">${r.mats.map(matLine).join('')}</ul>`;
   if(r.alt){
     mat+=`<div class="itemhead" style="margin-top:18px;">또는 이 재료로도 제작</div>
-      <ul class="changes">${r.alt.mats.map(m=>`<li>${esc(m)}</li>`).join('')}
-        <li>메소 ${esc(r.alt.meso)}</li></ul>`;
+      <ul class="matlist">${r.alt.mats.map(matLine).join('')}
+        <li class="mat">${A.mesoIcon?`<img class="ico" src="${esc(A.mesoIcon)}" alt="">`:'<span class="noico"></span>'}메소 ${esc(r.alt.meso)}</li></ul>`;
   }
   box.innerHTML=block({title:name, icon:r.icon, rows:rows, extra:mat});
   box.scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -1260,6 +1302,26 @@ function renderPatch(){
 }
 function renderSkills(){
   renderUlt(); renderPatch();
+}
+
+/* ===== 레벨 보상 ===== */
+function renderLevels(){
+  const L=D.levelRewards;
+  if(!L){document.getElementById('levelList').innerHTML='<div class="empty">데이터가 없습니다.</div>';return;}
+  const kw=document.getElementById('levelSearch').value.trim();
+  const rows=(L.list||[]).filter(r=>
+    !kw || String(r.level).includes(kw) || r.items.some(i=>i.includes(kw)));
+  document.getElementById('levelList').innerHTML=rows.map(r=>
+   `<div class="block"><h3><span class="lvtag">Lv.${r.level}</span></h3>
+      <ul class="changes">${r.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`
+  ).join('')||'<div class="empty">검색 결과가 없습니다.</div>';
+  document.getElementById('levelNote').textContent=
+    [L.extraNote,L.pending].filter(Boolean).join(' ');
+  document.getElementById('levelItemList').innerHTML=(L.itemInfo||[]).map(it=>{
+    const rows=[];
+    if(it.use) rows.push(['사용처',it.use]);
+    return block({title:it.name, lead:it.desc, rows:rows});
+  }).join('');
 }
 
 /* ===== 퀘스트 ===== */
@@ -1411,6 +1473,7 @@ function bindInputs(){
   document.getElementById('questSearch').oninput=renderQuests;
   document.getElementById('patchSearch').oninput=renderPatch;
   document.getElementById('mobSearch').oninput=renderMobDrops;
+  document.getElementById('levelSearch').oninput=renderLevels;
 }
 async function boot(){
   try{
@@ -1433,6 +1496,7 @@ async function boot(){
   renderItems();
   renderMobDrops();
   renderSkills();
+  renderLevels();
   renderQuestPanel();
   renderShop();
   renderRoute();
