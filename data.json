@@ -52,6 +52,10 @@
     "attend": {
       "title": "출석체크",
       "sub": "1일차부터 30일차까지 보상"
+    },
+    "bosses": {
+      "title": "보스",
+      "sub": "보스 스탯과 드랍 목록"
     }
   },
   "home": {
@@ -83,6 +87,11 @@
         "goto": "levels",
         "title": "레벨 보상",
         "desc": "10~250레벨 달성 보상, 보상 아이템 설명"
+      },
+      {
+        "goto": "bosses",
+        "title": "보스",
+        "desc": "자쿰·혼테일·크렉셀 스탯과 드랍"
       },
       {
         "goto": "enhance",
@@ -2616,6 +2625,271 @@
           ]
         ],
         "note": "사용 시 해당 경험치를 바로 획득합니다."
+      },
+      {
+        "name": "아스타로스 건",
+        "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAALbklEQVR4nJVXa3RUVZrd59x7611JJalUpfIihE5oAoQQBB9IFB2wg0yQxoRhaTPd/ICeONqts7TpaZ10WptZPaCOs3ociC7FblqbZJYvxABNC4gdAYGYECAxCZXKox6kUpV631t17znzAzNLaEad/e+edc737fOdvdfaF7gBLS0tFAB+8+S71q4339554f0/7Hp9x28eAoBjr7cYWlpaKOec3HgOAHgLpzdb/zpcV2im+Vx7SUFlDt01Nure1DMygG0NtwfOhPlj637wRPvM3mMH37ylXI00qYNnFWPVcr1Hl7fv9r9Z18s5p4QQ9m0JiABw7Ngx8W4AnamUsGbNGuXdNzoKi5zSpu5P96d/2XYY2WzKuXl17UvHD7TXpbzqEYOlsit3+rOXC+aWLNUtWAotOgl5YmpFz5GTjwM48/8hIX65Wf3yW+Xt7cIHgiGjKQHVxFLiogId9V3q4i/6fQXPPmZ7pD/P+rc+IfYxCV9dmtZVZXTlS3j8sw9ThSbjbf0Mywkhp87u2SMB+FYEKCGEXTzYuWf6/Infd3/QuYs0NWkWK5VMOi6qU2E4C8z4+YPVJN53la99Ypd66Mj+0pU5gYfNIuGh/nNC5GS7zggteySe/CPleIe3twtLtm5Vv7n1NZD+zg8PTCfH1/6u4yCe/LvvIyYV/Lo/GGlrzB70HHr1ef6ToQQZ+O1aTDz3Bfb1T8NDouyyVWS3LK7FYw9tEH2eybeX1dW+iuo1nxFCgvzsHglXjjKg8fpOTU2MAPyvniDbYl472j+svfX2e+z5+7LEuGH5z+tE//KuTzrxe7mSvLbzUST/uBMWxYBcQUS3wOiWRTZmvrWGjsq6//4kMfefbl10/yoAqwC8RW7ZlrlWuuNbTUCMRse0wtSIIEMUNj7/Pn/v4T6K3Jy7L3guoDdeguX2IXg/lvFGNIRTwgT+vZ5j9kInnygtoecHJy5v3/7MqNmgX5eQlRP86sCm6OddWzDtVcMKF8KWYjC9ixkEkcYzqc23rl3rv1GgIiWqoKVjcBg51lcKZOkL3VyQwBIpKmTPDQFjn8AdVTHFZXwU1vCPRwVMHOjGvSudeG7LQ0lJohvLy+csu+K7Oud3L+60J5JJx77Dp7G7Ph811RVQdflQs+fAQ3MPfdr5zgMAPJy3UEJa2TURAtBYEgaThB9+bx7+tbKKLE+XCRoYtloi2LL7IiruyUA3lcYjsg39wxR6ox4/WupCGvpIJsNcGZU5VVWrSoSDjvaj3drdK5j2ysCIVv3km1rtUy9ry5r/RY14Li26LStmIYRw/PIrLuCcg/AMMpIAxWlHHbVgnh6w6oCNFWl8N+HFM70J/LjGiS+Qxoq5BJ1bloh582/B5n975RdPPzPviYc3u7gSj2hTBivf+8TtwnB/VKgMmYXdS6uEpwxOYXB0SvAGfAzGzF9ZkxKSBXALKAE0CegaCeK0dwopLkFfWIYKVy4u+jMothkQYRreG8tg9X+dJbf96Gl84QsW1RXNLmHuIQIuCS/sfZ90DaXx3Ia78OfpSZw468db/iBe/vvvoqZ6Fu0Lmq654CsTEFUucZY/n4xOHOENPztO2tfk4LXdGiwGAz51m/HjP41jickI90QMJnAkpCwkbWWoKnZhYirBO989DTkDAmTw7LM16Lp0ETv2eTAUTOCDVBQqgEsferDjo//AVFylAAjQ+r92FDNCZrFQsuD4+V2bbZ6T7ezBD4N0z8pyPPvJMDZ1BlC5eDn6xt1oHpyAExJYRkYidBXngtNYURYmI8EU/jKaA4DAnvKDhWLoGwtjUfVCVNcuxpyy2XC4ionJaEDLM7/4UywWSxuN4l0EsocDlC783oaemDHvTvvcOxOF8++gwQhjk4KGjoyCWZULsWxJDYjZAp+ahlWnh2AwIhRPY1mhHwKXcXTQAlXTIIkc/7xbj8ZV5Vhfp8O4P46cLAvAOaYCXkyMedDc3Ozau3fvLHt+/ikOlBBCGG1vbxdW1K+7eCEm3G5ceE985+ZauubkECxOO0oKXeCEwGI0wmawQp9thbNwDlq2OHHvChsOfG6CJBBQAlCBwuuPw7Z4PrJnF0BJpnD5cj8+7+mBPxBAKBRCJBJhQ0PD2iPNzQWFzrwuvZ7PEpuamrT2xkZhVdOWC8rl43d83OP7OLvQa9v76is4d/48BgYGYDeZYalbhuNX02i+NwqnLY5tv5Zhz7eCc4ZkMgVCAM40aJoGgQpIJELo7e3leXn5PB6PU0opzCYTFQQRWVYdf2eXobjhUfSKANDU0aG1AFRftfKCPS/vHrPZfHZoeJi43W7S09MDj2cMs2bPAiMGFC6YC50xiJR8HlarEdPTccTjcQiiDiJJY/DICUx7QuCcQM2oZHx8nHDOYbFY2ORUmOr1FhRoOaR8tZFRo5Alzqix9Zo8EQwGZVEUaW9vLx8cHARAkZHDmBgOQmYl4CiETtTDZstCMplCMBiEySDBbDZhVUUUu14Jo28yGyYTQyg8Pck5T2maVlpSUkKdOXqebQlzp4PAPfoa5bxp/LoIxRgjOh3UeDw+1tPTA1Eg8F2V0XC3ij/sFBAKJXClP4Ke0xHk2bMQjcbAQbjNKvH7KoK4PKGie0xA3fKlWkVFJeOc/wBAWTKZeLe/v39oNu0h2zcE6E8fPUnXrVt5ye/3L/oqAUYIoZkMGYzH4w3nzp0j0ViUyYkkpriGYS0Nq9WIE6diePtQDFaLAMYAgRKiEgv5s2cWL65ZD6vVgtWr72ML5i+gAEAI4ZxjA4CKvX/BgTu2+S7NW5jp8Xm1FQBCIm6OJGMMmgbk5AAHPxDwaZcd1dXFGBubgKIocDgcDABXFGW8pqbGvG3bNnttba26fft2hMNhKZ6MjwKIMMYIIWQmezbc2OhGAryoqMgYCARutVgsAABJklBaWoyioiIoioJIJAJCCJdlmXyp7hcOHjw4Wehy7Y7FolkNDQ1oa2sbOXr06EZK6RlCiABA+7L+V0Mwv3GBEkIY53yR0Wj8fMmSJdzhcJBUKoV4PA5RFNHX14dYLMadTgdhGpvyer39okT3pdPabkmSfgLg+5xziKL4M1mWT3HORQBfG89u9gRTgiCwefPmkbKyMni9Xly8eBFutxvRaJTPmTOHe72+4dKC/P1+QXhaUTIAQNPp9EuEkJcAIJPJzFzuG7PhDAECgDscDvPk5GRDeXk5ra+v5+Pj46CUwufzYWRkBPOrqpg/EBAkERf2vdhy/MyZ7g15JUXxB7b89EhTY5OuuztGvvMdoLS0lLlcruvyX2trq4abZcIZAoQQFggEiiwW83/W19ejsLCQeDweTE5OIhgMori4GCBEYFoGm9bWrZdjk+vLS3KQRhqHOl7b2NHY0Q4AQ0PfdOebE5iBZjSatfXr1wuKoiAYDOLw4SMIh0NwOBy44vZgcWUR6u9axHIqylmB3qCd+egjcWJs+sGnf/Urne/KoCDojJrL5UI6nYYsy6rJZOJmsxlGo/Hw448/Pj0z7ZsSeOCBlUglGNu/v50NDw/B7/MhNycbkkihyEkY9SLNyAo5/1kPihesoBoMGBoYYoMBrVE15zYmYknoDQyjo6MghMDhcMBut0Ov12N0dPQ2AKcbGxtpR0eHdh2BlpYWtLa2YtsP/0EcGR2Xfrv7VUiShIICJ+6/fzXcbjeYmkY0lsB0MIju8wOw6N5Abq6duj1+yBYHoCjIdzrANAZZkZFlyUI0Gj2g0+mGAdBwODwOAFVVVdfpgAAA55wQQviOHTvyAPKUIFCAMSiZDAKBABRFEXSiTtOg3alE4067zRCy6KlezzKH4hajkE7rtGxrPvR6CSlFASGE22w2IgjC883NzVe/TgM3/c3+v/D66201LKNVRhMyUfNKjz25ecPXFgeArVu3SgDQ1tam4iYu+B/+D2obbGwGIgAAAABJRU5ErkJggg==",
+        "rows": [
+          [
+            "분류",
+            "무기 · 건"
+          ],
+          [
+            "착용 직업",
+            "해적"
+          ],
+          [
+            "요구 레벨",
+            "100"
+          ],
+          [
+            "요구 스탯",
+            "STR 100 · DEX 100"
+          ],
+          [
+            "공격속도",
+            "빠름"
+          ],
+          [
+            "DEX",
+            "+10"
+          ],
+          [
+            "공격력",
+            "+80"
+          ],
+          [
+            "업그레이드 가능 횟수",
+            "7"
+          ],
+          [
+            "특수 효과",
+            "보스 몬스터 공격 시 30% 확률로 5% 추가 데미지"
+          ],
+          [
+            "획득",
+            "크렉셀 드랍 (6.0%)"
+          ]
+        ],
+        "note": "장착 시 교환 불가"
+      },
+      {
+        "name": "아스타로스 너클",
+        "icon": "data:image/png;base64,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",
+        "rows": [
+          [
+            "분류",
+            "무기 · 너클"
+          ],
+          [
+            "착용 직업",
+            "해적"
+          ],
+          [
+            "요구 레벨",
+            "100"
+          ],
+          [
+            "요구 스탯",
+            "STR 100 · DEX 100"
+          ],
+          [
+            "공격속도",
+            "보통"
+          ],
+          [
+            "STR",
+            "+10"
+          ],
+          [
+            "공격력",
+            "+80"
+          ],
+          [
+            "명중률",
+            "+5"
+          ],
+          [
+            "업그레이드 가능 횟수",
+            "7"
+          ],
+          [
+            "특수 효과",
+            "보스 몬스터 공격 시 30% 확률로 5% 추가 데미지"
+          ],
+          [
+            "획득",
+            "크렉셀 드랍 (6.0%)"
+          ]
+        ],
+        "note": "장착 시 교환 불가"
+      },
+      {
+        "name": "크렉셀 견갑",
+        "icon": "data:image/png;base64,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",
+        "rows": [
+          [
+            "분류",
+            "어깨장식"
+          ],
+          [
+            "착용 직업",
+            "전 직업"
+          ],
+          [
+            "요구 레벨",
+            "120"
+          ],
+          [
+            "STR · DEX · INT · LUK",
+            "각 +7"
+          ],
+          [
+            "공격력",
+            "+1"
+          ],
+          [
+            "마력",
+            "+1"
+          ],
+          [
+            "획득",
+            "크렉셀 드랍 (4.5%)"
+          ]
+        ],
+        "note": "교환 불가"
+      },
+      {
+        "name": "골드 드래곤 크라운",
+        "icon": "data:image/png;base64,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",
+        "rows": [
+          [
+            "분류",
+            "모자"
+          ],
+          [
+            "착용 직업",
+            "마법사"
+          ],
+          [
+            "요구 레벨",
+            "110"
+          ],
+          [
+            "요구 스탯",
+            "LUK 113"
+          ],
+          [
+            "INT",
+            "+5"
+          ],
+          [
+            "LUK",
+            "+5"
+          ],
+          [
+            "MP",
+            "+25"
+          ],
+          [
+            "물리 방어력",
+            "+56"
+          ],
+          [
+            "마법 방어력",
+            "+85"
+          ],
+          [
+            "업그레이드 가능 횟수",
+            "7"
+          ]
+        ]
+      },
+      {
+        "name": "파풀라투스 마크",
+        "icon": "data:image/png;base64,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",
+        "rows": [
+          [
+            "분류",
+            "눈장식"
+          ],
+          [
+            "착용 직업",
+            "전 직업"
+          ],
+          [
+            "요구 레벨",
+            "100"
+          ],
+          [
+            "STR · DEX · INT · LUK",
+            "각 +4"
+          ],
+          [
+            "공격력",
+            "+2"
+          ],
+          [
+            "마력",
+            "+2"
+          ],
+          [
+            "물리 방어력",
+            "+55"
+          ],
+          [
+            "마법 방어력",
+            "+55"
+          ],
+          [
+            "업그레이드 가능 횟수",
+            "5"
+          ]
+        ],
+        "note": "장착 시 교환 불가"
+      },
+      {
+        "name": "핑크빈 마크",
+        "icon": "data:image/png;base64,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",
+        "rows": [
+          [
+            "분류",
+            "눈장식"
+          ],
+          [
+            "착용 직업",
+            "전 직업"
+          ],
+          [
+            "STR · DEX · INT · LUK",
+            "각 +10"
+          ],
+          [
+            "공격력",
+            "+5"
+          ],
+          [
+            "마력",
+            "+5"
+          ],
+          [
+            "물리 방어력",
+            "+140"
+          ],
+          [
+            "마법 방어력",
+            "+140"
+          ],
+          [
+            "명중률",
+            "+60"
+          ],
+          [
+            "회피율",
+            "+60"
+          ]
+        ],
+        "note": "요구 레벨과 업그레이드 가능 횟수는 확인 중입니다."
       }
     ],
     "dropNote": "확률은 인게임 표기 기준입니다."
@@ -4115,6 +4389,1203 @@
         "day": 30,
         "item": "에픽 잠재능력 주문서 90% 1개",
         "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEZ0lEQVR4nO2XXXXrOBCAP/WEwBiCFoILwYWQhZBCSCA4EBoI1xBqCBWEDAQNhNkHWbKdpvc+7sPunONYUeb/P/Bfh5BzRgBbP5bvAlbOoet8S5SzBzBAEKyS/cinC2FP7zlgAMKhIokVRmLb70IIwf3DIW607grD7N4YFUW+8+kqPaBzoe9CcM85mMBhK+zx3T0RDuCfDgohBM/u4U/0OkMybfT3oxO6osQBs2LEk3eDgcD2bhKvjKp7c87hGb3OMHFBMczKc4ofhR1wQAQxQAxjfwbgtBeups4Apopw5H50kindkifuOTQ+wCzXImkDN7tQA3eoMcO2CSV0XXB3D/wG7DQhtyMAv4Y7ACGsCdtLv8e3vSYmxsGAbkOUcw5VZU3mMQkcLTTrKdZvlYiAqsJUPAIl5je9LF6zVbgIc5qWBDZeqqf9w/FPp+s677rOP3/9IpqUEEzi6V12pfRoUYyRflQ4z+2uj/GRpIFYqdsXMdn9cD865/hJS30zVEHGhF16pr9XpiKyezc4z8Rz4vF6pzwgJryEbi01va0IsZen8R/GGW5H5suwt+iJNBFpXnqMPwKG8QIQ3gPhrci7pZlhXPH0Ks6pWM9pAmBWK4o8AZEYRGJIc62aJ/HPOYhJCYFnD9lzyNnDX1NRoh/6EGOE3kI8W7BL/13Skv31bdcBuw6LteolUX+IwWK9mHCoB1sK9/zVh+pONfUoMciYWuY31y/e2EIcNdgtepLn3mnyTVo7f1m1qV7aa11Lr8IwzgxRmC/DLg9kyU05aVA1RCL22IGAc/yk5R21CqRMPM/5t42nwWlqish5Lq4/FqtTSo4thhi7+Pd24tQPZRa8Bzzn8GIYXeiKRkmcmfLU7N00nW+u3NQ8U/FGsb4Y9S3zF4iL4wzWRvQ48Ujice7/qASU2MtJwzzNrrMS+58bUAX/KE0vAO6fjs3wdiut82sci0KLXJ1Ly61gVqxcG1EMALfr5Ec7NwvrGJ7sgpkx6/fkfAGwGd6nG8MxMRwTr5cLr39fmCdD5+KyOnSqAo/w/jZ/E948ZKd2zp7DWvo5HKAIV1NisYbjyVBV3qYOgDslY+06oGZLwn13cxyK4Esq/AAGqb2hB+Zlzq3r3AEgEokSmRcvD8fUmHrOodbsR19GLtOZNEEUIY4rbhUu8UYPpDRg8YLoSLIr2UsHNLFlcZGiQIVBBhRtisC8uK2sXXU5bYoAeulRMx9kaMIBJEZIEPue1JJYdtabQMhe1qoyAVe46hv5fg8mAqpedz0F3l5fG95WmdsyzaLsw6OmJLty//qCGENkXXxDzhmgrVQVvr6+2g5nm4HymIDX67Wdj8uu90z4OI6ICDFGYoyt3Yfsvt8D1TDUkxqooZbK/U9jdQO32+3p/XgeS6uWSC+xjHqJiEHwnHc7oWJoMse0bLJKu3/cGx/PRPnxLESiAFGCEDc5sIRg+29ocbkLJWNN7SmOiFBx6tyJIg0HQERCxZGl7W75/A//OvwDljgfvzo2MqIAAAAASUVORK5CYII="
+      }
+    ]
+  },
+  "bosses": {
+    "note": "드랍 확률은 인게임 표기 기준입니다.",
+    "list": [
+      {
+        "name": "자쿰",
+        "level": 140,
+        "type": "보스, 선공, 비언데드",
+        "location": "알 수 없음",
+        "stats": [
+          [
+            "체력",
+            "110,000,000"
+          ],
+          [
+            "마나",
+            "40,000"
+          ],
+          [
+            "물리 공격력",
+            "1,080"
+          ],
+          [
+            "마법 공격력",
+            "570"
+          ],
+          [
+            "물리 방어력",
+            "1,200"
+          ],
+          [
+            "마법 방어력",
+            "1,500"
+          ],
+          [
+            "명중률",
+            "250"
+          ],
+          [
+            "회피율",
+            "16"
+          ],
+          [
+            "이동속도",
+            "0"
+          ],
+          [
+            "밀쳐짐",
+            "50,000"
+          ],
+          [
+            "속성",
+            "없음"
+          ],
+          [
+            "경험치",
+            "35,000,000"
+          ]
+        ],
+        "drops": [
+          [
+            2,
+            "순록의 우유 15 ~ 50개",
+            "100.0%"
+          ],
+          [
+            3,
+            "황혼의 이슬 15 ~ 50개",
+            "100.0%"
+          ],
+          [
+            4,
+            "파워 엘릭서 5 ~ 10개",
+            "100.0%"
+          ],
+          [
+            5,
+            "자쿰의 투구 1개",
+            "22.5%"
+          ],
+          [
+            6,
+            "자쿰의 증표 1개",
+            "100.0%"
+          ],
+          [
+            7,
+            "[스킬북] 어드밴스드 콤보 1개",
+            "30.0%"
+          ],
+          [
+            8,
+            "[스킬북] 어드밴스드 차지 1개",
+            "30.0%"
+          ],
+          [
+            9,
+            "[스킬북] 엔젤레이 1개",
+            "30.0%"
+          ],
+          [
+            10,
+            "[스킬북] 트리플스로우 1개",
+            "30.0%"
+          ],
+          [
+            11,
+            "[마스터리북] 스탠스 30 1개",
+            "24.0%"
+          ],
+          [
+            12,
+            "[마스터리북] 인레이지 20 1개",
+            "15.0%"
+          ],
+          [
+            13,
+            "[마스터리북] 생츄어리 20 1개",
+            "6.0%"
+          ],
+          [
+            14,
+            "[마스터리북] 버서크 20 1개",
+            "45.0%"
+          ],
+          [
+            15,
+            "[마스터리북] 인피니티 30 1개",
+            "30.0%"
+          ],
+          [
+            16,
+            "[마스터리북] 메테오 20 1개",
+            "4.5%"
+          ],
+          [
+            17,
+            "[마스터리북] 블리자드 20 1개",
+            "10.5%"
+          ],
+          [
+            18,
+            "[마스터리북] 제네시스 20 1개",
+            "45.0%"
+          ],
+          [
+            19,
+            "[마스터리북] 보우 엑스퍼트 30 1개",
+            "16.5%"
+          ],
+          [
+            20,
+            "[마스터리북] 집중 20 1개",
+            "15.0%"
+          ],
+          [
+            21,
+            "[마스터리북] 크로스보우 엑스퍼트 30 1개",
+            "4.5%"
+          ],
+          [
+            22,
+            "[마스터리북] 스나이핑 20 1개",
+            "4.5%"
+          ],
+          [
+            23,
+            "[마스터리북] 베놈 30 1개",
+            "24.0%"
+          ],
+          [
+            24,
+            "[마스터리북] 트리플스로우 20 1개",
+            "33.0%"
+          ],
+          [
+            25,
+            "[마스터리북] 연막탄 20 1개",
+            "1.5%"
+          ],
+          [
+            26,
+            "스파타 1개",
+            "9.0%"
+          ],
+          [
+            27,
+            "토마호크 1개",
+            "3.0%"
+          ],
+          [
+            28,
+            "배틀해머 1개",
+            "3.0%"
+          ],
+          [
+            29,
+            "골드 트윈 나이프 1개",
+            "9.0%"
+          ],
+          [
+            30,
+            "블러드 대거 1개",
+            "9.0%"
+          ],
+          [
+            31,
+            "다이몬의 완드 1개",
+            "30.0%"
+          ],
+          [
+            32,
+            "블루마린 1개",
+            "15.0%"
+          ],
+          [
+            33,
+            "참화도 1개",
+            "3.0%"
+          ],
+          [
+            34,
+            "타바르 1개",
+            "3.0%"
+          ],
+          [
+            35,
+            "골든 스미스해머 1개",
+            "3.0%"
+          ],
+          [
+            36,
+            "피나카 1개",
+            "21.0%"
+          ],
+          [
+            37,
+            "제드버그 1개",
+            "21.0%"
+          ],
+          [
+            38,
+            "화이트 니스록 1개",
+            "3.0%"
+          ],
+          [
+            39,
+            "골든 니스록 1개",
+            "2.1%"
+          ],
+          [
+            40,
+            "화이트 네쉐르 1개",
+            "3.0%"
+          ],
+          [
+            41,
+            "골든 네쉐르 1개",
+            "2.1%"
+          ],
+          [
+            42,
+            "레드 크리븐 1개",
+            "15.0%"
+          ],
+          [
+            43,
+            "엘릭서 5 ~ 20개",
+            "100.0%"
+          ],
+          [
+            44,
+            "킹 센트 1개",
+            "30.0%"
+          ],
+          [
+            45,
+            "콘체르토 1개",
+            "30.0%"
+          ],
+          [
+            46,
+            "[마스터리북] 타임 리프 20 1개",
+            "33.0%"
+          ],
+          [
+            47,
+            "[마스터리북] 에어 스트라이크 20 1개",
+            "33.0%"
+          ],
+          [
+            48,
+            "투구 지력 주문서 10% 1개",
+            "9.0%"
+          ],
+          [
+            49,
+            "투구 민첩성 주문서 10% 1개",
+            "9.0%"
+          ],
+          [
+            50,
+            "귀 장식 행운 주문서 60% 1개",
+            "9.0%"
+          ],
+          [
+            51,
+            "귀 장식 체력 주문서 10% 1개",
+            "9.0%"
+          ],
+          [
+            52,
+            "전신 갑옷 지력 주문서 100% 1개",
+            "9.0%"
+          ],
+          [
+            53,
+            "백의 주문서 1% 1개",
+            "9.0%"
+          ],
+          [
+            54,
+            "혼돈의 주문서 60% 1개",
+            "9.0%"
+          ],
+          [
+            55,
+            "자쿰 카드 1개",
+            "1.0002%"
+          ],
+          [
+            56,
+            "자쿰의 나뭇가지 1개",
+            "30.0%"
+          ],
+          [
+            57,
+            "[스킬북] 파이널 컷 1개",
+            "15.0%"
+          ],
+          [
+            58,
+            "[스킬북] 사슬지옥 1개",
+            "15.0%"
+          ],
+          [
+            59,
+            "영혼의 반지 1개",
+            "0.4056%"
+          ],
+          [
+            60,
+            "자쿰의 돌조각 1개",
+            "50.0001%"
+          ],
+          [
+            61,
+            "자쿰의 영혼 조각 1 ~ 5개",
+            "50.0001%"
+          ],
+          [
+            62,
+            "[스킬북] 콤보 템페스트 1개",
+            "30.0%"
+          ],
+          [
+            63,
+            "[스킬북] 파이널 블로우 1개",
+            "30.0%"
+          ],
+          [
+            64,
+            "[스킬북] 하이 디펜스 1개",
+            "30.0%"
+          ],
+          [
+            65,
+            "[스킬북] 콤보 배리어 1개",
+            "30.0%"
+          ],
+          [
+            66,
+            "[스킬북] 플레임 휠 1개",
+            "30.0%"
+          ],
+          [
+            67,
+            "[스킬북] 매직 마스터리 1개",
+            "30.0%"
+          ],
+          [
+            68,
+            "[스킬북] 다크 포그 1개",
+            "30.0%"
+          ],
+          [
+            69,
+            "[스킬북] 소울 스톤 1개",
+            "30.0%"
+          ],
+          [
+            70,
+            "혼돈의 주문서 90% 1개",
+            "9.0%"
+          ],
+          [
+            71,
+            "자쿰의 결정석 1개",
+            "100.0%"
+          ],
+          [
+            72,
+            "신비한 마스터리북 1개",
+            "15.0%"
+          ],
+          [
+            73,
+            "스페셜 마스터리북 1개",
+            "10.5%"
+          ],
+          [
+            74,
+            "봉인된 비밀의 스킬북 1개",
+            "7.5%"
+          ],
+          [
+            75,
+            "순백의 주문서 10% 1개",
+            "9.0%"
+          ]
+        ],
+        "dropNote": "1번 항목은 화면에 잡히지 않아 확인 중입니다."
+      },
+      {
+        "name": "혼테일",
+        "level": 160,
+        "type": "보스, 비선공, 비언데드",
+        "location": "알 수 없음",
+        "stats": [
+          [
+            "체력",
+            "2,090,000,000"
+          ],
+          [
+            "마나",
+            "0"
+          ],
+          [
+            "물리 공격력",
+            "0"
+          ],
+          [
+            "마법 공격력",
+            "0"
+          ],
+          [
+            "물리 방어력",
+            "0"
+          ],
+          [
+            "마법 방어력",
+            "0"
+          ],
+          [
+            "명중률",
+            "0"
+          ],
+          [
+            "회피율",
+            "0"
+          ],
+          [
+            "이동속도",
+            "0"
+          ],
+          [
+            "밀쳐짐",
+            "1"
+          ],
+          [
+            "속성",
+            "없음"
+          ],
+          [
+            "경험치",
+            "0"
+          ]
+        ],
+        "drops": [
+          [
+            2,
+            "순록의 우유 30 ~ 100개",
+            "100.0%"
+          ],
+          [
+            3,
+            "황혼의 이슬 30 ~ 100개",
+            "100.0%"
+          ],
+          [
+            4,
+            "파워 엘릭서 10 ~ 20개",
+            "100.0%"
+          ],
+          [
+            5,
+            "엘릭서 10 ~ 40개",
+            "100.0%"
+          ],
+          [
+            6,
+            "스파타 1개",
+            "30.0%"
+          ],
+          [
+            7,
+            "토마호크 1개",
+            "30.0%"
+          ],
+          [
+            8,
+            "배틀해머 1개",
+            "30.0%"
+          ],
+          [
+            9,
+            "골드 트윈 나이프 1개",
+            "30.0%"
+          ],
+          [
+            10,
+            "블러드 대거 1개",
+            "30.0%"
+          ],
+          [
+            11,
+            "다이몬의 완드 1개",
+            "30.0%"
+          ],
+          [
+            12,
+            "블루마린 1개",
+            "30.0%"
+          ],
+          [
+            13,
+            "참화도 1개",
+            "30.0%"
+          ],
+          [
+            14,
+            "타바르 1개",
+            "30.0%"
+          ],
+          [
+            15,
+            "골든 스미스해머 1개",
+            "30.0%"
+          ],
+          [
+            16,
+            "피나카 1개",
+            "30.0%"
+          ],
+          [
+            17,
+            "제드버그 1개",
+            "30.0%"
+          ],
+          [
+            18,
+            "화이트 니스록 1개",
+            "30.0%"
+          ],
+          [
+            19,
+            "골든 니스록 1개",
+            "30.0%"
+          ],
+          [
+            20,
+            "다크 니스록 1개",
+            "30.0%"
+          ],
+          [
+            21,
+            "화이트 네쉐르 1개",
+            "30.0%"
+          ],
+          [
+            22,
+            "골든 네쉐르 1개",
+            "30.0%"
+          ],
+          [
+            23,
+            "다크 네쉐르 1개",
+            "30.0%"
+          ],
+          [
+            24,
+            "레드 크리븐 1개",
+            "30.0%"
+          ],
+          [
+            25,
+            "드래곤 완드 1개",
+            "30.0%"
+          ],
+          [
+            26,
+            "드래곤 카라벨라 1개",
+            "30.0%"
+          ],
+          [
+            27,
+            "드래곤 엑스 1개",
+            "30.0%"
+          ],
+          [
+            28,
+            "드래곤 메이스 1개",
+            "30.0%"
+          ],
+          [
+            29,
+            "드래곤 칸자르 1개",
+            "30.0%"
+          ],
+          [
+            30,
+            "드래곤 크리스 1개",
+            "30.0%"
+          ],
+          [
+            31,
+            "드래곤 스태프 1개",
+            "30.0%"
+          ],
+          [
+            32,
+            "드래곤 클레이모어 1개",
+            "30.0%"
+          ],
+          [
+            33,
+            "드래곤 배틀엑스 1개",
+            "30.0%"
+          ],
+          [
+            34,
+            "드래곤 플레임 1개",
+            "30.0%"
+          ],
+          [
+            35,
+            "드래곤 팔티잔 1개",
+            "30.0%"
+          ],
+          [
+            36,
+            "드래곤 핼버드 1개",
+            "30.0%"
+          ],
+          [
+            37,
+            "드래곤 샤인보우 1개",
+            "30.0%"
+          ],
+          [
+            38,
+            "드래곤 샤인크로스 1개",
+            "30.0%"
+          ],
+          [
+            39,
+            "드래곤 그린 슬레브 1개",
+            "30.0%"
+          ],
+          [
+            40,
+            "드래곤 퍼플 슬레브 1개",
+            "30.0%"
+          ],
+          [
+            41,
+            "혼테일의 목걸이 1개",
+            "15.0%"
+          ],
+          [
+            42,
+            "나인스피릿의 알 1개",
+            "100.0%"
+          ],
+          [
+            43,
+            "[마스터리북] 인레이지 30 1개",
+            "60.0%"
+          ],
+          [
+            44,
+            "[마스터리북] 생츄어리 30 1개",
+            "60.0%"
+          ],
+          [
+            45,
+            "[마스터리북] 버서크 30 1개",
+            "60.0%"
+          ],
+          [
+            46,
+            "[마스터리북] 메테오 30 1개",
+            "60.0%"
+          ],
+          [
+            47,
+            "[마스터리북] 블리자드 30 1개",
+            "60.0%"
+          ],
+          [
+            48,
+            "[마스터리북] 제네시스 30 1개",
+            "60.0%"
+          ],
+          [
+            49,
+            "[마스터리북] 집중 30 1개",
+            "30.0%"
+          ],
+          [
+            50,
+            "[마스터리북] 스나이핑 30 1개",
+            "30.0%"
+          ],
+          [
+            51,
+            "[마스터리북] 트리플스로우 30 1개",
+            "60.0%"
+          ],
+          [
+            52,
+            "[마스터리북] 연막탄 30 1개",
+            "60.0%"
+          ],
+          [
+            53,
+            "[마스터리북] 메이플 용사 20 1개",
+            "30.0%"
+          ],
+          [
+            54,
+            "킹 센트 1개",
+            "30.0%"
+          ],
+          [
+            55,
+            "콘체르토 1개",
+            "30.0%"
+          ],
+          [
+            56,
+            "용아주조 1개",
+            "30.0%"
+          ],
+          [
+            57,
+            "드래곤 세인트 1개",
+            "30.0%"
+          ],
+          [
+            58,
+            "[마스터리북] 타임 리프 30 1개",
+            "33.0%"
+          ],
+          [
+            59,
+            "[마스터리북] 에어 스트라이크 30 1개",
+            "33.0%"
+          ],
+          [
+            60,
+            "귀 장식 민첩 주문서 60% 1개",
+            "9.0%"
+          ],
+          [
+            61,
+            "상의 힘 주문서 60% 1개",
+            "9.0%"
+          ],
+          [
+            62,
+            "상의 체력 주문서 60% 1개",
+            "9.0%"
+          ],
+          [
+            63,
+            "전신 갑옷 지력 주문서 100% 1개",
+            "9.0%"
+          ],
+          [
+            64,
+            "전신 갑옷 행운 주문서 100% 1개",
+            "9.0%"
+          ],
+          [
+            65,
+            "하의 민첩성 주문서 60% 1개",
+            "9.0%"
+          ],
+          [
+            67,
+            "혼돈의 주문서 60% 1개",
+            "9.0%"
+          ],
+          [
+            68,
+            "혼테일 카드 1개",
+            "1.0002%"
+          ],
+          [
+            69,
+            "영혼의 반지 1개",
+            "0.5859%"
+          ],
+          [
+            70,
+            "[마스터리북] 쏜즈 이펙트 30 1개",
+            "30.0%"
+          ],
+          [
+            71,
+            "[마스터리북] 더미 이펙트 30 1개",
+            "30.0%"
+          ],
+          [
+            72,
+            "[마스터리북] 몬스터 붐 30 1개",
+            "30.0%"
+          ],
+          [
+            73,
+            "[마스터리북] 베놈 30 1개",
+            "30.0%"
+          ],
+          [
+            74,
+            "[마스터리북] 오닉스의 축복 30 1개",
+            "30.0%"
+          ],
+          [
+            75,
+            "[마스터리북] 블레이즈 30 1개",
+            "30.0%"
+          ],
+          [
+            76,
+            "[마스터리북] 콤보 템페스트 30 1개",
+            "30.0%"
+          ],
+          [
+            77,
+            "[마스터리북] 파이널 블로우 30 1개",
+            "30.0%"
+          ],
+          [
+            78,
+            "청월도 1개",
+            "30.0%"
+          ],
+          [
+            79,
+            "[마스터리북] 메이플 용사 30 1개",
+            "15.0%"
+          ],
+          [
+            80,
+            "혼테일의 비늘 1개",
+            "50.0001%"
+          ],
+          [
+            81,
+            "혼테일의 영혼 조각 1 ~ 5개",
+            "50.0001%"
+          ],
+          [
+            82,
+            "놀라운 혼돈의 주문서 90% 1개",
+            "9.0%"
+          ],
+          [
+            83,
+            "혼테일의 결정석 1개",
+            "100.0%"
+          ],
+          [
+            84,
+            "순백의 주문서 10% 1개",
+            "9.0%"
+          ],
+          [
+            85,
+            "신비한 마스터리북 1개",
+            "18.6%"
+          ],
+          [
+            86,
+            "스페셜 마스터리북 1개",
+            "12.75%"
+          ],
+          [
+            87,
+            "봉인된 비밀의 스킬북 1개",
+            "9.0%"
+          ]
+        ],
+        "dropNote": "1번과 66번 항목은 화면에 잡히지 않아 확인 중입니다. 공격력·방어력·경험치가 0으로 표시되는 것도 인게임 표기 그대로입니다."
+      },
+      {
+        "name": "크렉셀",
+        "level": 140,
+        "type": "보스, 선공, 비언데드",
+        "location": "알 수 없음",
+        "stats": [
+          [
+            "체력",
+            "50,000,000"
+          ],
+          [
+            "마나",
+            "40,000"
+          ],
+          [
+            "물리 공격력",
+            "980"
+          ],
+          [
+            "마법 공격력",
+            "570"
+          ],
+          [
+            "물리 방어력",
+            "570"
+          ],
+          [
+            "마법 방어력",
+            "1,020"
+          ],
+          [
+            "명중률",
+            "250"
+          ],
+          [
+            "회피율",
+            "18"
+          ],
+          [
+            "이동속도",
+            "100"
+          ],
+          [
+            "밀쳐짐",
+            "50,000"
+          ],
+          [
+            "속성",
+            "불에 강함 / 얼음에 강함 / 번개에 강함 / 독에 강함 / 빛에 강함"
+          ],
+          [
+            "경험치",
+            "11,000,000"
+          ]
+        ],
+        "drops": [
+          [
+            1,
+            "아스타로스 너클 1개",
+            "6.0%"
+          ],
+          [
+            2,
+            "아스타로스 건 1개",
+            "6.0%"
+          ],
+          [
+            3,
+            "혼돈의 주문서 60% 1개",
+            "7.5%"
+          ],
+          [
+            4,
+            "무한의 수리검 1개",
+            "3.0%"
+          ],
+          [
+            5,
+            "[스킬북] 어드밴스드 콤보 1개",
+            "9.0%"
+          ],
+          [
+            6,
+            "[스킬북] 어드밴스드 차지 1개",
+            "9.0%"
+          ],
+          [
+            7,
+            "[스킬북] 엔젤레이 1개",
+            "9.0%"
+          ],
+          [
+            8,
+            "[스킬북] 트리플스로우 1개",
+            "9.0%"
+          ],
+          [
+            9,
+            "[스킬북] 파이널 컷 1개",
+            "9.0%"
+          ],
+          [
+            10,
+            "[마스터리북] 배틀쉽 토르페도 30 1개",
+            "22.5%"
+          ],
+          [
+            14,
+            "스파타 1개",
+            "15.0%"
+          ],
+          [
+            15,
+            "토마호크 1개",
+            "15.0%"
+          ],
+          [
+            16,
+            "배틀해머 1개",
+            "15.0%"
+          ],
+          [
+            17,
+            "블러드 대거 1개",
+            "15.0%"
+          ],
+          [
+            18,
+            "다이몬의 완드 1개",
+            "15.0%"
+          ],
+          [
+            19,
+            "블루마린 1개",
+            "15.0%"
+          ],
+          [
+            20,
+            "참화도 1개",
+            "15.0%"
+          ],
+          [
+            21,
+            "타바르 1개",
+            "15.0%"
+          ],
+          [
+            22,
+            "골든 스미스해머 1개",
+            "15.0%"
+          ],
+          [
+            23,
+            "피나카 1개",
+            "15.0%"
+          ],
+          [
+            24,
+            "제드버그 1개",
+            "15.0%"
+          ],
+          [
+            25,
+            "화이트 니스록 1개",
+            "15.0%"
+          ],
+          [
+            26,
+            "골든 니스록 1개",
+            "15.0%"
+          ],
+          [
+            27,
+            "화이트 네쉐르 1개",
+            "15.0%"
+          ],
+          [
+            28,
+            "골든 네쉐르 1개",
+            "15.0%"
+          ],
+          [
+            29,
+            "레드 크리븐 1개",
+            "15.0%"
+          ],
+          [
+            31,
+            "[마스터리북] 인피니티 20 1개",
+            "22.5%"
+          ],
+          [
+            32,
+            "[마스터리북] 파이어 데몬 30 1개",
+            "22.5%"
+          ],
+          [
+            33,
+            "[마스터리북] 아이스 데몬 30 1개",
+            "22.5%"
+          ],
+          [
+            34,
+            "[마스터리북] 크로스보우 엑스퍼트 20 1개",
+            "22.5%"
+          ],
+          [
+            35,
+            "[마스터리북] 스피릿 자벨린 30 1개",
+            "22.5%"
+          ],
+          [
+            36,
+            "[마스터리북] 부메랑 스텝 30 1개",
+            "22.5%"
+          ],
+          [
+            37,
+            "[마스터리북] 브랜디쉬 30 1개",
+            "22.5%"
+          ],
+          [
+            38,
+            "[마스터리북] 몬스터 마그넷 30 1개",
+            "22.5%"
+          ],
+          [
+            39,
+            "[마스터리북] 마나 리플렉션 30 1개",
+            "22.5%"
+          ],
+          [
+            40,
+            "[마스터리북] 닌자 앰부쉬 30 1개",
+            "22.5%"
+          ],
+          [
+            41,
+            "[마스터리북] 몬스터 마그넷 20 1개",
+            "22.5%"
+          ],
+          [
+            42,
+            "[마스터리북] 닌자 앰부쉬 20 1개",
+            "22.5%"
+          ],
+          [
+            43,
+            "만능열쇠 1개",
+            "50.0001%"
+          ],
+          [
+            44,
+            "[마스터리북] 피스트 30 1개",
+            "22.5%"
+          ],
+          [
+            46,
+            "크렉셀 카드 1개",
+            "1.0002%"
+          ],
+          [
+            47,
+            "블레이즈 캡슐 1개",
+            "3.0%"
+          ],
+          [
+            48,
+            "글레이스 캡슐 1개",
+            "3.0%"
+          ],
+          [
+            49,
+            "크렉셀 견갑 1개",
+            "4.5%"
+          ]
+        ],
+        "dropNote": "11~13번, 30번, 45번 항목은 화면에 잡히지 않아 확인 중입니다."
       }
     ]
   }
