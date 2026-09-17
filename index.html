@@ -709,6 +709,7 @@
     <button class="navbtn" data-tab="attend">출석체크</button>
     <button class="navbtn" data-tab="shop">홍포 상점</button>
     <button class="navbtn" data-tab="levels">레벨 보상</button>
+    <button class="navbtn" data-tab="bosses">보스</button>
     <button class="navbtn" data-tab="enhance">강화</button>
     <button class="navbtn" data-tab="alchemy">연금술</button>
     <button class="navbtn" data-tab="items">아이템 정보</button>
@@ -742,6 +743,20 @@
         <div class="v" id="tipText"></div>
       </div>
       <div class="homegrid" id="homeCards"></div>
+    </section>
+
+    <!-- ========== 보스 ========== -->
+    <section class="panel" id="bosses">
+      <div class="subtabs" id="bossSubtabs"></div>
+      <div id="bossInfo"></div>
+      <div class="searchline"><input type="text" id="bossDropSearch" placeholder="드랍 아이템 이름으로 검색"></div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th class="num" style="width:58px;">번호</th><th>아이템</th><th class="num">확률</th></tr></thead>
+          <tbody id="bossDropBody"></tbody>
+        </table>
+      </div>
+      <div id="bossDropNote"></div>
     </section>
 
     <!-- ========== 강화 ========== -->
@@ -1093,6 +1108,43 @@ function renderHome(){
     try{ localStorage.setItem(KEY,String(i)); }catch(e){}
     document.getElementById('tipText').textContent=T[i];
   }
+}
+
+/* ===== 보스 ===== */
+let bossIdx=0;
+function renderBosses(){
+  const B=D.bosses;
+  if(!B||!B.list||!B.list.length){
+    document.getElementById('bossInfo').innerHTML='<div class="empty">데이터가 없습니다.</div>'; return;
+  }
+  if(bossIdx>=B.list.length) bossIdx=0;
+  document.getElementById('bossSubtabs').innerHTML=B.list.map((b,i)=>
+    `<button class="subtab ${i===bossIdx?'active':''}" data-i="${i}">${esc(b.name)}</button>`).join('');
+  document.querySelectorAll('#bossSubtabs .subtab').forEach(t=>t.onclick=()=>{
+    bossIdx=parseInt(t.dataset.i);
+    document.getElementById('bossDropSearch').value='';
+    renderBosses();
+  });
+  const b=B.list[bossIdx];
+  const head=[['레벨','Lv.'+b.level],['타입',b.type],['위치',b.location]];
+  document.getElementById('bossInfo').innerHTML=
+    block({title:b.name, rows:head}) +
+    `<div class="itemhead">몬스터 스탯</div>` +
+    `<div class="tablewrap" style="max-height:none;"><table><tbody>${
+      b.stats.map(s=>`<tr><td class="muted" style="width:170px;">${esc(s[0])}</td><td class="gold num" style="text-align:left;">${esc(s[1])}</td></tr>`).join('')
+    }</tbody></table></div>` +
+    `<div class="itemhead">드랍 목록 <span class="muted" style="font-size:13px;">${b.drops.length}종</span></div>`;
+  renderBossDrops();
+}
+function renderBossDrops(){
+  const b=D.bosses.list[bossIdx];
+  const kw=document.getElementById('bossDropSearch').value.trim();
+  const rows=b.drops.filter(r=>!kw||r[1].includes(kw));
+  document.getElementById('bossDropBody').innerHTML=rows.map(r=>
+   `<tr><td class="num muted">${r[0]}</td><td>${esc(r[1])}</td><td class="num gold">${esc(r[2])}</td></tr>`
+  ).join('')||'<tr><td colspan="3" class="empty">검색 결과가 없습니다.</td></tr>';
+  const note=[b.dropNote,(D.bosses.note||'')].filter(Boolean).join(' ');
+  document.getElementById('bossDropNote').innerHTML=note?block({note:note}):'';
 }
 
 /* ===== 강화 ===== */
@@ -1482,6 +1534,7 @@ function buildIndex(){
   ((D.items&&D.items.list)||[]).forEach(it=>(it.drops||[]).forEach(t=>{
     if(!mobSeen.has(t[0])){mobSeen.add(t[0]);INDEX.push([t[0],'items','드랍 몬스터']);}
   }));
+  ((D.bosses&&D.bosses.list)||[]).forEach(b=>INDEX.push([b.name,'bosses','보스']));
   ((D.skills&&D.skills.ultimates)||[]).forEach(s=>INDEX.push([s.name,'skills','궁극기']));
   ((D.skills&&D.skills.patches)||[]).forEach(s=>INDEX.push([s.job,'skills','스킬 패치']));
   (D.extraSearchEntries||[]).forEach(e=>INDEX.push(e));
@@ -1507,6 +1560,7 @@ function bindInputs(){
   document.getElementById('mobSearch').oninput=renderMobDrops;
   document.getElementById('levelSearch').oninput=renderLevels;
   document.getElementById('attendSearch').oninput=renderAttend;
+  document.getElementById('bossDropSearch').oninput=renderBossDrops;
 }
 async function boot(){
   try{
@@ -1529,6 +1583,7 @@ async function boot(){
   renderItems();
   renderMobDrops();
   renderSkills();
+  renderBosses();
   renderLevels();
   renderQuestPanel();
   renderAttend();
