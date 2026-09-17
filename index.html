@@ -819,8 +819,25 @@
 
     <!-- ========== 아이템 정보 ========== -->
     <section class="panel" id="items">
-      <div class="subtabs" id="itemSubtabs"></div>
-      <div id="itemDetail"></div>
+      <div class="subtabs">
+        <button class="subtab active" data-sub="it-item">아이템별</button>
+        <button class="subtab" data-sub="it-mob">몹별 드랍</button>
+      </div>
+
+      <div class="subpanel active" id="it-item">
+        <div class="filterbar" id="itemSubtabs"></div>
+        <div id="itemDetail"></div>
+      </div>
+
+      <div class="subpanel" id="it-mob">
+        <div class="searchline"><input type="text" id="mobSearch" placeholder="몬스터 이름으로 검색"></div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>몬스터</th><th>드랍 아이템</th><th class="num">확률</th></tr></thead>
+            <tbody id="mobBody"></tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <!-- ========== 스킬 ========== -->
@@ -1107,14 +1124,15 @@ function renderItems(){
   }
   if(itemIdx>=I.list.length) itemIdx=0;
   document.getElementById('itemSubtabs').innerHTML=I.list.map((it,i)=>
-    `<button class="subtab ${i===itemIdx?'active':''}" data-i="${i}">${esc(it.name)}</button>`).join('');
-  document.querySelectorAll('#itemSubtabs .subtab').forEach(b=>b.onclick=()=>{
+    `<div class="chip ${i===itemIdx?'active':''}" data-i="${i}">${esc(it.name)}</div>`).join('');
+  document.querySelectorAll('#itemSubtabs .chip').forEach(b=>b.onclick=()=>{
     itemIdx=parseInt(b.dataset.i); renderItems(); });
 
   const it=I.list[itemIdx];
   const head=(I.tierHeaders||['스탯','변화 없음','1단계','2단계','3단계']);
-  const table=(it.stats&&it.stats.length)?
-   `<div class="tablewrap" style="max-height:none;">
+  const statTable=(it.stats&&it.stats.length)?
+   `<div class="itemhead">${esc(it.statTitle||'스탯별 상승 확률')}</div>
+    <div class="tablewrap" style="max-height:none;">
       <table>
         <thead><tr><th>${esc(head[0])}</th>${head.slice(1).map(x=>`<th class="num">${esc(x)}</th>`).join('')}</tr></thead>
         <tbody>${it.stats.map(s=>
@@ -1123,11 +1141,28 @@ function renderItems(){
           ).join('')}</tr>`).join('')}</tbody>
       </table>
     </div>`:'';
+  const dropTable=(it.drops&&it.drops.length)?
+   `<div class="itemhead">${esc(it.dropTitle||'드랍 몬스터')}</div>
+    <div class="tablewrap" style="max-height:none;">
+      <table>
+        <thead><tr><th>몬스터</th><th class="num">드랍 확률</th></tr></thead>
+        <tbody>${it.drops.map(t=>
+          `<tr><td>${esc(t[0])}</td><td class="num gold">${esc(t[1])}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>${I.dropNote?`<div class="block"><div class="note" style="border-top:none;padding-top:0;">${esc(I.dropNote)}</div></div>`:''}`:'';
   document.getElementById('itemDetail').innerHTML=
-    block({title:it.name, rows:it.rows, lead:it.desc}) +
-    (it.statTitle?`<div class="itemhead">${esc(it.statTitle)}</div>`:'') +
-    table +
-    (it.note?block({note:it.note}):'');
+    block({title:it.name, rows:it.rows, lead:it.desc, note:it.note}) + statTable + dropTable;
+}
+function renderMobDrops(){
+  const I=D.items||{};
+  const rows=[];
+  (I.list||[]).forEach(it=>(it.drops||[]).forEach(t=>rows.push([t[0],it.name,t[1]])));
+  rows.sort((a,b)=>a[0].localeCompare(b[0],'ko'));
+  const kw=document.getElementById('mobSearch').value.trim();
+  const out=rows.filter(r=>r[0].includes(kw)||r[1].includes(kw));
+  document.getElementById('mobBody').innerHTML=out.map(r=>
+    `<tr><td>${esc(r[0])}</td><td class="muted">${esc(r[1])}</td><td class="num gold">${esc(r[2])}</td></tr>`).join('')
+    ||'<tr><td colspan="3" class="empty">검색 결과가 없습니다.</td></tr>';
 }
 
 /* ===== 스킬 ===== */
@@ -1288,6 +1323,10 @@ function buildIndex(){
   D.quest.quests.forEach(q=>INDEX.push([q.name,'quest','퀘스트']));
   D.shop.items.forEach(s=>INDEX.push([s.name,'shop','홍포 상점']));
   (D.items&&D.items.list||[]).forEach(i=>INDEX.push([i.name,'items','아이템']));
+  const mobSeen=new Set();
+  ((D.items&&D.items.list)||[]).forEach(it=>(it.drops||[]).forEach(t=>{
+    if(!mobSeen.has(t[0])){mobSeen.add(t[0]);INDEX.push([t[0],'items','드랍 몬스터']);}
+  }));
   ((D.skills&&D.skills.ultimates)||[]).forEach(s=>INDEX.push([s.name,'skills','궁극기']));
   ((D.skills&&D.skills.patches)||[]).forEach(s=>INDEX.push([s.job,'skills','스킬 패치']));
   (D.extraSearchEntries||[]).forEach(e=>INDEX.push(e));
@@ -1310,6 +1349,7 @@ function bindInputs(){
   document.getElementById('bossSearch').oninput=renderBoss;
   document.getElementById('questSearch').oninput=renderQuests;
   document.getElementById('patchSearch').oninput=renderPatch;
+  document.getElementById('mobSearch').oninput=renderMobDrops;
 }
 async function boot(){
   try{
@@ -1330,6 +1370,7 @@ async function boot(){
   renderHidden();
   renderAlchemy();
   renderItems();
+  renderMobDrops();
   renderSkills();
   renderQuestPanel();
   renderShop();
