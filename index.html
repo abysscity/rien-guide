@@ -434,6 +434,25 @@
   .warncard p{margin:0;font-size:14.5px;line-height:1.7;color:var(--text-dim);}
   #homeWarnings{margin-bottom:34px;}
   #homeChips{margin-bottom:10px;}
+  #homeChips{margin-bottom:10px;}
+  .home-now-compact{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+  .home-now-item{display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line-soft);border-radius:10px;padding:15px 18px;}
+  .home-now-no{flex:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--gold-dim);color:var(--gold-bright);font-size:12px;background:rgba(221,182,92,.035);}
+  .home-now-body{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;}
+  .home-now-body b{font-size:15.5px;font-weight:600;}
+  .home-now-body span{font-size:13px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .home-now-go{flex:none;background:none;border:0;color:var(--gold);font-family:inherit;font-size:13px;cursor:pointer;padding:4px 0;}
+  .home-now-go:hover{filter:brightness(1.15);}
+  .home-roadmap-link{display:block;background:none;border:0;color:var(--gold);font-family:inherit;font-size:13px;padding:0;margin:0 0 30px;cursor:pointer;text-align:left;}
+  .home-roadmap-link:hover{filter:brightness(1.15);}
+  .home-warning-title{margin-top:0;}
+  .home-warning-card{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:0;}
+  .home-warning-card .linkbtn{flex:none;margin-top:0;}
+  @media (max-width:700px){
+    .home-now-item{align-items:flex-start;}
+    .home-now-go{margin-left:auto;}
+    .home-warning-card{align-items:flex-start;flex-direction:column;}
+  }
   @media (max-width:700px){
     .nowgrid{grid-template-columns:1fr;}
     .hero{padding:24px 22px;}
@@ -940,18 +959,10 @@
       <div class="group-title" id="homeNowTitle"></div>
       <p class="lead muted" id="homeNowDesc" style="margin:-6px 0 16px;"></p>
       <div id="homeNow"></div>
+      <button class="home-roadmap-link" data-goto="roadmap">전체 성장 로드맵 보기 →</button>
 
-      <div class="group-title" id="homeStepTitle"></div>
-      <div id="homeSteps"></div>
-
-      <div class="group-title" id="homeGroupTitle"></div>
-      <div id="homeGroups"></div>
-
-      <div class="group-title" id="homeWarnTitle"></div>
+      <div class="group-title home-warning-title" id="homeWarnTitle"></div>
       <div id="homeWarnings"></div>
-
-      <div class="group-title" id="homeFind"></div>
-      <div class="filterbar" id="homeChips"></div>
     </section>
 
     <!-- ========== 보스 ========== -->
@@ -1378,46 +1389,36 @@ function renderHome(){
       <p>${esc(hero.desc||'')}</p>
       <div class="hero-cta">
         ${hero.cta?`<button class="btn" data-goto="${esc(hero.cta.goto)}">${esc(hero.cta.label)}</button>`:''}
-        ${hero.cta2?`<button class="btn-ghost" data-anchor="${esc(hero.cta2.anchor)}">${esc(hero.cta2.label)}</button>`:''}
+
       </div>
     </div>`;
 
   const stages=(D.route&&D.route.stages)||[];
   document.getElementById('homeNowTitle').textContent=H.nowTitle||'';
   document.getElementById('homeNowDesc').textContent=H.nowDesc||'';
-  document.getElementById('homeNow').innerHTML=`<div class="nowgrid">${stages.map((st,i)=>`
-    <div class="nowcard">
-      <div class="nowno">${String(i+1).padStart(2,'0')}</div>
-      <b>${esc(st.title)}</b>
-      <ul class="dots">${(st.todo||[]).map(t=>`<li class="${esc(t[0])}">${esc(t[1])}</li>`).join('')}</ul>
-      ${st.goto?linkBtn(st.goto,(st.cta||'자세히 보기')+' →'):''}
-    </div>`).join('')}</div>`;
+  // 홈에서는 당장 필요한 초반 2단계만 간결하게 보여주고,
+  // 전체 5단계 진행은 성장 로드맵 페이지에서 확인하도록 분리합니다.
+  document.getElementById('homeNow').innerHTML=`<div class="home-now-compact">${stages.slice(0,2).map((st,i)=>{
+    const first=(st.todo||[])[0];
+    return `<div class="home-now-item">
+      <div class="home-now-no">${String(i+1).padStart(2,'0')}</div>
+      <div class="home-now-body">
+        <b>${esc(st.title)}</b>
+        <span>${esc(first ? first[1] : '')}</span>
+      </div>
+      ${st.goto?`<button class="home-now-go" data-goto="${esc(st.goto)}">${esc(st.cta||'자세히 보기')} →</button>`:''}
+    </div>`;
+  }).join('')}</div>`;
 
-  document.getElementById('homeStepTitle').textContent=H.stepTitle||'';
-  document.getElementById('homeSteps').innerHTML=`<ol class="stepflow">${stages.map((st,i)=>`
-    <li><span class="sn">STEP ${String(i+1).padStart(2,'0')}</span><span class="st">${esc(st.title)}</span></li>`).join('')}</ol>`;
-
-  document.getElementById('homeGroupTitle').textContent=H.groupTitle||'';
-  document.getElementById('homeGroups').innerHTML=(H.groups||[]).map(g=>`
-    <div class="sysgroup">
-      <div class="sysname">${esc(g.title)}</div>
-      <div class="homegrid">${(g.items||[]).map(it=>`
-        <div class="homecard" data-goto="${esc(it.goto)}">
-          <b>${esc(it.label)}</b><span>${esc(it.desc||'')}</span>
-        </div>`).join('')}</div>
-    </div>`).join('');
-
-  document.getElementById('homeWarnTitle').textContent=H.warnTitle||'';
-  document.getElementById('homeWarnings').innerHTML=`<div class="homegrid">${(H.warnings||[]).map(w=>`
-    <div class="warncard">
-      <b>${esc(w.title)}</b>
-      <p>${esc(w.desc)}</p>
-      ${w.goto?linkBtn(w.goto,(w.cta||'자세히 보기')+' →'):''}
-    </div>`).join('')}</div>`;
-
-  document.getElementById('homeFind').textContent=H.findTitle||'';
-  document.getElementById('homeChips').innerHTML=(H.findChips||[])
-    .filter(k=>S[k]).map(k=>`<div class="chip" data-goto="${esc(k)}">${esc(S[k].title)}</div>`).join('');
+  // 홈의 경고는 여러 장을 쌓지 않고 하루에 하나만 노출합니다.
+  document.getElementById('homeWarnTitle').textContent=H.warnTitle||'꼭 알아두세요';
+  const warnings=H.warnings||[];
+  const wi=warnings.length ? (new Date().getDate()-1)%warnings.length : 0;
+  const w=warnings[wi];
+  document.getElementById('homeWarnings').innerHTML=w?`<div class="warncard home-warning-card">
+    <div><b>${esc(w.title)}</b><p>${esc(w.desc)}</p></div>
+    ${w.goto?linkBtn(w.goto,(w.cta||'자세히 보기')+' →'):''}
+  </div>`:'';
 
   document.querySelectorAll('#home [data-goto]').forEach(el=>el.onclick=()=>switchTab(el.dataset.goto));
   document.querySelectorAll('#home [data-anchor]').forEach(el=>el.onclick=()=>{
