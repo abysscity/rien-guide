@@ -227,6 +227,19 @@
   details.quest summary .r{color:var(--text-faint);font-size:12.5px;white-space:nowrap;}
   details.quest[open] summary{border-bottom:1px solid var(--line-soft);color:var(--gold-bright);background:rgba(221,182,92,.035);}
   details.quest .body{padding:17px 18px;}
+  .q-check{
+    display:inline-block;width:16px;height:16px;flex:none;
+    border:1px solid var(--line);border-radius:4px;cursor:pointer;position:relative;
+  }
+  .q-check:hover{border-color:var(--gold-dim);}
+  .q-check.on{background:var(--gold);border-color:var(--gold);}
+  .q-check.on::after{
+    content:'';position:absolute;left:4px;top:1px;width:5px;height:9px;
+    border-right:2px solid #16191F;border-bottom:2px solid #16191F;
+    transform:rotate(40deg);
+  }
+  details.quest.q-done summary{opacity:.5;}
+  details.quest.q-done summary .q-name{text-decoration:line-through;}
 
   .homecard{
     position:relative;
@@ -1239,14 +1252,15 @@
       <div class="subpanel" id="q-title">
         <div id="titleQuestList"></div>
         <div class="itemhead">타이틀 퀘스트 기타재료 통합</div>
-        <p class="lead muted" style="margin:-6px 0 14px;">아래 25개 타이틀 퀘스트를 전부 진행하는 데 필요한 기타재료를 종류별로 합산한 표입니다.</p>
+        <p class="lead muted" id="titleMatSummaryDesc" style="margin:-6px 0 14px;"></p>
         <div class="tablewrap" style="max-height:480px;">
           <table>
-            <thead><tr><th>재료</th><th class="num">총 필요량</th><th>사용 퀘스트</th></tr></thead>
+            <thead><tr><th>재료</th><th class="num">남은 필요량</th><th>사용 퀘스트</th></tr></thead>
             <tbody id="titleMatSummaryBody"></tbody>
           </table>
         </div>
-        <div class="searchline" style="margin-top:24px;"><input type="text" id="questSearch" placeholder="퀘스트 이름으로 검색"></div>
+        <button class="linkbtn" id="resetClearBtn">클리어 체크 전체 초기화</button>
+        <div class="searchline" style="margin-top:8px;"><input type="text" id="questSearch" placeholder="퀘스트 이름으로 검색"></div>
         <div id="questList"></div>
       </div>
     </section>
@@ -2220,25 +2234,59 @@ function calcBoss(){
   document.getElementById('bossResult').innerHTML=
    `<span class="big">${esc(b[0])} ${t}회</span>필요 재료 <strong>${fmt(b[1]*t)}</strong>개 · 경험치 <strong>${fmt(b[2]*t)}</strong> · 메소 <strong>${fmt(b[3]*t)}</strong>`;
 }
+/* 클리어 체크는 게임 서버와 연동되지 않고, 이 브라우저에만 저장됩니다 (localStorage). */
+let clearedQuests=new Set();
+try{ clearedQuests=new Set(JSON.parse(localStorage.getItem('rien_titleQuestCleared')||'[]')); }catch(e){}
+function saveClearedQuests(){
+  try{ localStorage.setItem('rien_titleQuestCleared', JSON.stringify([...clearedQuests])); }catch(e){}
+}
+function toggleQuestCleared(name){
+  if(clearedQuests.has(name)) clearedQuests.delete(name); else clearedQuests.add(name);
+  saveClearedQuests();
+  renderQuests();
+  renderTitleMatSummary();
+}
 function renderTitleMatSummary(){
-  const list=D.quest.matSummary||[];
-  document.getElementById('titleMatSummaryBody').innerHTML=list.map(m=>{
+  const all=D.quest.matSummary||[];
+  const total=D.quest.quests.length;
+  const done=D.quest.quests.filter(q=>clearedQuests.has(q.name)).length;
+  document.getElementById('titleMatSummaryDesc').textContent=
+    `타이틀 퀘스트 ${done}/${total} 클리어 체크됨 · 아래 퀘스트 목록에서 체크하면 이미 클리어한 퀘스트 재료는 자동으로 표에서 빠집니다.`;
+  const rows=all.map(m=>{
+    const remain=m.from.filter(f=>!clearedQuests.has(f[0]));
+    const remainTotal=remain.reduce((s,f)=>s+f[1],0);
+    return {name:m.name, total:remainTotal, from:remain};
+  }).filter(m=>m.total>0).sort((a,b)=>b.total-a.total);
+  document.getElementById('titleMatSummaryBody').innerHTML=rows.map(m=>{
     const src=m.from.map(f=>`${esc(f[0])} ${fmt(f[1])}`).join(', ');
     return `<tr><td>${esc(m.name)}</td><td class="num gold">${fmt(m.total)}개</td><td class="muted">${src}</td></tr>`;
-  }).join('')||'<tr><td colspan="3" class="empty">데이터가 없습니다.</td></tr>';
+  }).join('')||'<tr><td colspan="3" class="empty">체크되지 않은 퀘스트가 없습니다 🎉</td></tr>';
 }
 function renderQuests(){
   const kw=document.getElementById('questSearch').value.trim();
   const rows=D.quest.quests.filter(q=>q.name.includes(kw));
   document.getElementById('questList').innerHTML=rows.map(q=>{
     const r='경험치 '+fmt(q.reward)+'+';
-    return `<details class="quest"><summary><span>${esc(q.name)}</span><span class="r">${r}</span></summary>
+    const done=clearedQuests.has(q.name);
+    return `<details class="quest ${done?'q-done':''}"><summary>
+        <span style="display:flex;align-items:center;gap:9px;min-width:0;">
+          <span class="q-check ${done?'on':''}" data-qname="${esc(q.name)}" title="클리어 체크"></span>
+          <span class="q-name">${esc(q.name)}</span>
+        </span>
+        <span class="r">${r}</span>
+      </summary>
       <div class="body">
         <dl class="kv"><dt>필요 재료</dt><dd>${esc(q.mat)}</dd></dl>
         <dl class="kv"><dt>효과</dt><dd>${esc(q.effect)}</dd></dl>
         <dl class="kv"><dt>클리어 보상</dt><dd>${r}</dd></dl>
       </div></details>`;
   }).join('')||'<div class="empty">검색 결과가 없습니다.</div>';
+  document.querySelectorAll('#questList .q-check').forEach(el=>{
+    el.onclick=(e)=>{
+      e.preventDefault(); e.stopPropagation();
+      toggleQuestCleared(el.dataset.qname);
+    };
+  });
 }
 function renderQuestPanel(){
   const Q=D.quest;
@@ -2399,6 +2447,12 @@ function bindInputs(){
   document.getElementById('alchemySearch').oninput=renderAlchemy;
   document.getElementById('bossSearch').oninput=renderBoss;
   document.getElementById('questSearch').oninput=renderQuests;
+  document.getElementById('resetClearBtn').onclick=()=>{
+    clearedQuests=new Set();
+    saveClearedQuests();
+    renderQuests();
+    renderTitleMatSummary();
+  };
   document.getElementById('patchSearch').oninput=renderPatch;
   document.getElementById('mobSearch').oninput=renderMobDrops;
   document.getElementById('levelSearch').oninput=renderLevels;
