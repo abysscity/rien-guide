@@ -1250,6 +1250,10 @@
       </div>
 
       <div class="subpanel" id="q-title">
+        <div class="tipbox" style="margin-bottom:18px;">
+          <div class="k">안내</div>
+          <div class="v">실제 게임에서는 캐릭터 레벨과 비슷한 타이틀 퀘스트만 순서대로 노출됩니다. 아래 목록은 전체 타이틀 퀘스트이며, 실제로 보이는 퀘스트는 캐릭터 레벨에 따라 다를 수 있습니다.</div>
+        </div>
         <div id="titleQuestList"></div>
         <div class="itemhead">타이틀 퀘스트 기타재료 통합</div>
         <p class="lead muted" id="titleMatSummaryDesc" style="margin:-6px 0 14px;"></p>
@@ -1891,19 +1895,22 @@ function renderAlchemy(){
   document.getElementById('alchemyHead').innerHTML= upgrade
     ? '<th>아이템</th><th class="num">성공 경험치</th><th>하위 재료</th>'
     : (hasRecipe
-       ? '<th>아이템</th><th>분류</th><th class="num">성공 확률</th><th class="num">성공 경험치</th>'
+       ? '<th>아이템</th><th>분류 · 하위 재료</th><th class="num">성공 확률</th><th class="num">성공 경험치</th>'
        : '<th>분류</th><th>아이템</th><th class="num">성공 경험치</th>');
 
   document.getElementById('alchemyBody').innerHTML=rows.map(a=>{
     const r=R[a[1]];
+    const isUpgradeItem=(A.upgradeCategories||[]).includes(a[0]);
     if(upgrade)
       return `<tr><td>${esc(a[1])}</td><td class="num gold">${fmt(a[2])}</td><td class="muted">${esc(a[3])||'—'}</td></tr>`;
     if(!hasRecipe)
       return `<tr><td class="muted">${esc(a[0])}</td><td>${esc(a[1])}</td><td class="num gold">${fmt(a[2])}</td></tr>`;
     const ico=r&&r.icon?`<img class="ico" src="${esc(r.icon)}" alt="">`:'';
+    // 표창·수리검 / 총알처럼 강화로 연결되는 항목은 클릭 없이도 '분류' 칸에 다음 상위 하위재료를 바로 보여줍니다.
+    const catCell=isUpgradeItem?(esc(a[3])||'—'):esc(a[0]);
     return `<tr class="${r?'clickrow':''}" data-n="${esc(a[1])}">
       <td><span class="namecell">${ico}${esc(a[1])}${r?'<span class="more">레시피</span>':''}</span></td>
-      <td class="muted">${esc(a[0])}</td>
+      <td class="muted">${catCell}</td>
       <td class="num">${r?esc(r.rate):'—'}</td>
       <td class="num gold">${fmt(a[2])}</td></tr>`;
   }).join('')||`<tr><td colspan="4" class="empty">검색 결과가 없습니다.</td></tr>`;
