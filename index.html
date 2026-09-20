@@ -1216,6 +1216,7 @@
         <button class="subtab active" data-sub="q-daily">일일퀘스트</button>
         <button class="subtab" data-sub="q-boss">필드보스</button>
         <button class="subtab" data-sub="q-title">타이틀 퀘스트</button>
+        <button class="subtab" data-sub="q-effect">효과 랭킹</button>
       </div>
 
       <div class="subpanel active" id="q-daily">
@@ -1266,6 +1267,11 @@
         <button class="linkbtn" id="resetClearBtn">클리어 체크 전체 초기화</button>
         <div class="searchline" style="margin-top:8px;"><input type="text" id="questSearch" placeholder="퀘스트 이름으로 검색"></div>
         <div id="questList"></div>
+      </div>
+
+      <div class="subpanel" id="q-effect">
+        <p class="lead muted" style="margin:0 0 16px;">타이틀 퀘스트 25개의 클리어 효과를 종류별로 모아, 값이 가장 높은 순으로 1~3위를 뽑았습니다. 값이 같으면 같은 순위로 묶여서 3위 안에 여러 퀘스트가 들어갈 수 있습니다.</p>
+        <div id="effectRankingList"></div>
       </div>
     </section>
 
@@ -2241,6 +2247,18 @@ function calcBoss(){
   document.getElementById('bossResult').innerHTML=
    `<span class="big">${esc(b[0])} ${t}회</span>필요 재료 <strong>${fmt(b[1]*t)}</strong>개 · 경험치 <strong>${fmt(b[2]*t)}</strong> · 메소 <strong>${fmt(b[3]*t)}</strong>`;
 }
+function renderEffectRanking(){
+  const list=D.quest.effectRanking||[];
+  document.getElementById('effectRankingList').innerHTML=list.map(e=>{
+    const rows=e.top.map(t=>
+      `<tr><td class="num gold">${t.rank}위</td><td>${esc(t.quest)}</td><td class="num">+${fmt(t.value)}</td></tr>`
+    ).join('')||'<tr><td colspan="3" class="empty">데이터가 없습니다.</td></tr>';
+    const table=`<div class="tablewrap" style="max-height:none;margin-top:2px;">
+      <table><thead><tr><th class="num" style="width:60px;">순위</th><th>퀘스트</th><th class="num">효과</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`;
+    return block({title:e.effect, extra:table});
+  }).join('');
+}
 /* 클리어 체크는 게임 서버와 연동되지 않고, 이 브라우저에만 저장됩니다 (localStorage). */
 let clearedQuests=new Set();
 try{ clearedQuests=new Set(JSON.parse(localStorage.getItem('rien_titleQuestCleared')||'[]')); }catch(e){}
@@ -2304,6 +2322,7 @@ function renderQuestPanel(){
   document.getElementById('bossTimesLabel').textContent=`진행 횟수 (최대 ${max})`;
   document.getElementById('bossNote').textContent=Q.bossNote||'';
   renderTitleMatSummary();
+  renderEffectRanking();
   renderDaily(); renderBoss(); renderQuests();
 }
 

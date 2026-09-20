@@ -2176,6 +2176,158 @@
           ]
         ]
       }
+    ],
+    "effectRanking": [
+      {
+        "effect": "추가데미지",
+        "top": [
+          {
+            "rank": 1,
+            "value": 55,
+            "quest": "드레이크 조상"
+          },
+          {
+            "rank": 2,
+            "value": 45,
+            "quest": "켄타우로스 처형자"
+          },
+          {
+            "rank": 3,
+            "value": 35,
+            "quest": "블랙펄의 선장"
+          },
+          {
+            "rank": 3,
+            "value": 35,
+            "quest": "쫄깃한 망둥이"
+          }
+        ]
+      },
+      {
+        "effect": "경험치",
+        "top": [
+          {
+            "rank": 1,
+            "value": 16,
+            "quest": "연구자"
+          },
+          {
+            "rank": 2,
+            "value": 13,
+            "quest": "크로커다일"
+          },
+          {
+            "rank": 2,
+            "value": 13,
+            "quest": "꼬리 수집가"
+          },
+          {
+            "rank": 3,
+            "value": 10,
+            "quest": "재봉사"
+          },
+          {
+            "rank": 3,
+            "value": 10,
+            "quest": "질겅질겅"
+          },
+          {
+            "rank": 3,
+            "value": 10,
+            "quest": "골렘창조자"
+          },
+          {
+            "rank": 3,
+            "value": 10,
+            "quest": "식탁에서 약먹자"
+          },
+          {
+            "rank": 3,
+            "value": 10,
+            "quest": "몸보신"
+          }
+        ]
+      },
+      {
+        "effect": "메소",
+        "top": [
+          {
+            "rank": 1,
+            "value": 5,
+            "quest": "연구자"
+          },
+          {
+            "rank": 1,
+            "value": 5,
+            "quest": "켄타우로스 처형자"
+          },
+          {
+            "rank": 2,
+            "value": 4,
+            "quest": "토이토이"
+          },
+          {
+            "rank": 2,
+            "value": 4,
+            "quest": "크로커다일"
+          },
+          {
+            "rank": 2,
+            "value": 4,
+            "quest": "플로리나비치"
+          },
+          {
+            "rank": 2,
+            "value": 4,
+            "quest": "블랙펄의 선장"
+          },
+          {
+            "rank": 2,
+            "value": 4,
+            "quest": "쫄깃한 망둥이"
+          },
+          {
+            "rank": 2,
+            "value": 4,
+            "quest": "꼬리 수집가"
+          },
+          {
+            "rank": 3,
+            "value": 3,
+            "quest": "재봉사"
+          },
+          {
+            "rank": 3,
+            "value": 3,
+            "quest": "몽키매직"
+          },
+          {
+            "rank": 3,
+            "value": 3,
+            "quest": "북"
+          }
+        ]
+      },
+      {
+        "effect": "경험치 획득량",
+        "top": [
+          {
+            "rank": 1,
+            "value": 4,
+            "quest": "송곳니"
+          }
+        ]
+      },
+      {
+        "effect": "메소 획득량",
+        "top": [
+          {
+            "rank": 1,
+            "value": 3,
+            "quest": "버섯의 왕국"
+          }
+        ]
+      }
     ]
   },
   "shop": {
