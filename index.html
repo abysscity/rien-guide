@@ -1238,6 +1238,14 @@
 
       <div class="subpanel" id="q-title">
         <div id="titleQuestList"></div>
+        <div class="itemhead">타이틀 퀘스트 기타재료 통합</div>
+        <p class="lead muted" style="margin:-6px 0 14px;">아래 25개 타이틀 퀘스트를 전부 진행하는 데 필요한 기타재료를 종류별로 합산한 표입니다.</p>
+        <div class="tablewrap" style="max-height:480px;">
+          <table>
+            <thead><tr><th>재료</th><th class="num">총 필요량</th><th>사용 퀘스트</th></tr></thead>
+            <tbody id="titleMatSummaryBody"></tbody>
+          </table>
+        </div>
         <div class="searchline" style="margin-top:24px;"><input type="text" id="questSearch" placeholder="퀘스트 이름으로 검색"></div>
         <div id="questList"></div>
       </div>
@@ -2212,6 +2220,13 @@ function calcBoss(){
   document.getElementById('bossResult').innerHTML=
    `<span class="big">${esc(b[0])} ${t}회</span>필요 재료 <strong>${fmt(b[1]*t)}</strong>개 · 경험치 <strong>${fmt(b[2]*t)}</strong> · 메소 <strong>${fmt(b[3]*t)}</strong>`;
 }
+function renderTitleMatSummary(){
+  const list=D.quest.matSummary||[];
+  document.getElementById('titleMatSummaryBody').innerHTML=list.map(m=>{
+    const src=m.from.map(f=>`${esc(f[0])} ${fmt(f[1])}`).join(', ');
+    return `<tr><td>${esc(m.name)}</td><td class="num gold">${fmt(m.total)}개</td><td class="muted">${src}</td></tr>`;
+  }).join('')||'<tr><td colspan="3" class="empty">데이터가 없습니다.</td></tr>';
+}
 function renderQuests(){
   const kw=document.getElementById('questSearch').value.trim();
   const rows=D.quest.quests.filter(q=>q.name.includes(kw));
@@ -2233,6 +2248,7 @@ function renderQuestPanel(){
   document.getElementById('bossTimes').max=max;
   document.getElementById('bossTimesLabel').textContent=`진행 횟수 (최대 ${max})`;
   document.getElementById('bossNote').textContent=Q.bossNote||'';
+  renderTitleMatSummary();
   renderDaily(); renderBoss(); renderQuests();
 }
 
