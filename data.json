@@ -573,7 +573,7 @@
         "표창·수리검",
         "토비 표창",
         120,
-        "금비"
+        "고드름"
       ],
       [
         "표창·수리검",
@@ -589,9 +589,15 @@
       ],
       [
         "표창·수리검",
-        "고드름",
+        "종이비행기",
         60,
         "나무팽이"
+      ],
+      [
+        "표창·수리검",
+        "고드름",
+        90,
+        "종이비행기"
       ],
       [
         "표창·수리검",
@@ -923,7 +929,7 @@
         "icon": "data:image/png;base64,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",
         "rate": "60.5% (60% + 0.5%)",
         "mats": [
-          "금비 표창 1개"
+          "고드름 1개"
         ],
         "meso": "813,000",
         "atk": 23
@@ -948,11 +954,11 @@
       },
       "고드름": {
         "icon": "data:image/png;base64,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",
-        "rate": "80.5% (80% + 0.5%)",
+        "rate": "70.5% (70% + 0.5%)",
         "mats": [
-          "나무팽이 1개"
+          "종이비행기 1개"
         ],
-        "meso": "284,000",
+        "meso": "438,000",
         "atk": 21
       },
       "나무 팽이": {
@@ -1082,6 +1088,13 @@
         ],
         "meso": "1,548,570",
         "qty": 3
+      },
+      "종이비행기": {
+        "rate": "80.5% (80% + 0.5%)",
+        "mats": [
+          "나무팽이 1개"
+        ],
+        "meso": "284,000"
       }
     },
     "recipeNote": "성공 확률의 괄호 안 뒷자리는 연금술 레벨로 붙은 추가 확률입니다. 레벨이 오르면 이 값이 커집니다.",
