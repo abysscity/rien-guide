@@ -2228,7 +2228,14 @@ function renderDaily(){
   const Q=D.quest;
   document.getElementById('dailyGradeBody').innerHTML=Q.dailyGrades.map(g=>
    `<tr><td class="gold">${esc(g[0])}</td>${g.slice(1).map(v=>`<td class="num">${esc(v)}</td>`).join('')}</tr>`).join('');
-  document.getElementById('weekdayBlock').innerHTML=block(Q.weekday);
+  const W=Q.weekday;
+  const rows=(W.rows||[]).map(r=>{
+    const icon=r[2]?`<img class="ico" src="${esc(r[2])}" alt="">`:'<span class="noico"></span>';
+    return `<li class="mat">${icon}<strong>${esc(r[0])}</strong>&nbsp;— ${esc(r[1])}</li>`;
+  }).join('');
+  const note=W.note?`<div class="note">${esc(W.note)}</div>`:'';
+  document.getElementById('weekdayBlock').innerHTML=
+    `<div class="block"><h3>${esc(W.title||'')}</h3><ul class="matlist">${rows}</ul>${note}</div>`;
 }
 function renderBoss(){
   const Q=D.quest;
