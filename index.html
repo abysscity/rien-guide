@@ -937,14 +937,12 @@
     <button class="navbtn" data-tab="shop">홍포 상점</button>
     <button class="navbtn" data-tab="levels">레벨 보상</button>
     <button class="navbtn" data-tab="bosses">보스</button>
-    <button class="navbtn" data-tab="enhance">강화</button>
     <button class="navbtn" data-tab="sets">세트 효과</button>
     <button class="navbtn" data-tab="alchemy">연금술</button>
     <button class="navbtn" data-tab="items">아이템 정보</button>
     <button class="navbtn" data-tab="skills">스킬</button>
     <button class="navbtn" data-tab="jobguide">직업 가이드</button>
     <button class="navbtn" data-tab="hidden">히든 스킬</button>
-    <button class="navbtn" data-tab="soul">영혼석</button>
   </aside>
 
   <main class="main">
@@ -990,110 +988,6 @@
         </table>
       </div>
       <div id="bossDropNote"></div>
-    </section>
-
-    <!-- ========== 강화 ========== -->
-    <section class="panel" id="enhance">
-      <div class="subtabs">
-        <button class="subtab active" data-sub="enh-overview">개요</button>
-        <button class="subtab" data-sub="enh-normal">일반 장비 강화</button>
-        <button class="subtab" data-sub="enh-max">최대 장비 강화</button>
-        <button class="subtab" data-sub="enh-dmg">추가 데미지</button>
-        <button class="subtab" data-sub="enh-amp">증폭</button>
-        <button class="subtab" data-sub="enh-ability">어빌리티</button>
-      </div>
-
-      <div class="subpanel active" id="enh-overview">
-        <div id="enhStartCta"></div>
-        <div class="itemhead">강화 시스템 구조</div>
-        <div id="enhTree"></div>
-        <div class="itemhead">지금 어떤 강화를 해야 하나요?</div>
-        <div class="homegrid" id="enhOverviewCards"></div>
-        <div class="itemhead">강화 전 체크</div>
-        <ul class="checklist" id="enhChecklist"></ul>
-        <div class="itemhead">강화 안정제</div>
-        <div id="enhStabilizer"></div>
-        <div class="itemhead">강화 시스템 비교</div>
-        <div class="tablewrap" style="max-height:none;">
-          <table>
-            <thead><tr><th>시스템</th><th>비용</th><th>성공 · 결과</th><th>주요 위험</th></tr></thead>
-            <tbody id="enhCompareBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="subpanel" id="enh-normal">
-        <div id="enhNormalInfo"></div>
-      </div>
-
-      <div class="subpanel" id="enh-max">
-        <div id="enhMaxInfo"></div>
-      </div>
-
-      <div class="subpanel" id="enh-dmg">
-        <div id="enhDmgInfo"></div>
-        <div class="calc">
-          <h4>필요 재료 계산</h4>
-          <div class="field">
-            <label>시도 횟수</label>
-            <input type="number" id="dmgTries" min="0" value="10">
-            <button class="btn" onclick="calcDmg()">계산</button>
-          </div>
-          <div class="result" id="dmgResult">시도 횟수를 입력하세요.</div>
-          <div class="note" id="dmgCalcNote"></div>
-        </div>
-      </div>
-
-      <div class="subpanel" id="enh-amp">
-        <div id="enhAmpInfo"></div>
-        <div class="probgrid" id="ampProbGrid"></div>
-        <div class="calc">
-          <h4>필요 재료 계산</h4>
-          <div class="field">
-            <label>시도 횟수</label>
-            <input type="number" id="ampTries" min="0" value="5">
-            <button class="btn" onclick="calcAmp()">계산</button>
-          </div>
-          <div class="result" id="ampResult">시도 횟수를 입력하세요.</div>
-        </div>
-      </div>
-
-      <div class="subpanel" id="enh-ability">
-        <div id="enhAbilityInfo"></div>
-      </div>
-    </section>
-
-    <!-- ========== 영혼석 ========== -->
-    <section class="panel" id="soul">
-      <div class="subtabs">
-        <button class="subtab active" data-sub="soul-info">제작 정보</button>
-        <button class="subtab" data-sub="soul-calc">재료 계산</button>
-      </div>
-      <div class="subpanel active" id="soul-info">
-        <div id="soulInfo"></div>
-      </div>
-      <div class="subpanel" id="soul-calc">
-        <div class="calc">
-          <h4>목표 개수로 계산</h4>
-          <div class="field">
-            <label>만들 영혼석 개수</label>
-            <input type="number" id="soulTarget" min="0" value="1">
-            <button class="btn" onclick="calcSoulByTarget()">계산</button>
-          </div>
-          <div class="result" id="soulTargetResult">개수를 입력하세요.</div>
-        </div>
-        <div class="calc">
-          <h4>보유 재료로 계산</h4>
-          <div class="field"><label>영혼의 파편</label><input type="number" id="haveFrag" min="0" value="0"></div>
-          <div class="field"><label>영혼석 정화수</label><input type="number" id="havePurify" min="0" value="0"></div>
-          <div class="field">
-            <label>메소</label>
-            <input type="number" id="haveMeso" min="0" value="0">
-            <button class="btn" onclick="calcSoulByHave()">계산</button>
-          </div>
-          <div class="result" id="soulHaveResult">보유량을 입력하세요.</div>
-        </div>
-      </div>
     </section>
 
     <!-- ========== 직업 가이드 ========== -->
@@ -1546,15 +1440,9 @@ function renderRoadmap(){
 }
 
 function rmPhase(p,i,on){
-  const E=D.enhance||{}, S=D.shop||{}, Q=D.quest||{}, R=D.roadmap||{};
+  const S=D.shop||{}, Q=D.quest||{}, R=D.roadmap||{};
   let extra='';
 
-  if(p.showDmgCost&&E.dmg){
-    extra+=`<div class="itemhead">추가 데미지 강화</div>
-      <div class="tablewrap" style="max-height:none;"><table><tbody>${
-        (E.dmg.rows||[]).map(x=>`<tr><td class="muted" style="width:150px;">${esc(x[0])}</td><td>${esc(x[1])}</td></tr>`).join('')
-      }</tbody></table></div>`;
-  }
   if(p.showBossLimit&&Q.bossNote){
     extra+=`<div class="rmnote">${esc(Q.bossNote)}</div>`;
   }
@@ -1575,17 +1463,6 @@ function rmPhase(p,i,on){
         <ul class="matlist">${mv.map(s=>
           `<li class="mat">${s.icon?`<img class="ico" src="${esc(s.icon)}" alt="">`:'<span class="noico"></span>'}${esc(s.name)} · ${fmt(s.meso)} 메소</li>`).join('')}</ul>`;
     }
-  }
-  if(p.showAmpTable&&E.amp){
-    extra+=`<div class="itemhead">추가 데미지 증폭 <span class="muted" style="font-size:13px;font-weight:400;">일반 강화와 다른 시스템입니다</span></div>
-      <div class="tablewrap" style="max-height:none;"><table><tbody>${
-        (E.amp.rows||[]).map(x=>`<tr><td class="muted" style="width:150px;">${esc(x[0])}</td><td>${esc(x[1])}</td></tr>`).join('')
-      }</tbody></table></div>
-      <div class="tablewrap" style="max-height:none;"><table>
-        <thead><tr><th>결과</th><th class="num">확률</th><th>수치 변동</th></tr></thead>
-        <tbody>${(E.amp.table||[]).map(t=>
-          `<tr><td>${esc(t[0])}</td><td class="num">${esc(t[1])}</td><td>${esc(t[2])}</td></tr>`).join('')}</tbody>
-      </table></div>`;
   }
   if(p.showUnion&&R.unionBox){
     const u=R.unionBox;
@@ -1724,150 +1601,6 @@ function renderSets(){
   }
 
   document.getElementById('setDetail').innerHTML=html;
-}
-
-/* ===== 강화 ===== */
-function jumpSub(panelId, sub){
-  const btn=document.querySelector(`#${panelId} .subtab[data-sub="${sub}"]`);
-  if(btn) btn.click();
-}
-function extractRow(rows,label){
-  const r=(rows||[]).find(x=>x[0]===label);
-  return r?r[1]:'—';
-}
-function renderEnhance(){
-  const E=D.enhance;
-  document.getElementById('enhNormalInfo').innerHTML = block(E.basic[0]);
-  document.getElementById('enhMaxInfo').innerHTML = block(E.basic[1]);
-  document.getElementById('enhDmgInfo').innerHTML = block(E.dmg);
-  document.getElementById('dmgCalcNote').textContent = E.dmg.calcNote||'';
-  document.getElementById('enhAmpInfo').innerHTML = block(E.amp);
-  document.getElementById('ampProbGrid').innerHTML = (E.amp.table||[]).map(r=>
-    `<div class="probcard"><div class="probhead">${esc(r[0])}</div><div class="probpct">${esc(r[1])}</div><div class="probval">${esc(r[2])}</div></div>`).join('');
-  document.getElementById('enhAbilityInfo').innerHTML = block(E.ability);
-  renderEnhanceOverview();
-}
-function renderEnhanceOverview(){
-  const E=D.enhance;
-
-  document.getElementById('enhStartCta').innerHTML = `
-    <div class="block">
-      <h3>처음 시작하셨나요?</h3>
-      <p class="lead" style="margin-bottom:12px;">강화부터 시작하기보다 전체 성장 순서를 먼저 확인하세요.</p>
-      <button class="linkbtn" id="enhToRoadmap" style="margin-top:0;">1 → 120 성장 로드맵 보기 →</button>
-    </div>`;
-  const rmBtn=document.getElementById('enhToRoadmap');
-  if(rmBtn) rmBtn.onclick=()=>switchTab('roadmap');
-
-  document.getElementById('enhTree').innerHTML = `
-    <div class="enhtree">
-      <div class="et-root">기본 장비</div>
-      <div class="et-lines">
-        <div class="et-branch">일반 장비 강화</div>
-        <div class="et-branch">추가 데미지 강화</div>
-        <div class="et-branch">추가 데미지 증폭 <span class="et-arrow">→</span> 최대 장비 강화</div>
-      </div>
-    </div>
-    <div class="note">실제 게임의 선행 조건이 아니라, 강화 시스템을 구분해서 보여주기 위한 정보 구조입니다.</div>`;
-
-  const cards=[
-    {title:'일반 장비 강화', desc:'장비 등급을 높이는 기본 강화입니다.', sub:'enh-normal'},
-    {title:'추가 데미지 강화', desc:`추증석 ${E.dmg.costStone}개 + 메소 ${fmt(E.dmg.costMeso)}. 성공 확률 ${extractRow(E.dmg.rows,'성공 확률')}.`, sub:'enh-dmg'},
-    {title:'추가 데미지 증폭', desc:`추증석 ${E.amp.costStone}개 + 메소 ${fmt(E.amp.costMeso)}. 결과가 여러 갈래로 나뉩니다.`, sub:'enh-amp'},
-    {title:'최대 장비 강화', desc:'실패 시 장비가 파괴될 수 있는 강화입니다.', sub:'enh-max', warn:true},
-  ];
-  document.getElementById('enhOverviewCards').innerHTML=cards.map(c=>
-    `<div class="homecard${c.warn?' warn-mini':''}" data-jump="${c.sub}"><b>${esc(c.title)}</b><span>${esc(c.desc)}</span></div>`
-  ).join('');
-  document.querySelectorAll('#enhOverviewCards [data-jump]').forEach(el=>el.onclick=()=>jumpSub('enhance', el.dataset.jump));
-
-  const checks=[
-    '일반 강화인가? → 강화 안정제 여부를 먼저 확인하세요.',
-    `추가 데미지 강화인가? → 추증석 ${E.dmg.costStone}개와 메소 ${fmt(E.dmg.costMeso)}가 필요합니다.`,
-    `추가 데미지 증폭인가? → 추증석 ${E.amp.costStone}개와 메소 ${fmt(E.amp.costMeso)}가 필요합니다.`,
-    '최대 강화인가? → 실패 시 장비가 파괴될 수 있다는 점을 확인하세요.',
-  ];
-  document.getElementById('enhChecklist').innerHTML=checks.map((t,i)=>{
-    let done=''; try{ done=localStorage.getItem('rien_enh_chk_'+i)?' done':''; }catch(e){}
-    return `<li class="chk${done}" data-k="rien_enh_chk_${i}">${esc(t)}</li>`;
-  }).join('');
-  document.querySelectorAll('#enhChecklist .chk').forEach(el=>el.onclick=()=>{
-    const on=el.classList.toggle('done');
-    try{ localStorage.setItem(el.dataset.k, on?'1':''); }catch(e){}
-  });
-
-  const rec=(D.alchemy&&D.alchemy.recipes)||{};
-  const st=rec['강화 안정제'];
-  const stabBox=document.getElementById('enhStabilizer');
-  if(st){
-    stabBox.innerHTML=`
-      <div class="warncard">
-        <b>강화하기 전에 강화 안정제를 확인하세요</b>
-        <p>강화 안정제가 없으면 일반 강화 실패 시 장비 등급이 하락할 수 있습니다. 연금술로 제작할 수 있습니다.</p>
-        <div class="filterbar" style="margin-top:10px;">
-          <div class="chip" style="cursor:default;">성공 확률 ${esc(st.rate)}</div>
-          <div class="chip" style="cursor:default;">메소 ${esc(st.meso)}</div>
-        </div>
-        <button class="linkbtn" id="enhStabCta">연금술에서 확인 →</button>
-      </div>`;
-    const stBtn=document.getElementById('enhStabCta');
-    if(stBtn) stBtn.onclick=()=>{
-      switchTab('alchemy');
-      if(typeof showRecipe==='function') showRecipe('강화 안정제');
-    };
-  } else {
-    stabBox.innerHTML='<div class="empty">현재 데이터에서 확인할 수 없습니다.</div>';
-  }
-
-  const rows=[
-    ['일반 장비 강화','강화석 + 메소','강화 등급 상승','실패 시 등급 하락 가능 (안정제 미보유 시)'],
-    ['추가 데미지 강화',`추증석 ${E.dmg.costStone}개 + 메소 ${fmt(E.dmg.costMeso)}`,`성공 ${extractRow(E.dmg.rows,'성공 확률')}`,'실패 결과는 상세 정보 참고'],
-    ['추가 데미지 증폭',`추증석 ${E.amp.costStone}개 + 메소 ${fmt(E.amp.costMeso)}`,'여러 결과 존재 (성공·실패·대성공·대실패)','실패 · 대실패 시 수치 감소'],
-    ['최대 장비 강화','강화 재료 + 메소','강화 등급 상승','실패 시 장비 파괴 가능'],
-  ];
-  document.getElementById('enhCompareBody').innerHTML=rows.map(r=>
-    `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="muted">${esc(r[3])}</td></tr>`).join('');
-}
-function calcDmg(){
-  const E=D.enhance.dmg;
-  const n=Math.max(0,parseInt(document.getElementById('dmgTries').value)||0);
-  document.getElementById('dmgResult').innerHTML=
-   `<span class="big">${fmt(n)}회 시도 시</span>추증석 <strong>${fmt(n*E.costStone)}</strong>개 · 메소 <strong>${fmt(n*E.costMeso)}</strong>`;
-}
-function calcAmp(){
-  const E=D.enhance.amp;
-  const n=Math.max(0,parseInt(document.getElementById('ampTries').value)||0);
-  document.getElementById('ampResult').innerHTML=
-   `<span class="big">${fmt(n)}회 시도 시</span>추증석 <strong>${fmt(n*E.costStone)}</strong>개 · 메소 <strong>${fmt(n*E.costMeso)}</strong>`;
-}
-
-/* ===== 영혼석 ===== */
-function renderSoul(){
-  const S=D.soul;
-  document.getElementById('soulInfo').innerHTML = block({
-    title:S.title,
-    rows:[['영혼의 파편', S.fragPerUnit+'개'],
-          ['영혼석 정화수', S.purifyPerUnit+'개'],
-          ['메소', fmt(S.mesoPerUnit)]],
-    note:S.note
-  });
-}
-function calcSoulByTarget(){
-  const S=D.soul;
-  const n=Math.max(0,parseInt(document.getElementById('soulTarget').value)||0);
-  document.getElementById('soulTargetResult').innerHTML=
-   `<span class="big">영혼석 ${fmt(n)}개 제작</span>영혼의 파편 <strong>${fmt(n*S.fragPerUnit)}</strong>개 · 정화수 <strong>${fmt(n*S.purifyPerUnit)}</strong>개 · 메소 <strong>${fmt(n*S.mesoPerUnit)}</strong>`;
-}
-function calcSoulByHave(){
-  const S=D.soul;
-  const f=Math.max(0,parseInt(document.getElementById('haveFrag').value)||0);
-  const p=Math.max(0,parseInt(document.getElementById('havePurify').value)||0);
-  const m=Math.max(0,parseInt(document.getElementById('haveMeso').value)||0);
-  const byF=Math.floor(f/S.fragPerUnit), byP=Math.floor(p/S.purifyPerUnit), byM=Math.floor(m/S.mesoPerUnit);
-  const can=Math.min(byF,byP,byM);
-  const neck = can===byF ? '영혼의 파편' : (can===byP ? '영혼석 정화수' : '메소');
-  document.getElementById('soulHaveResult').innerHTML=
-   `<span class="big">제작 가능 ${fmt(can)}개</span>가장 부족한 재료: ${neck}`;
 }
 
 /* ===== 히든스킬 ===== */
@@ -2502,8 +2235,6 @@ async function boot(){
   renderHome();
   renderRoadmap();
   renderSets();
-  renderEnhance();
-  renderSoul();
   renderHidden();
   renderAlchemy();
   renderItems();
