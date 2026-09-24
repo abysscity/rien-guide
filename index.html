@@ -1226,7 +1226,6 @@
             <tbody id="dailyGradeBody"></tbody>
           </table>
         </div>
-        <div id="weekdayBlock"></div>
       </div>
 
       <div class="subpanel" id="q-boss">
@@ -1270,7 +1269,7 @@
       </div>
 
       <div class="subpanel" id="q-effect">
-        <p class="lead muted" style="margin:0 0 16px;">타이틀 퀘스트 25개의 클리어 효과를 종류별로 모아, 값이 가장 높은 순으로 1~3위를 뽑았습니다. 값이 같으면 같은 순위로 묶여서 3위 안에 여러 퀘스트가 들어갈 수 있습니다.</p>
+        <p class="lead muted" id="effectRankingDesc" style="margin:0 0 16px;"></p>
         <div id="effectRankingList"></div>
       </div>
     </section>
@@ -2228,14 +2227,6 @@ function renderDaily(){
   const Q=D.quest;
   document.getElementById('dailyGradeBody').innerHTML=Q.dailyGrades.map(g=>
    `<tr><td class="gold">${esc(g[0])}</td>${g.slice(1).map(v=>`<td class="num">${esc(v)}</td>`).join('')}</tr>`).join('');
-  const W=Q.weekday;
-  const rows=(W.rows||[]).map(r=>{
-    const icon=r[2]?`<img class="ico" src="${esc(r[2])}" alt="">`:'<span class="noico"></span>';
-    return `<li class="mat">${icon}<strong>${esc(r[0])}</strong>&nbsp;— ${esc(r[1])}</li>`;
-  }).join('');
-  const note=W.note?`<div class="note">${esc(W.note)}</div>`:'';
-  document.getElementById('weekdayBlock').innerHTML=
-    `<div class="block"><h3>${esc(W.title||'')}</h3><ul class="matlist">${rows}</ul>${note}</div>`;
 }
 function renderBoss(){
   const Q=D.quest;
@@ -2256,6 +2247,9 @@ function calcBoss(){
 }
 function renderEffectRanking(){
   const list=D.quest.effectRanking||[];
+  const total=D.quest.quests.length;
+  document.getElementById('effectRankingDesc').textContent=
+    `타이틀 퀘스트 ${total}개의 클리어 효과를 종류별로 모아, 값이 가장 높은 순으로 1~3위를 뽑았습니다. 값이 같으면 같은 순위로 묶여서 3위 안에 여러 퀘스트가 들어갈 수 있습니다.`;
   document.getElementById('effectRankingList').innerHTML=list.map(e=>{
     const rows=e.top.map(t=>
       `<tr><td class="num gold">${t.rank}위</td><td>${esc(t.quest)}</td><td class="num">+${fmt(t.value)}</td></tr>`

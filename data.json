@@ -1255,37 +1255,6 @@
         "0.35%"
       ]
     ],
-    "weekday": {
-      "title": "요일별 지급 재료",
-      "rows": [
-        [
-          "월요일",
-          "벼루주화 1개"
-        ],
-        [
-          "화요일",
-          "경험치 상승 (소) 10개",
-          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACzklEQVR4nL1X0ZWrIBC9vrMNYAluCVhCtoSkhLWEbAnPErSEpIRQApTwKIEpgfcRBwFBNz+553CEcWbuZVCUxnnnBQEkBNrmE++A8xogAQHChyABAqFtPqH17S0C2qaH8xpEAh8EQtv20PqGcRxhrU2cu67b2PbsJeS+Wt+CiD9MPgxDEsCIA4UQRXseUxrH9mEYgog/8U0miImklMWksV1KCSFEYqsJj/sAUgE5OGGcuARjTHJ9BYkATsAqjTEQQmzseb9Efjqdir4vVQAAlFKH/ZzwFRQF5CprmKapGlObdS48EfD9/b0JYFuJXEoZRPxWwPl8Tvw+itkPwOSEHlJqTNOUvMY18GTiSRWXYJ7n0M9nxuTACAuDO5qkEnuY5xlCiCR/cR+oISY3+An2kbYiYpK4P45jkvPwLeCAuOwGP7AAeKvpBHApiCjher3WBTBZ7hSTKxiohdwCMEvbE5HnqwqInUtBPzCYI/IgggBln+0Ih0vADrHjMAwwxmCCxwMeFgAtDQCIAN15OOlhjNm8ETnproBaAIt4Mj5JubGSEjnw4hIcBTDIri2UYidXLWdRANFORkSkS9tzH8cRRBSqmu+sxa34EJS1g4cv3gdyHO4DNQG/XQJgf2LJt4BLz4rXnS+FPvtiMikltNZhzA9lXIF8easfIya3aNbggl9e/Xh8lX7zobrf73UBrI7J72hwadKfy5OzUG2Hk1upeKzaLvWzDR4FETGSZyAvD1OcnA0tFhGTI/NVbVd8O/IlTSqQ/9cpWmcYCLQNV9V2z3Fc97ifCSj95CYCaocN+VhtPCvz1UE+LFTfJfdV34UYyn6SjTEbjkTAhtyuZEHMzcJcOsibBWgZfy3j5X6YfWEJco7GOedLpyN+EPt7sybMsFnjbPzvb/njNE0T+v4C5zQa750niLceTvv+Au81CAKNc94LEEg8T63vQHw8/w/zGcr6IEMUNQAAAABJRU5ErkJggg=="
-        ],
-        [
-          "수요일",
-          "황금망치 1개"
-        ],
-        [
-          "목요일",
-          "+10 강화권 1개"
-        ],
-        [
-          "금요일",
-          "MVP 경험치 뿌리기 (다이아) 1개"
-        ],
-        [
-          "일요일",
-          "MVP 경험치 뿌리기 (다이아) 1개"
-        ]
-      ],
-      "note": "토요일 재료는 확인 중입니다."
-    },
     "bossMaxRuns": 10,
     "bossNote": "필드보스 전리품은 하루 10회까지 진행할 수 있습니다.",
     "bosses": [
@@ -1630,9 +1599,143 @@
         "mat": "드레이크의 머리뼈 200개, 얼음 등뼈 175개, 다크 드레이크의 뿔 110개",
         "effect": "추가 데미지 +55, 경험치 +6, 메소 +2",
         "reward": 83600
+      },
+      {
+        "name": "플라잉 더치맨",
+        "mat": "바이킹의 돛 295개, 기간틱 바이킹의 모자 275개",
+        "effect": "추가 데미지 +70, 경험치 획득량 +8, 메소 획득량 +5",
+        "reward": 5400100
+      },
+      {
+        "name": "유령",
+        "mat": "봉인된 항아리 300개, 팬텀워치의 얼음조각 285개",
+        "effect": "경험치 획득량 +18, 메소 획득량 +6",
+        "reward": 5423520
+      },
+      {
+        "name": "샥스핀",
+        "mat": "냉동포장 샥스핀 355개",
+        "effect": "추가 데미지 +85, 메소 획득량 +6",
+        "reward": 5642000
+      },
+      {
+        "name": "코니언 가족",
+        "mat": "나무 어깨 보호대 370개, 해골 어깨 보호대 360개",
+        "effect": "추가 데미지 +50, 경험치 획득량 +14, 메소 획득량 +4",
+        "reward": 7654200
+      },
+      {
+        "name": "추억 수호대장",
+        "mat": "녹색 심장 450개, 검은 갑옷조각 75개, 시간 조각 3개",
+        "effect": "추가 데미지 +100, 경험치 획득량 +7, 메소 획득량 +3",
+        "reward": 7325000
+      },
+      {
+        "name": "후회 수호대장",
+        "mat": "푸른 심장 480개, 검은 갑옷조각 85개, 시간 조각 3개",
+        "effect": "추가 데미지 +70, 경험치 획득량 +8, 메소 획득량 +5",
+        "reward": 9753200
+      },
+      {
+        "name": "해골 뿔 대머리",
+        "mat": "부러진 뿔 410개, 드래곤의 영혼 1개, 드래곤의 비늘 1개",
+        "effect": "추가 데미지 +85, 메소 획득량 +6",
+        "reward": 8440000
+      },
+      {
+        "name": "탑루의 크로키",
+        "mat": "크로키의 투구 450개, 정화의 토템 1개",
+        "effect": "추가 데미지 +100, 경험치 획득량 +7, 메소 획득량 +3",
+        "reward": 8657000
+      },
+      {
+        "name": "탑루의 레인디어",
+        "mat": "레인디어의 창 460개, 정화의 토템 1개",
+        "effect": "추가 데미지 +70, 경험치 획득량 +8, 메소 획득량 +5",
+        "reward": 9345100
       }
     ],
     "matSummary": [
+      {
+        "name": "푸른 심장",
+        "total": 480,
+        "from": [
+          [
+            "후회 수호대장",
+            480
+          ]
+        ]
+      },
+      {
+        "name": "레인디어의 창",
+        "total": 460,
+        "from": [
+          [
+            "탑루의 레인디어",
+            460
+          ]
+        ]
+      },
+      {
+        "name": "녹색 심장",
+        "total": 450,
+        "from": [
+          [
+            "추억 수호대장",
+            450
+          ]
+        ]
+      },
+      {
+        "name": "크로키의 투구",
+        "total": 450,
+        "from": [
+          [
+            "탑루의 크로키",
+            450
+          ]
+        ]
+      },
+      {
+        "name": "부러진 뿔",
+        "total": 410,
+        "from": [
+          [
+            "해골 뿔 대머리",
+            410
+          ]
+        ]
+      },
+      {
+        "name": "나무 어깨 보호대",
+        "total": 370,
+        "from": [
+          [
+            "코니언 가족",
+            370
+          ]
+        ]
+      },
+      {
+        "name": "해골 어깨 보호대",
+        "total": 360,
+        "from": [
+          [
+            "코니언 가족",
+            360
+          ]
+        ]
+      },
+      {
+        "name": "냉동포장 샥스핀",
+        "total": 355,
+        "from": [
+          [
+            "샥스핀",
+            355
+          ]
+        ]
+      },
       {
         "name": "켄타우로스의 불꽃",
         "total": 330,
@@ -1654,12 +1757,52 @@
         ]
       },
       {
+        "name": "봉인된 항아리",
+        "total": 300,
+        "from": [
+          [
+            "유령",
+            300
+          ]
+        ]
+      },
+      {
+        "name": "바이킹의 돛",
+        "total": 295,
+        "from": [
+          [
+            "플라잉 더치맨",
+            295
+          ]
+        ]
+      },
+      {
+        "name": "팬텀워치의 얼음조각",
+        "total": 285,
+        "from": [
+          [
+            "유령",
+            285
+          ]
+        ]
+      },
+      {
         "name": "켄타우로스의 뼈",
         "total": 280,
         "from": [
           [
             "켄타우로스 처형자",
             280
+          ]
+        ]
+      },
+      {
+        "name": "기간틱 바이킹의 모자",
+        "total": 275,
+        "from": [
+          [
+            "플라잉 더치맨",
+            275
           ]
         ]
       },
@@ -1710,6 +1853,20 @@
           [
             "몸보신",
             170
+          ]
+        ]
+      },
+      {
+        "name": "검은 갑옷조각",
+        "total": 160,
+        "from": [
+          [
+            "추억 수호대장",
+            75
+          ],
+          [
+            "후회 수호대장",
+            85
           ]
         ]
       },
@@ -2158,6 +2315,20 @@
         ]
       },
       {
+        "name": "시간 조각",
+        "total": 6,
+        "from": [
+          [
+            "추억 수호대장",
+            3
+          ],
+          [
+            "후회 수호대장",
+            3
+          ]
+        ]
+      },
+      {
         "name": "돼지의 머리",
         "total": 5,
         "from": [
@@ -2196,6 +2367,40 @@
             3
           ]
         ]
+      },
+      {
+        "name": "정화의 토템",
+        "total": 2,
+        "from": [
+          [
+            "탑루의 크로키",
+            1
+          ],
+          [
+            "탑루의 레인디어",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "드래곤의 비늘",
+        "total": 1,
+        "from": [
+          [
+            "해골 뿔 대머리",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "드래곤의 영혼",
+        "total": 1,
+        "from": [
+          [
+            "해골 뿔 대머리",
+            1
+          ]
+        ]
       }
     ],
     "effectRanking": [
@@ -2204,23 +2409,38 @@
         "top": [
           {
             "rank": 1,
-            "value": 55,
-            "quest": "드레이크 조상"
+            "value": 100,
+            "quest": "추억 수호대장"
+          },
+          {
+            "rank": 1,
+            "value": 100,
+            "quest": "탑루의 크로키"
           },
           {
             "rank": 2,
-            "value": 45,
-            "quest": "켄타우로스 처형자"
+            "value": 85,
+            "quest": "샥스핀"
+          },
+          {
+            "rank": 2,
+            "value": 85,
+            "quest": "해골 뿔 대머리"
           },
           {
             "rank": 3,
-            "value": 35,
-            "quest": "블랙펄의 선장"
+            "value": 70,
+            "quest": "플라잉 더치맨"
           },
           {
             "rank": 3,
-            "value": 35,
-            "quest": "쫄깃한 망둥이"
+            "value": 70,
+            "quest": "후회 수호대장"
+          },
+          {
+            "rank": 3,
+            "value": 70,
+            "quest": "탑루의 레인디어"
           }
         ]
       },
@@ -2334,8 +2554,28 @@
         "top": [
           {
             "rank": 1,
-            "value": 4,
-            "quest": "송곳니"
+            "value": 18,
+            "quest": "유령"
+          },
+          {
+            "rank": 2,
+            "value": 14,
+            "quest": "코니언 가족"
+          },
+          {
+            "rank": 3,
+            "value": 8,
+            "quest": "플라잉 더치맨"
+          },
+          {
+            "rank": 3,
+            "value": 8,
+            "quest": "후회 수호대장"
+          },
+          {
+            "rank": 3,
+            "value": 8,
+            "quest": "탑루의 레인디어"
           }
         ]
       },
@@ -2344,8 +2584,38 @@
         "top": [
           {
             "rank": 1,
-            "value": 3,
-            "quest": "버섯의 왕국"
+            "value": 6,
+            "quest": "유령"
+          },
+          {
+            "rank": 1,
+            "value": 6,
+            "quest": "샥스핀"
+          },
+          {
+            "rank": 1,
+            "value": 6,
+            "quest": "해골 뿔 대머리"
+          },
+          {
+            "rank": 2,
+            "value": 5,
+            "quest": "플라잉 더치맨"
+          },
+          {
+            "rank": 2,
+            "value": 5,
+            "quest": "후회 수호대장"
+          },
+          {
+            "rank": 2,
+            "value": 5,
+            "quest": "탑루의 레인디어"
+          },
+          {
+            "rank": 3,
+            "value": 4,
+            "quest": "코니언 가족"
           }
         ]
       }
